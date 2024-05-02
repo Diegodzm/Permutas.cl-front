@@ -2,14 +2,17 @@ export const getState = ({ getActions, getStore, setStore }) => {
     return {
         store: {
             user:{
-                email:"",
-                password:""
+                username: "",
+                firstname:"",
+                lastname:"",
+                password: "",
+                email: ""
+                
             },
 
             usersList:[]
         },
         actions: {
-
             handleOnchange: (event)=>{
                 const store= getStore()
                 setStore({
@@ -19,8 +22,25 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         
                     }
                 })
-                console.log(event.target.name, event.target.value)
+                
+                
+                console.log(store.user)
             },
+           
+            handleSubmitGoogleuser:(user)=>{
+                fetch("http://localhost:5000/user/logingoogle",{ 
+                method :"POST",
+                body: JSON.stringify(user),
+                headers:{
+                    "content-type":"application/json"
+                }
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data))
+            .then((error)=>console.log(error))
+
+            },
+          
             handleSubmituser: (event)=>{
                 const store= getStore()
                 event.preventDefault()
@@ -69,11 +89,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 usersList: data,
             })) 
             .then((error)=>console.log(error))
-            } else{
+            } /*else{
                 alert("missing access token")
 
             }
-       
+              */
        
             }}
         
