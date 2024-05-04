@@ -20,6 +20,9 @@ const Navbar=()=>{
         <li className="nav-item">
           <Link className="nav-link" to='/login ' >login</Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to='/product_upload ' >product upload</Link>
+        </li>
     
       </ul>
     </div>

@@ -5,6 +5,7 @@ import injectContext from './store/context';
 import Register from './views/register';
 import Navbar from './components/navbar';
 import Login from './views/login';
+import ProductUploadView from './views/product_upload';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
        <Route path='/'  element={<Home/>}></Route>
        <Route path='/register'  element={<Register/>}></Route>
        <Route path='/login'  element={<Login/>}></Route>
+       <Route path='/product_upload'  element={<ProductUploadView />}></Route>
      </Routes>
-    
+  
     </BrowserRouter>
 
   );
