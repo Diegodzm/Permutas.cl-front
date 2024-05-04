@@ -17,6 +17,7 @@ const Register = () => {
         password: "",
         confimPass: "",
         email: "",
+<<<<<<< HEAD
         address: "",
     });
     const submitFn = (event) => {
@@ -44,6 +45,35 @@ const Register = () => {
 
     
 
+=======
+        
+
+    });
+    const submitFn = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        set_Validated(true);
+
+        if(set_Validated){
+            store.user= form_Data
+        }   
+    }
+    const chngFn = (event) => {
+        
+        const { name, value } = event.target;
+        set_Form_Data({
+            ...form_Data,
+            [name]: value,
+        });
+        actions.handleOnchange(event)
+        console.log(store.user)
+    };
+
+
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
     return (
         <Container className="mt-5">
             <Row>
@@ -161,6 +191,7 @@ const Register = () => {
                                 Please enter a valid email address.
                             </Form.Control.Feedback>
                         </Form.Group>
+<<<<<<< HEAD
                         <Form.Group  className="mt-2 mb-2"  controlId="address">
                             <Form.Label>Address</Form.Label>
                             <Form.Control
@@ -178,6 +209,8 @@ const Register = () => {
                                 Please enter a valid address.
                             </Form.Control.Feedback>
                         </Form.Group>
+=======
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
                         <Button className='mt-4 mb-5'type="submit" onClick={submitFn}>Submit</Button>
                         <Link to='/'></Link>
                     </Form>

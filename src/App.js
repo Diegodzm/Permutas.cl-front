@@ -7,7 +7,15 @@ import Navbar from './components/navbar';
 import Login from './views/login';
 import ProductUploadView from './views/product_upload';
 
+
+
+const clientId =' 1093113123795-87toel31a28896rb433beu59am4p5cee.apps.googleusercontent.com'
+
+
+
 function App() {
+
+
   return (
     <BrowserRouter>
      <Navbar></Navbar>

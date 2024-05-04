@@ -1,13 +1,22 @@
 export const getState = ({ getActions, getStore, setStore }) => {
     return {
         store: {
+<<<<<<< HEAD
             user: {
+=======
+            user:{
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
                 username: "",
                 firstname:"",
                 lastname:"",
                 password: "",
+<<<<<<< HEAD
                 email: "",
                 address: "",
+=======
+                email: ""
+                
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
             },
             accessToken: "secret-code-01",
             usersList: [],
@@ -23,8 +32,13 @@ export const getState = ({ getActions, getStore, setStore }) => {
             publishedProducts: []
         },
         actions: {
+<<<<<<< HEAD
             handleOnchange: (event) => {
                 const store = getStore();
+=======
+            handleOnchange: (event)=>{
+                const store= getStore()
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
                 setStore({
                     user: {
                         ...store.user,
@@ -53,6 +67,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         "Content-Type": "application/json"
                     }
                 })
+<<<<<<< HEAD
                     .then((response) => response.json())
                     .then((data) => console.log(data))
                     .catch((error) => console.log(error));
@@ -74,6 +89,40 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         });
                     })
                     .catch((error) => console.log(error));
+=======
+                
+                
+                console.log(store.user)
+            },
+           
+            handleSubmitGoogleuser:(user)=>{
+                fetch("http://localhost:5000/user/logingoogle",{ 
+                method :"POST",
+                body: JSON.stringify(user),
+                headers:{
+                    "content-type":"application/json"
+                }
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data))
+            .then((error)=>console.log(error))
+
+            },
+          
+            handleSubmituser: (event)=>{
+                const store= getStore()
+                event.preventDefault()
+                fetch("http://localhost:5000/user/register",{ 
+                method :"POST",
+                body: JSON.stringify(store.user),
+                headers:{
+                    "content-type":"application/json"
+                }
+            })
+            .then((response)=>response.json())
+            .then((data)=>console.log(data))
+            .then((error)=>console.log(error))
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
             },
             getUsers: () => {
                 const store = getStore();
@@ -94,6 +143,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     alert("Missing access token");
                 } */
             },
+<<<<<<< HEAD
             handleProductUpload: (event) => {
                 const store = getStore();
                 event.preventDefault();
@@ -159,6 +209,32 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }))
                     .catch((error) => console.log(error));
             }
+=======
+
+            getUsers: ()=>{
+                const store =getStore()
+                if (store.accessToken ){
+                fetch("http://localhost:5000/users",{ 
+                method :"GET",
+                headers:{
+                    "content-type":"application/json",
+                    "Authorization":"Bearer " +store.accessToken,
+                }
+            })
+            .then((response)=>response.json())
+            .then((data)=>setStore({ 
+                usersList: data,
+            })) 
+            .then((error)=>console.log(error))
+            } /*else{
+                alert("missing access token")
+
+            }
+              */
+       
+            }}
+        
+>>>>>>> 657cb120d2e2a63730e463cfa7b5c686ed10357a
         }
     };
 };
