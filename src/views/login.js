@@ -1,37 +1,90 @@
 
 import { Context } from "../store/context"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 
 
 
 const Login = () => {
     const { store, actions } = useContext(Context)
+    const [validated, set_Validated] = useState(false);
+    const [form_Data, set_Form_Data] = useState({
+        password: "",
+        email: ""
 
 
-    return <div className="container mt-5 d-flex ">
-        <form className='mx-auto col-5' onSubmit={actions.handleSubmitLogin}>
-            <div className="ms-3">
-                <img className="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd0hitsZYPCwTxPK70de3v_3MEC4k_A6wQRxqsl42RZg&s" alt="" width="78" height="72" />
-                <h1 className="h3 mb-3 fw-normal">Please log in</h1>
+    });
 
-                <div className="form-floating">
-                    <input type="email" onChange={actions.handleOnchange} name="email" className="form-control" id="floatingInput" placeholder="name@example.com"></input>
-                    <label htmlFor="floatingInput">Email address</label>
-                </div>
-                <div className="form-floating">
-                    <input type="password" name="password" onChange={actions.handleOnchange} className="form-control" id="floatingPassword" placeholder="Password"></input>
-                    <label htmlFor="floatingPassword">Password</label>
-                </div>
-            </div>
-            <div className="d-flex mt-4 " >
-                <button className="btn btn-primary col-6 me-5" type="submit">Sign in</button>
+    const submitFn = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        set_Validated(true);
 
-                <div>
-                    <GoogleLogin
-                        cookiePolicy={'single_host_origin'}
+        if (set_Validated) {
+            store.user = form_Data
+        }
+    }
+    const chngFn = (event) => {
+        const { name, value } = event.target;
+        set_Form_Data({
+            ...form_Data,
+            [name]: value,
+        });
+        actions.handleOnchange(event)
+        console.log(store.user)
+    };
+
+
+    return  <Container className="mt-5 col-5">
+            <img className="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd0hitsZYPCwTxPK70de3v_3MEC4k_A6wQRxqsl42RZg&s" alt="" width="78" height="72" />
+            <h1 className="h3 mb-3 fw-normal">Please log in</h1>
+            <Form noValidate validated={validated} onSubmit={e => { actions.handleSubmitLogin(e) }}>
+                <Form.Group className="mt-5 mb-2" controlId="email">
+
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        type="email"
+                        name="email"
+                        value={form_Data.email}
+                        onChange={chngFn}
+                        required
+                        isInvalid={
+                            validated &&
+                            !/^\S+@\S+\.\S+$/.test(form_Data.email)
+                        }
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Please enter a valid email address.
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group className="mt-2 mb-2" controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="password"
+                        value={form_Data.password}
+                        onChange={chngFn}
+                        minLength={6}
+                        required
+                        isInvalid={
+                            validated && form_Data.password.length < 6
+                        }
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Password must be at least 6 characters long.
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <div className="d-flex mt-5">
+                <Button className='me-4 col-5 ' type="submit" onClick={submitFn}>Submit</Button>
+                <GoogleLogin
+                        
                         onSuccess={(credentialResponse) => {
                             const credentialResponsedecoded = jwtDecode(credentialResponse.credential)
                             actions.handleSubmitGoogleuser(credentialResponsedecoded)
@@ -43,27 +96,9 @@ const Login = () => {
                         }}
                     />
                 </div>
-
-            </div>
-
-            <div className="form-check text-start my-3">
-                <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"></input>
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                    Remember me
-                </label>
-            </div>
-
-
-
-            <p className="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
-
-
-        </form>
-
-
-
-    </div>
-
+            </Form>
+        </Container>
+    
 }
 
 export default Login
