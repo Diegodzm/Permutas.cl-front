@@ -4,6 +4,7 @@ import Home from "./views/home";
 import injectContext from './store/context';
 import Register from './views/register';
 import Login from './views/login';
+import ProductUploadView from './views/product_upload';
 import NavbarReact from './components/navbar';
 import Categories from './views/categories';
 
@@ -20,9 +21,10 @@ function App() {
        <Route path='/'  element={<Home/>}></Route>
        <Route path='/register'  element={<Register/>}></Route>
        <Route path='/login'  element={<Login/>}></Route>
+       <Route path='/product_upload'  element={<ProductUploadView />}></Route>
        <Route path='/categories' element={<Categories></Categories>}></Route>
      </Routes>
-    
+  
     </BrowserRouter>
 
   );
