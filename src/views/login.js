@@ -14,8 +14,6 @@ const Login = () => {
     const [form_Data, set_Form_Data] = useState({
         password: "",
         email: ""
-
-
     });
 
     const submitFn = (event) => {
@@ -63,7 +61,6 @@ const Login = () => {
                         Please enter a valid email address.
                     </Form.Control.Feedback>
                 </Form.Group>
-
                 <Form.Group className="mt-2 mb-2" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control
