@@ -6,8 +6,7 @@ import Register from './views/register';
 import Login from './views/login';
 import ProductUploadView from './views/product_upload';
 import NavbarReact from './components/navbar';
-import Categories from './views/categories';
-
+import ListadeIntercambios from './views/listadeintercambios'; 
 
   
 
@@ -22,7 +21,7 @@ function App() {
        <Route path='/register'  element={<Register/>}></Route>
        <Route path='/login'  element={<Login/>}></Route>
        <Route path='/product_upload'  element={<ProductUploadView />}></Route>
-       <Route path='/categories' element={<Categories></Categories>}></Route>
+       <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
      </Routes>
   
     </BrowserRouter>
