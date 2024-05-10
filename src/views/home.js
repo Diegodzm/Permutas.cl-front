@@ -1,19 +1,28 @@
 import { Context } from "../store/context"
 import { useContext, useEffect } from "react"
 
-
-
-
-
 const Home = () => {
 
-    const { actions, store } = useContext(Context)
+    const { actions,store  } = useContext(Context)
     useEffect(() => {
-        actions.getUsers();
+        actions.accessTokenExpired();
         
+     
     }, []);
+    if(store.loginValidation){
+        actions.accessTokenExpired()
+        .then(window.location.reload())
+    }
+    
 
     return <div className="container">
+        <div style={{ marginTop: '50px'} }></div>
+            <h1 className="text-center" style={{ color: 'black', fontSize: '64px' }}>Permuta tus productos y únete a la comunidad de Permutadores de Chile</h1>
+            <button className="btn btn-primary" style={{ backgroundColor: '#426B1F', color: 'white', display: 'block', margin: '30px auto' }}>Permutas Disponibles</button>
+            <div style={{ marginBottom: '50px' }}></div>
+            <h2 className="text-center" style={{ color: 'black', fontSize: '32px' }}>Descubre una nueva forma de obtener lo que necesitas</h2>
+           
+            <div className="container"></div>
         {store.userList && store.userList.length > 0 && store.userList.map((user) => user.email)}
     </div>
 

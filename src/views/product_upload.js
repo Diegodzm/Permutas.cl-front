@@ -1,4 +1,4 @@
-// ProductUploadView.js
+
 
 import React from 'react';
 import ProductUploadForm from '../components/product_upload_form';
