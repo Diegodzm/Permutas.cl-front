@@ -27,6 +27,7 @@ function NavbarLogged() {
             <Nav.Link href="/register" >Register</Nav.Link>
             <Nav.Link href="/login" >Login</Nav.Link>
             <Nav.Link href="/" onClick={actions.logout} >Logout</Nav.Link>
+            <Nav.Link href="/product_upload" >Product upload</Nav.Link>
 
           </Nav>
         </Navbar.Collapse>

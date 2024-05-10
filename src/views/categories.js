@@ -9,7 +9,7 @@ const Categories = () => {
 
     return (<div className="container mt-5">
 
-        <ul>{store.categoryProducts.map((contact, index) =>
+        <ul>{store.categoryProducts.map((index) =>
             <li className='ListaContactos  border d-inline-flex p-2 mt-4 mx-2' key={index}>
                 <Button href="/productreview">
                     <Card style={{ width: '18rem' }}>
