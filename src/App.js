@@ -10,6 +10,8 @@ import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import ProductReview from './views/productreview';
 import ListadeIntercambios from './views/listadeintercambios'; 
+import Categories from './views/categories';
+
 
 function App() {
   let accessToken = localStorage.getItem("accessToken")
@@ -28,13 +30,13 @@ function App() {
       {auth? <NavbarLogged/>:<NavbarReact/>}
       <Routes>
         <Route element={<PrivateRoutes />}>
-      
+          <Route path='/product_upload' element={<ProductUploadView />}></Route>
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/productreview' element={<ProductReview />}></Route>
-        <Route path='/product_upload' element={<ProductUploadView />}></Route>
+        <Route path='/categories' element={<Categories/>}></Route>
         <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
 
       </Routes>

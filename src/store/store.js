@@ -22,7 +22,20 @@ export const getState = ({ getActions, getStore, setStore }) => {
             userProducts: [],
             publishedProducts: [],
             loginValidation: false,
-            registerValidation: false
+            registerValidation: false,
+            categoryProducts: [{
+                name: "producto1",
+                price: 19000,
+                photo: "15615616",
+                product_info: "producto1",
+                brand: "producto1",
+            },
+             {  name: "producto2",
+                price: 1111 ,
+                photo: "producto2",
+                product_info: "producto2",
+                brand: "producto2",
+            }]
 
         },
         actions: {
@@ -93,7 +106,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(data)
                         validation = true
-                    
+
                     })
                     .catch((error) => console.log(error))
                 return validation
@@ -119,7 +132,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
 
-            handleSubmituser: async() => {
+            handleSubmituser: async () => {
                 const store = getStore()
                 let validation = store.registerValidation
 
@@ -132,9 +145,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((response) => response.json())
                     .then((data) => console.log(data))
-                    .then( validation = true)
+                    .then(validation = true)
                     .catch((error) => console.log(error))
-                   
+
                 return validation
             },
 
@@ -170,7 +183,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .catch((error) => console.log(error));
             },
 
-            
+
             getIntercambios: () => {
                 const store = getStore();
                 if (store.accessToken) {
@@ -203,6 +216,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-         
+
 
 
