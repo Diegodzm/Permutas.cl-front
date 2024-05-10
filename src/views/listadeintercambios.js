@@ -1,4 +1,4 @@
- import React, { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../store/context';
 
 const ListadeIntercambios = () => {
@@ -6,14 +6,14 @@ const ListadeIntercambios = () => {
 
     return (
         <div className="container">
-            <h1>Tus Intercambios</h1>
+            <h1>Tus Productos para Intercambiar</h1>
             <ul>
-                {store.usersList.map((user, index) => (
+                {store.productsList.map((product, index) => (
                     <li key={index}>
-                        <p>Email: {user.email}</p>
-                        <p>Nombre: {user.firstname} {user.lastname}</p>
-                        <p>Dirección: {user.address}, {user.country}</p>
-                        <p>Número de teléfono: {user.phonenumber}</p>
+                        <p>Nombre del Producto: {product.name}</p>
+                        <p>Descripción: {product.description}</p>
+                        <p>Categoría: {product.category}</p>
+                        <p>Precio: {product.price}</p>
                     </li>
                 ))}
             </ul>
@@ -21,4 +21,4 @@ const ListadeIntercambios = () => {
     );
 }
 
-export default ListadeIntercambios;
+export default ListadeIntercambios
