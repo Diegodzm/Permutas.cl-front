@@ -15,8 +15,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 price: 0,
                 photo: "",
                 product_info: "",
-                brand: "",
-                category_id: ""
+                brand: ""
             },
             userProducts: [],
             publishedProducts: [],
@@ -57,9 +56,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                  .then((response) => response.json())
                  .then((data) => {
                         setStore({
-                            accessToken: data.access_token,
+                            accessToken: data.access_token
+                            
 
-                        })
+                        });
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(getStore().accessToken)
                     })
@@ -67,7 +67,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
             }, 
            
             handleSubmitGoogleuser:(user)=>{
-                fetch("http://localhost:5000/user/logingoogle", {
+                const store = getStore()
+                fetch("http://localhost:5000/user/logingoogle", { 
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -108,19 +109,28 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             handleProductUpload: (event) => {
+                console.log("Manejador de envío de producto ejecutándose...");
                 const store = getStore();
                 event.preventDefault();
+
+                console.log("Datos del formulario:", store.productForm);
              
                 fetch("http://localhost:5000/products/upload", {
                     method: "POST",
-                    body: JSON.stringify(store.productForm),
+                    body: JSON.stringify({...store.productForm
+                    }),
                     headers: {
-                        "Content-Type": "application/json",
-                        /*"Authorization": "Bearer " + store.accessToken*/
+                        "Content-Type": "application/json"
+                        
                     }
                 })
                     .then((response) => response.json())
                     .then((data) => {
+                        setStore({
+                            accessToken: data.access_token
+
+                        });
+                        console.log("Respuesta del servidor:", data);
                         console.log(data);
                         /*getActions().fetchUserProducts();*/
                     })

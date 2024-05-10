@@ -6,16 +6,16 @@ import { useContext } from "react"
 import { Link } from "react-router-dom"
 
 const ProductUploadForm = () => {
-    const {store, actions}= useContext(Context)
+    const { store, actions } = useContext(Context)
     const [validated, set_Validated] = useState(false);
-    const [formData, setFormData] = useState ({
+    const [formData, setFormData] = useState({
 
-        name:"",
-        price:0,
-        photo:"",
-        product_info:"",
-        brand:"",
-        category_id:"",
+        name: "",
+        price: 0,
+        photo: "",
+        product_info: "",
+        brand: "",
+        user_id: 1
     });
 
     const submitProduct = (event) => {
@@ -26,23 +26,24 @@ const ProductUploadForm = () => {
         }
         set_Validated(true);
 
-        if(set_Validated){
-            store.productForm= formData
-        }   
+        if (set_Validated) {
+            store.productForm = formData
+        }
     }
     const chngProduct = (event) => {
-        
+
         const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value,
         });
+        console.log("Datos del formulario actualizados:", formData);
         actions.handleProductOnChange(event)
         console.log(store.productForm)
     };
 
 
-    
+
     return (
         <Container className="mt-5">
             <Row>
@@ -53,7 +54,7 @@ const ProductUploadForm = () => {
                     }}>
                     <Form noValidate validated={validated} onSubmit={actions.handleProductUpload}>
                         <Form.Group className="mt-2 mb-2" controlId="name">
-                            <Form.Label>Product name</Form.Label> 
+                            <Form.Label>Product name</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="name"
@@ -65,8 +66,9 @@ const ProductUploadForm = () => {
                                 Please enter a product name.
                             </Form.Control.Feedback>
                         </Form.Group>
+
                         <Form.Group className="mt-2 mb-2" controlId="price">
-                            <Form.Label>Price CL$</Form.Label> 
+                            <Form.Label>Price CL$</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="price"
@@ -78,8 +80,24 @@ const ProductUploadForm = () => {
                                 Please enter a price
                             </Form.Control.Feedback>
                         </Form.Group>
+
+                        {/*ID DE PRUEBA*/}
+
+                        <Form.Group className="mt-2 mb-2" controlId="user_id">
+                            <Form.Label>Test user id</Form.Label>
+                            <Form.Control
+                                type="number"
+                                name="user_id"
+                                value={formData.user_id}
+                                onChange={chngProduct}
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please enter a user id
+                            </Form.Control.Feedback>
+                        </Form.Group>
                         <Form.Group className="mt-2 mb-2" controlId="photo">
-                            <Form.Label>Photo url</Form.Label> 
+                            <Form.Label>Photo url</Form.Label>
                             <Form.Control
                                 type="url"
                                 name="photo"
@@ -92,7 +110,7 @@ const ProductUploadForm = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mt-2 mb-2" controlId="product_info">
-                            <Form.Label>Product info</Form.Label> 
+                            <Form.Label>Product info</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="product_info"
@@ -105,7 +123,7 @@ const ProductUploadForm = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mt-2 mb-2" controlId="brand">
-                            <Form.Label>Brand</Form.Label> 
+                            <Form.Label>Brand</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="brand"
@@ -117,27 +135,14 @@ const ProductUploadForm = () => {
                                 Please enter the product's brand
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className="mt-2 mb-2" controlId="category_id">
-                            <Form.Label>Category</Form.Label> 
-                            <Form.Control
-                                type="text"
-                                name="category_id"
-                                value={formData.category_id}
-                                onChange={chngProduct}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a category for your product
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Button className='mt-4 mb-5'type="submit" onClick={submitProduct}>Submit Product</Button>
+                        <Button className='mt-4 mb-5' type="submit" onClick={submitProduct}>Submit Product</Button>
                         <Link to='/'></Link>
                     </Form>
                 </Col>
             </Row>
         </Container>
     );
-    
+
 };
 
 export default ProductUploadForm;
