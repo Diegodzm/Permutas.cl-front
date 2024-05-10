@@ -9,7 +9,7 @@ import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import ProductReview from './views/productreview';
-
+import ListadeIntercambios from './views/listadeintercambios'; 
 
 function App() {
   let accessToken = localStorage.getItem("accessToken")
@@ -35,9 +35,9 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/productreview' element={<ProductReview />}></Route>
         <Route path='/product_upload' element={<ProductUploadView />}></Route>
+        <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
 
       </Routes>
-
     </BrowserRouter>
 
   );

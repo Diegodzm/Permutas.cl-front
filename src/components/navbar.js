@@ -5,7 +5,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Context } from "../store/context"
 import { useContext,  } from "react"
 
-
 function NavbarReact() {
   const { actions, } = useContext(Context)
  
@@ -15,14 +14,10 @@ function NavbarReact() {
         <Navbar.Brand className='col-8'>Permutas</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-     
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-       
             <Nav.Link href="/register" >Register</Nav.Link>
             <Nav.Link href="/login" >Login</Nav.Link>
-           
-
           </Nav>
         </Navbar.Collapse>
       </Container>

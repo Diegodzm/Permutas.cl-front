@@ -170,6 +170,27 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .catch((error) => console.log(error));
             },
 
+            
+            getIntercambios: () => {
+                const store = getStore();
+                if (store.accessToken) {
+                    fetch("http://localhost:5000/intercambios", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + store.accessToken,
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((data) => setStore({
+                            intercambiosList: data,
+                        }))
+                        .catch((error) => console.error('Hubo un problema con la operación fetch:', error));
+                } else {
+                    alert("Falta el token de acceso");
+                }
+            }
+
 
         }
     }
@@ -182,7 +203,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-
-
+         
 
 
