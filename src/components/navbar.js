@@ -16,8 +16,16 @@ function NavbarReact() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
+            <NavDropdown title="Categories" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/categories">Electrodomesticos</NavDropdown.Item>
+              <NavDropdown.Item href="/categories">Ropa</NavDropdown.Item>
+              <NavDropdown.Item href="/categories">Muebles</NavDropdown.Item>
+              <NavDropdown.Item href="/categories">Zapatillas</NavDropdown.Item>
+
+            </NavDropdown>
             <Nav.Link href="/register" >Register</Nav.Link>
             <Nav.Link href="/login" >Login</Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>
