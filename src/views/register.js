@@ -4,11 +4,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Context } from "../store/context";
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom";
 
 
 const Register = () => {
     const {store,actions}= useContext(Context)
+    const navigate= useNavigate()
     const [validated, set_Validated] = useState(false);
     const [form_Data, set_Form_Data] = useState({
         username: "",
@@ -22,14 +23,19 @@ const Register = () => {
     });
     const submitFn = (event) => {
         const form = event.currentTarget;
+        event.preventDefault();
         if (form.checkValidity() === false) {
-            event.preventDefault();
+       
             event.stopPropagation();
+       
         }
         set_Validated(true);
 
         if(set_Validated){
             store.user= form_Data
+            actions.handleSubmituser()
+            .then(response=>{if(response){navigate("/login")}})
+            .catch(error=>console.log(error))
         }   
     }
     const chngFn = (event) => {
@@ -52,7 +58,7 @@ const Register = () => {
                         span: 6,
                         offset: 3,
                     }}>
-                    <Form noValidate validated={validated} onSubmit={actions.handleSubmituser}>
+                    <Form noValidate validated={validated} onSubmit={submitFn}>
                         <Form.Group className="mt-2 mb-2" controlId="username">
                             <Form.Label>Username</Form.Label>
                             <Form.Control
@@ -161,7 +167,7 @@ const Register = () => {
                                 Please enter a valid email address.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5'type="submit" onClick={submitFn}>Submit</Button>
+                        <Button className='mt-4 mb-5'type="submit">Submit</Button>
                         <Link to='/'></Link>
                     </Form>
                 </Col>

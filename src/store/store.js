@@ -1,4 +1,5 @@
 export const getState = ({ getActions, getStore, setStore }) => {
+
     return {
         store: {
             user: {
@@ -20,7 +21,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             userProducts: [],
             publishedProducts: [],
-           
+            loginValidation: false,
+            registerValidation: false
+
         },
         actions: {
 
@@ -44,102 +47,111 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 });
                 console.log(store.productForm)
             },
-            handleSubmitLogin: (event) => {
+            handleSubmitLogin: async (e) => {
                 const store = getStore()
-                event.preventDefault()
-                fetch("http://localhost:5000/user/login", {
+                let validation = store.loginValidation
+                await fetch("http://localhost:5000/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
                         "content-type": "application/json"
                     }
-                })
-                 .then((response) => response.json())
-                 .then((data) => {
-                        setStore({
-                            accessToken: data.access_token,
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error(response.json())
+                    }
+                    return response.json()
 
-                        })
+
+                })
+                    .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        console.log(getStore().accessToken)
+                        console.log(data)
+                        validation = true
                     })
-                 .catch((error) => console.log(error))
-            }, 
-           
-            handleSubmitGoogleuser:(user)=>{
-                fetch("http://localhost:5000/user/logingoogle", {
+                    .catch((error) => console.log(error))
+                return validation
+            },
+
+            logout: () => {
+                localStorage.removeItem("accessToken")
+                console.log("logout")
+
+            },
+
+            handleSubmitGoogleuser: async (user) => {
+                const store = getStore()
+                let validation = store.loginValidation
+                await fetch("http://localhost:5000/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
                         "content-type": "application/json"
                     }
                 }).then((response) => response.json())
-                .then((data) => {          
-                    setStore({
-                            accessToken: data.access_token,
-                        });
-                        console.log(store.accessToken);
+                    .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
+                        console.log(data)
+                        validation = true
+                    
                     })
                     .catch((error) => console.log(error))
-
+                return validation
             },
 
-            getUsers: () => {
-                const store = getStore()
+            accessTokenExpired: () => {
                 let accessToken = localStorage.getItem("accessToken")
-                console.log(store)
-                if(accessToken){
+                if (accessToken) {
                     fetch("http://localhost:5000/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
-                            Authorization: "Bearer "+ accessToken
+                            Authorization: "Bearer " + accessToken
                         }
                     }).then((response) => response.json())
-                    .then((data) => console.log(data))
-                    .catch((error) => console.log(error))
+                        .then((data) => { data.msg === "Token has expired" ? localStorage.removeItem("accessToken") : console.log("accessTokenValid") })
+                        .catch((error) => console.log(error))
                 }
-                else{
-                    alert("missing access token")}
-                    console.log(store.accessToken) 
- 
+                else {
+                    console.log("need aut token")
+                }
 
             },
 
-            handleProductUpload: (event) => {
-                const store = getStore();
-                event.preventDefault();
-             
-                fetch("http://localhost:5000/products/upload", {
+
+            handleSubmituser: async() => {
+                const store = getStore()
+                let validation = store.registerValidation
+
+                await fetch("http://localhost:5000/user/register", {
                     method: "POST",
-                    body: JSON.stringify(store.productForm),
+                    body: JSON.stringify(store.user),
                     headers: {
-                        "Content-Type": "application/json",
-                        /*"Authorization": "Bearer " + store.accessToken*/
+                        "content-type": "application/json"
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                        /*getActions().fetchUserProducts();*/
-                    })
-                    .catch((error) => console.log(error));
+                    .then((data) => console.log(data))
+                    .then( validation = true)
+                    .catch((error) => console.log(error))
+                   
+                return validation
             },
-            handleProductPublish: (productId) => {
+
+
+            fetchPublishedProducts: () => {
                 const store = getStore();
-                fetch(`http://localhost:5000/products/${productId}/publish`, {
-                    method: "PUT",
+                fetch("http://localhost:5000/products/published", {
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + store.accessToken
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                        console.log(data);
-                        getActions().fetchPublishedProducts();
-                    })
+                    .then((data) => setStore({
+                        publishedProducts: data
+                    }))
                     .catch((error) => console.log(error));
             },
             fetchUserProducts: () => {
@@ -157,43 +169,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }))
                     .catch((error) => console.log(error));
             },
-            fetchPublishedProducts: () => {
-                const store = getStore();
-                fetch("http://localhost:5000/products/published", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + store.accessToken
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((data) => setStore({
-                        publishedProducts: data
-                    }))
-                    .catch((error) => console.log(error));
-            },
-
-            
-            handleSubmituser: (event) => {
-                const store = getStore()
-                event.preventDefault()
-                fetch("http://localhost:5000/user/register", {
-                    method: "POST",
-                    body: JSON.stringify(store.user),
-                    headers: {
-                        "content-type": "application/json"
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((data) => console.log(data))
-                    .catch((error) => console.log(error))
-            },
-
-
 
 
         }
-    };
+    }
 };
 
 
@@ -201,10 +180,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-               
 
 
-            
 
-     
-   
+
+
+
