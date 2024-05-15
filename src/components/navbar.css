@@ -1,0 +1,14 @@
+a{
+    text-decoration: none !important;
+    color: black!important;
+    
+}
+a:hover{
+    text-decoration: none !important;
+    color: blue!important;
+    
+}
+ul{
+    list-style-type: none;
+    padding-left: 0 !important;
+}
