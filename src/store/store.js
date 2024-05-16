@@ -1,5 +1,4 @@
 export const getState = ({ getActions, getStore, setStore }) => {
-
     return {
         store: {
             user: {
@@ -34,13 +33,56 @@ export const getState = ({ getActions, getStore, setStore }) => {
             publishedProducts: [],
             categoryProducts:[],
             loginValidation: false,
-            registerValidation: false
+            registerValidation: false,
+            contacto: {
+                destinatario: '',
+                mensaje: '',
+            },
+            UserProductOfferList: [
+                {
+                    name: "zapatilla",
+                    price: 25000,
+                    product_info: "buenas zapatillas",
+                    brand: "nike"
+                },
+                {
+                    name: "zapatillaNike",
+                    price: 25,
+                    product_info: "buenas zapatillas",
+                    brand: "nike"
+                },
+                {
+                    name: "zapatillaJordan23",
+                    price: 250002,
+                    product_info: "buenas zapatillas",
+                    brand: "nike"
+                },
+                {
+                    name: "zapatillaPailitaSutro",
+                    price: 250003,
+                    product_info: "buenas zapatillas",
+                    brand: "nike"
+                }
+            ],
+            
+            UserProductForPermuta: [
+                {
+                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
+                    name: "Guitarra de michel jackson",
+                    price: 25000,
+                    product_info: "buena guitarra",
+                    brand: "EEUU",
 
+                },
+              
+            ],
+            
         },
-        actions: {
 
+
+        actions: {
             handleOnchange: (event) => {
-                const store = getStore()
+                const store = getStore();
                 setStore({
                     user: {
                         ...store.user,
@@ -57,11 +99,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         [event.target.name]: event.target.value
                     }
                 });
-                console.log(store.productForm)
             },
+
             handleSubmitLogin: async (e) => {
-                const store = getStore()
-                let validation = store.loginValidation
+                const store = getStore();
+                let validation = store.loginValidation;
                 await fetch("http://localhost:5000/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
@@ -70,30 +112,26 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => {
                     if (response.status !== 200) {
-                        throw new Error(response.json())
+                        throw new Error(response.json());
                     }
-                    return response.json()
-
-
+                    return response.json();
                 })
-                    .then((data) => {
-                        localStorage.setItem("accessToken", data.access_token);
-                        console.log(data)
-                        validation = true
-                    })
-                    .catch((error) => console.log(error))
-                return validation
+                .then((data) => {
+                    localStorage.setItem("accessToken", data.access_token);
+                    validation = true;
+                })
+                .catch((error) => console.log(error));
+                return validation;
             },
 
             logout: () => {
-                localStorage.removeItem("accessToken")
-                console.log("logout")
-
+                localStorage.removeItem("accessToken");
+                console.log("logout");
             },
 
             handleSubmituser: async () => {
-                const store = getStore()
-                let validation = store.registerValidation
+                const store = getStore();
+                let validation = store.registerValidation;
 
                 await fetch("http://localhost:5000/user/register", {
                     method: "POST",
@@ -102,17 +140,17 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         "content-type": "application/json"
                     }
                 })
-                    .then((response) => response.json())
-                    .then((data) => console.log(data))
-                    .then(validation = true)
-                    .catch((error) => console.log(error))
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .then(validation = true)
+                .catch((error) => console.log(error));
 
-                return validation
+                return validation;
             },
 
             handleSubmitGoogleuser: async (user) => {
-                const store = getStore()
-                let validation = store.loginValidation
+                const store = getStore();
+                let validation = store.loginValidation;
                 await fetch("http://localhost:5000/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
@@ -120,18 +158,16 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         "content-type": "application/json"
                     }
                 }).then((response) => response.json())
-                    .then((data) => {
-                        localStorage.setItem("accessToken", data.access_token);
-                        console.log(data)
-                        validation = true
-
-                    })
-                    .catch((error) => console.log(error))
-                return validation
+                .then((data) => {
+                    localStorage.setItem("accessToken", data.access_token);
+                    validation = true;
+                })
+                .catch((error) => console.log(error));
+                return validation;
             },
 
             accessTokenExpired: () => {
-                let accessToken = localStorage.getItem("accessToken")
+                let accessToken = localStorage.getItem("accessToken");
                 if (accessToken) {
                     fetch("http://localhost:5000/users", {
                         method: "GET",
@@ -140,13 +176,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                             Authorization: "Bearer " + accessToken
                         }
                     }).then((response) => response.json())
-                        .then((data) => { data.msg === "Token has expired" ? localStorage.removeItem("accessToken") : console.log("accessTokenValid") })
-                        .catch((error) => console.log(error))
+                    .then((data) => { data.msg === "Token has expired" ? localStorage.removeItem("accessToken") : console.log("accessTokenValid") })
+                    .catch((error) => console.log(error));
+                } else {
+                    console.log("need auth token");
                 }
-                else {
-                    console.log("need aut token")
-                }
-
             },
 
             fetchPublishedProducts: () => {
@@ -157,11 +191,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         "Content-Type": "application/json",
                     }
                 })
-                    .then((response) => response.json())
-                    .then((data) => setStore({
-                        publishedProducts: data
-                    }))
-                    .catch((error) => console.log(error));
+                .then((response) => response.json())
+                .then((data) => setStore({
+                    publishedProducts: data
+                }))
+                .catch((error) => console.log(error));
             },
 
             handleProductUpload: (event) => {
@@ -181,17 +215,15 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                     }
                 })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setStore({
-                            accessToken: data.access_token
-
-                        });
-                        console.log("Respuesta del servidor:", data);
-                        console.log(data);
-                        /*getActions().fetchUserProducts();*/
-                    })
-                    .catch((error) => console.log(error));
+                .then((response) => response.json())
+                .then((data) => {
+                    setStore({
+                        accessToken: data.access_token
+                    });
+                    console.log("Respuesta del servidor:", data);
+                    console.log(data);
+                })
+                .catch((error) => console.log(error));
             },
 
             fetchUserProducts: () => {
@@ -203,46 +235,33 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         "Authorization": "Bearer " + store.accessToken
                     }
                 })
-                    .then((response) => response.json())
-                    .then((data) => setStore({
-                        userProducts: data
-                    }))
-                    .catch((error) => console.log(error));
+                .then((response) => response.json())
+                .then((data) => setStore({
+                    userProducts: data
+                }))
+                .catch((error) => console.log(error));
             },
 
-
-            getIntercambios: () => {
+            handleContactoChange: (event) => {
                 const store = getStore();
-                if (store.accessToken) {
-                    fetch("http://localhost:5000/intercambios", {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + store.accessToken,
-                        }
-                    })
-                        .then((response) => response.json())
-                        .then((data) => setStore({
-                            intercambiosList: data,
-                        }))
-                        .catch((error) => console.error('Hubo un problema con la operación fetch:', error));
-                } else {
-                    alert("Falta el token de acceso");
-                }
-            }
+                setStore({
+                    contacto: {
+                        ...store.contacto,
+                        [event.target.name]: event.target.value,
+                    },
+                });
+            },
 
-
-        }
-    }
+            enviarMensaje: () => {
+                const store = getStore();
+                console.log('Mensaje enviado:', store.contacto.mensaje);
+                setStore({
+                    contacto: {
+                        ...store.contacto,
+                        mensaje: '',
+                    },
+                });
+            },
+        },
+    };
 };
-
-
-
-
-
-
-
-
-         
-
-

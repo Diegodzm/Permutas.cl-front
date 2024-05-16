@@ -9,40 +9,34 @@ import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import ProductReview from './views/productreview';
-import ListadeIntercambios from './views/listadeintercambios'; 
-import Categories from './views/categories'; 
+import Categories from './views/categories';
+import OfertaPermuta from './components/oferta_permuta'; // Importar el componente OfertaPermuta
 
 function App() {
   let accessToken = localStorage.getItem("accessToken")
   let auth = false
   if (accessToken === null || accessToken === "") {
     auth = false
-
-  }
-  else {
+  } else {
     auth = true
   }
 
-
   return (
     <BrowserRouter>
-      {auth? <NavbarLogged/>:<NavbarReact/>}
+      {auth ? <NavbarLogged /> : <NavbarReact />}
       <Routes>
         <Route element={<PrivateRoutes />}>
-            <Route path='/product_upload' element={<ProductUploadView />}></Route>
-            <Route path='/productreview' element={<ProductReview />}></Route>
+
         </Route>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path='/categories' element={<Categories />}></Route>
-
-       
-        <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
-
+        <Route path='/' element={<Home />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/categories' element={<Categories />} />
+        <Route path='/product_upload' element={<ProductUploadView />} />
+        <Route path='/productreview' element={<ProductReview />} />
+        <Route path='/oferta_permuta' element={<OfertaPermuta />} />
       </Routes>
     </BrowserRouter>
-
   );
 }
 
