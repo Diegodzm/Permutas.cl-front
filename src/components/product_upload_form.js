@@ -15,32 +15,44 @@ const ProductUploadForm = () => {
         photo: "",
         product_info: "",
         brand: "",
-        user_id: 1
+        category_id:0,
     });
+    const categoryOnchange=(e)=>{
+        const index = e.target.selectedIndex;
+        actions.setCategory(index)
+        return index
+
+
+    }
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
+        event.preventDefault()
         if (form.checkValidity() === false) {
-            event.preventDefault();
+
             event.stopPropagation();
         }
         set_Validated(true);
 
         if (set_Validated) {
-            store.productForm = formData
+            
+            actions.ProductUpload(event)
         }
     }
     const chngProduct = (event) => {
 
         const { name, value } = event.target;
+        
+        
         setFormData({
             ...formData,
             [name]: value,
+        
         });
-        console.log("Datos del formulario actualizados:", formData);
         actions.handleProductOnChange(event)
-        console.log(store.productForm)
+      
     };
+   
 
 
 
@@ -52,7 +64,7 @@ const ProductUploadForm = () => {
                         span: 6,
                         offset: 3,
                     }}>
-                    <Form noValidate validated={validated} onSubmit={actions.handleProductUpload}>
+                    <Form noValidate validated={validated} onSubmit={submitProduct}>
                         <Form.Group className="mt-2 mb-2" controlId="name">
                             <Form.Label>Product name</Form.Label>
                             <Form.Control
@@ -80,22 +92,15 @@ const ProductUploadForm = () => {
                                 Please enter a price
                             </Form.Control.Feedback>
                         </Form.Group>
-
-                        {/*ID DE PRUEBA*/}
-
-                        <Form.Group className="mt-2 mb-2" controlId="user_id">
-                            <Form.Label>Test user id</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="user_id"
-                                value={formData.user_id}
-                                onChange={chngProduct}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a user id
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        <Form.Select onChange={e=>categoryOnchange(e)} className="mt-4 mb-3" aria-label="Default select example">
+                            <option>Categoria del producto</option>
+                            <option value="1">Electrodomesticos</option>
+                            <option value="2">Vestimenta</option>
+                            <option value="3">Tecnologia</option>
+                            <option value="4">Deportes</option>
+                            <option value="5">Abarrotes</option>
+                            <option value="6">Otros</option>
+                        </Form.Select>
                         <Form.Group className="mt-2 mb-2" controlId="photo">
                             <Form.Label>Photo url</Form.Label>
                             <Form.Control
@@ -135,7 +140,7 @@ const ProductUploadForm = () => {
                                 Please enter the product's brand
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5' type="submit" onClick={submitProduct}>Submit Product</Button>
+                        <Button className='mt-4 mb-5' type="submit">Submit Product</Button>
                         <Link to='/'></Link>
                     </Form>
                 </Col>
