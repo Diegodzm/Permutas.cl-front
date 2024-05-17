@@ -49,16 +49,25 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 });
             },
 
-            handleProductOnChange: (event) => {
-                const store = getStore();
+            handleProductOnChange: (formData) => {
+                console.log(formData)
+                const store = getStore()
+                const productForm = store.productForm
+                const {name, value} = formData.target
+                productForm[name]=value 
                 setStore({
+                    productForm: productForm
+                })
+                /* setStore((prevState) => ({
                     productForm: {
-                        ...store.productForm,
-                        [event.target.name]: event.target.value
+                        ...prevState.productForm,
+                        ...formData
                     }
-                });
-                console.log(store.productForm)
+                })); */
+                console.log (getStore().productForm)
             },
+            
+            
             handleSubmitLogin: async (e) => {
                 const store = getStore()
                 let validation = store.loginValidation
@@ -150,7 +159,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             fetchPublishedProducts: () => {
-                const store = getStore();
+                getStore();
                 fetch("http://localhost:5000/products/published", {
                     method: "GET",
                     headers: {
