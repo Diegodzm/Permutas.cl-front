@@ -6,7 +6,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 firstname: "",
                 lastname: "",
                 password: "",
-                email: ""
+                email: "",
             },
             user_id: 0,
             accessToken: "",
@@ -31,24 +31,29 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             UserProductOfferList: [
                 {
+                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
                     name: "zapatilla",
                     price: 25000,
                     product_info: "buenas zapatillas",
                     brand: "nike"
+                    
                 },
                 {
+                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
                     name: "zapatillaNike",
                     price: 25,
                     product_info: "buenas zapatillas",
                     brand: "nike"
                 },
                 {
+                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
                     name: "zapatillaJordan23",
                     price: 250002,
                     product_info: "buenas zapatillas",
                     brand: "nike"
                 },
                 {
+                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
                     name: "zapatillaPailitaSutro",
                     price: 250003,
                     product_info: "buenas zapatillas",
@@ -99,8 +104,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             handleSubmitLogin: async (e) => {
+               
                 const store = getStore()
-                await fetch("http://localhost:5000/user/login", {
+                await fetch("http://localhost:3001/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -119,7 +125,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                     })
                     .catch((error) => console.log(error))
-                return store.validation
+                return store.validation  
             },
 
             logout: () => {
@@ -132,7 +138,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-                await fetch("http://localhost:5000/user/register", {
+                await fetch("http://localhost:3001/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -149,7 +155,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
 
-                await fetch("http://localhost:5000/user/logingoogle", {
+                await fetch("http://localhost:3001/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -171,7 +177,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             accessTokenExpired: () => {
                 let accessToken = localStorage.getItem("accessToken");
                 if (accessToken) {
-                    fetch("http://localhost:5000/users", {
+                    fetch("http://localhost:3001/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
@@ -193,7 +199,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             fetchPublishedProducts: () => {
                 ;
                 const store = getStore()
-                fetch("http://localhost:5000/products", {
+                fetch("http://localhost:3001/products", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -220,7 +226,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getProductsbyCategory: (id) => {
                 const store = getStore()
-                fetch("http://localhost:5000/category/products/" + id, {
+                fetch("http://localhost:3001/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -238,7 +244,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getProductsbyUser: () => {
 
                 const store = getStore()
-                fetch("http://localhost:5000/products/user/" + store.user_id, {
+                fetch("http://localhost:3001/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -261,7 +267,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 console.log("Datos del formulario:", store.productForm);
 
 
-                await fetch("http://localhost:5000/products/upload", {
+                await fetch("http://localhost:3001/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {

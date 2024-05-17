@@ -14,15 +14,44 @@ function injectContext(PassedComponent){
                     actions: { ...state.actions }
                 })
             })
-        )
+        );
 
-        return <Context.Provider value={state}>
-            <PassedComponent />
-        </Context.Provider>
-    }
+        const actions = {
 
-    return StoreWrapper
+            exchangeProducts: (selectedProduct, userProductForPermuta) => {
+                const updatedUserProductOfferList = state.store.UserProductOfferList.filter(product => product !== selectedProduct);
+                const updatedUserProductForPermuta = [...state.store.UserProductForPermuta, selectedProduct];
+                actions.updateUserProductLists(updatedUserProductOfferList, updatedUserProductForPermuta);
+            },
+
+            updateUserProductLists: (updatedUserProductOfferList, updatedUserProductForPermuta) => {
+                setState({
+                    store: {
+                        ...state.store,
+                        UserProductOfferList: updatedUserProductOfferList,
+                        UserProductForPermuta: updatedUserProductForPermuta
+                    },
+                    actions: { ...state.actions }
+                });
+            }
+        };
+
+        const combinedState = {
+            ...state,
+            actions: {
+                ...state.actions,
+                ...actions
+            }
+        };
+
+        return (
+            <Context.Provider value={combinedState}>
+                <PassedComponent />
+            </Context.Provider>
+        );
+    };
+
+    return StoreWrapper;
 }
 
-export default injectContext
-//HOC Higher order components
+export default injectContext;
