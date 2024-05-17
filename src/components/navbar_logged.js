@@ -4,7 +4,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Context } from "../store/context";
-import { useContext, } from "react";
 import { Link } from 'react-router-dom';
 import './navbar_logged.css';
 

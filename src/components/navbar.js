@@ -5,6 +5,8 @@ import { Context } from "../store/context"
 import { useContext, } from "react"
 import { Link } from 'react-router-dom';
 import "./navbar.css"
+import { NavDropdown } from 'react-bootstrap';
+
 
 function NavbarReact() {
   const { actions, } = useContext(Context)
@@ -26,6 +28,7 @@ function NavbarReact() {
             </NavDropdown>
             <Nav.Link className='mx-1' ><Link  to='/products'>Products</Link></Nav.Link>
             <Nav.Link className= 'col-3' ><Link to="/product_upload">Product Upload</Link></Nav.Link>
+            <Nav.Link as={Link} to="/oferta_permuta" className="text-white" style={{ backgroundColor: 'rgb(66, 107, 31)', color: 'white' }}>Oferta Permuta</Nav.Link>
             <Nav.Link className='mx-1'><Link to="/register">Register</Link></Nav.Link>
             <Nav.Link className='mx-1' ><Link to="/login">Login</Link></Nav.Link>
 

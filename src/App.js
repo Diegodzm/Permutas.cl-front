@@ -9,7 +9,6 @@ import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import OfertaPermuta from './components/oferta_permuta';
-import ListadeIntercambios from './views/listadeintercambios';
 import CatAbarr from './views/cat_abarr';
 import CatDeportes from './views/cat_deportes';
 import CatElectro from './views/cat_electro';
@@ -33,10 +32,11 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
-          <Route path='/oferta_permuta' element={<OfertaPermuta />} />
+          
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
+        <Route path='/oferta_permuta' element={<OfertaPermuta />} />
         <Route path='/login' element={<Login />}></Route>
         <Route path='/categorias/electro' element={<CatElectro />}></Route>
         <Route path='/categorias/abarrotes' element={<CatAbarr />}></Route>
@@ -44,7 +44,6 @@ function App() {
         <Route path='/categorias/deportes' element={<CatDeportes />}></Route>
         <Route path='/categorias/tecnologia' element={<CatTecno />}></Route>
         <Route path='/categorias/vestimenta' element={<CatVest />}></Route>
-        <Route path='/listadeintercambios' element={<ListadeIntercambios />}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
 
