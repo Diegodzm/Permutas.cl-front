@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Context } from "../store/context";
 import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const ProductUploadForm = () => {
+    const navigate = useNavigate()
     const { store, actions } = useContext(Context)
     const [validated, set_Validated] = useState(false);
     const [formData, setFormData] = useState({
@@ -17,6 +19,10 @@ const ProductUploadForm = () => {
         brand: "",
         category_id:0,
     });
+    useEffect(() => {
+        actions.accessTokenExpired()
+
+    }, []);
     const categoryOnchange=(e)=>{
         const index = e.target.selectedIndex;
         actions.setCategory(index)
@@ -24,6 +30,7 @@ const ProductUploadForm = () => {
 
 
     }
+    
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
@@ -35,8 +42,8 @@ const ProductUploadForm = () => {
         set_Validated(true);
 
         if (set_Validated) {
-            
-            actions.ProductUpload(event)
+            actions.ProductUpload()
+            .then(response=>{if(response){navigate('/')}})
         }
     }
     const chngProduct = (event) => {

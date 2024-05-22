@@ -5,7 +5,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { Form, Button, Container,} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import logo from "./logo.jpg"
 
 
 
@@ -31,6 +31,7 @@ const Login = () => {
         if (set_Validated) {
             store.user = form_Data
             actions.handleSubmitLogin()
+            
             .then(response=>{if(response){navigate("/")}})
             .catch(error=>console.log(error))
       
@@ -48,8 +49,7 @@ const Login = () => {
 
 
     return  <Container className="mt-5 col-4">
-            <img className="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd0hitsZYPCwTxPK70de3v_3MEC4k_A6wQRxqsl42RZg&s" alt="" width="78" height="72" />
-            <h1 className="h3 mb-3 fw-normal">Please log in</h1>
+            <h1 className="h3 mb-3 ">Ingreso</h1>
             <Form noValidate validated={validated} onSubmit={submitFn}>
                 <Form.Group className="mt-5 mb-2" controlId="email">
 
@@ -66,11 +66,11 @@ const Login = () => {
                         }
                     />
                     <Form.Control.Feedback type="invalid">
-                        Please enter a valid email address.
+                        Ingresar mail valido.
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="mt-2 mb-2" controlId="password">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Contraseña</Form.Label>
                     <Form.Control
                         type="password"
                         name="password"
@@ -83,7 +83,7 @@ const Login = () => {
                         }
                     />
                     <Form.Control.Feedback type="invalid">
-                        Password must be at least 6 characters long.
+                        Contraseña debe contener al menos 6 characteres
                     </Form.Control.Feedback>
                 </Form.Group>
                 <div className="d-flex mt-5 ms-3 ">

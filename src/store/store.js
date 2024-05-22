@@ -9,24 +9,25 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 password: "",
                 email: ""
             },
-            user_id:0,
+            user_id: 0,
             accessToken: "",
-            usersList: [],
             productForm: {
                 name: "",
                 price: 0,
                 photo: "",
                 product_info: "",
                 brand: "",
-                category_id:0,
-                user_id:0,
+                category_id: 0,
+                user_id: 0,
             },
             userProducts: [],
             publishedProducts: [],
             validation: false,
-            
+            productSended: false,
             categoryProducts: [],
-       
+            wishedList: [],
+            username:""
+
         },
         actions: {
 
@@ -46,7 +47,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     productForm: {
                         ...store.productForm,
                         [event.target.name]: event.target.value,
-                        
+
 
                     }
                 });
@@ -70,12 +71,13 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        setStore({validation:true , user_id:data.user_id})
+                        localStorage.setItem("user_id",data.user_id)
+                        setStore({ validation: true, user_id: data.user_id,username:data.username })
                         console.log(store.user_id)
-                        
+
                     })
                     .catch((error) => console.log(error))
-                return  store.validation
+                return store.validation
             },
 
             logout: () => {
@@ -86,8 +88,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             handleSubmituser: async () => {
                 const store = getStore()
-                
-                
+
+
 
                 await fetch("http://localhost:5000/user/register", {
                     method: "POST",
@@ -105,7 +107,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
-               
+
                 await fetch("http://localhost:5000/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
@@ -114,9 +116,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => response.json())
                     .then((data) => {
+                        localStorage.setItem("user_id",data.user_id)
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(data)
-                        setStore({validation:true , user_id:data.user_id})
+                        setStore({ validation: true, user_id: data.user_id,username:data.username })
                         console.log(store.user_id)
 
                     })
@@ -126,7 +129,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             accessTokenExpired: () => {
+                const store = getStore()
                 let accessToken = localStorage.getItem("accessToken")
+                setStore({productSended:false})
                 if (accessToken) {
                     fetch("http://localhost:5000/users", {
                         method: "GET",
@@ -135,13 +140,14 @@ export const getState = ({ getActions, getStore, setStore }) => {
                             Authorization: "Bearer " + accessToken
                         }
                     }).then((response) => response.json())
-                        .then((data) => { if (data.msg === "Token has expired"){ 
-                            localStorage.removeItem("accessToken")
-                            setStore({validation:false})
-                         } 
-                            else{console.log("accessTokenValid")}
-                            setStore({validation:true})
-                         })
+                        .then((data) => {
+                            if (data.msg === "Token has expired") {
+                                localStorage.removeItem("accessToken")
+                                setStore({ validation: false })
+                            }
+                            else { console.log("accessTokenValid") }
+                            setStore({ validation: true })
+                        })
                         .catch((error) => console.log(error))
                 }
                 else {
@@ -150,8 +156,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             },
 
-            fetchPublishedProducts: () => {;
-                const store= getStore()
+            fetchPublishedProducts: () => {
+                ;
+                const store = getStore()
                 fetch("http://localhost:5000/products", {
                     method: "GET",
                     headers: {
@@ -159,55 +166,58 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) =>{ setStore({
-                        publishedProducts: data
+                    .then((data) => {
+                        setStore({
+                            publishedProducts: data
+                        })
+                        console.log(store.publishedProducts)
                     })
-                    console.log(store.publishedProducts)
-                })
-                    .catch((error) => console.log(error));  
+                    .catch((error) => console.log(error));
             },
-            setCategory:(index)=>{
-              
-             const store= getStore()
-               
+            setCategory: (index) => {
+
+                const store = getStore()
+
                 setStore({
-                    productForm:{...store.productForm,category_id:index,user_id:store.user_id}
+                    productForm: { ...store.productForm, category_id: index, user_id: store.user_id }
                 })
 
 
             },
-            getProductsbyCategory:(id)=>{
-                const store= getStore()
-                fetch("http://localhost:5000/category/products/"+id, {
+            getProductsbyCategory: (id) => {
+                const store = getStore()
+                fetch("http://localhost:5000/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) =>{ setStore({
-                        categoryProducts: data
+                    .then((data) => {
+                        setStore({
+                            categoryProducts: data
+                        })
+                        console.log(store.categoryProducts)
                     })
-                    console.log(store.categoryProducts)
-                })
-                    .catch((error) => console.log(error));  
+                    .catch((error) => console.log(error));
             },
-            getProductsbyUser:()=>{
+            getProductsbyUser: () => {
 
-                const store= getStore()
-                fetch("http://localhost:5000/products/user/"+store.user_id, {
+                const store = getStore()
+                fetch("http://localhost:5000/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) =>{ setStore({
-                        userProducts: data
+                    .then((data) => {
+                        setStore({
+                            userProducts: data
+                        })
+                        console.log(store.userProducts)
                     })
-                    console.log(store.userProducts)
-                })
-                    .catch((error) => console.log(error));  
+                    .catch((error) => console.log(error));
             },
 
 
@@ -215,26 +225,40 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 console.log("Manejador de envío de producto ejecutándose...");
                 const store = getStore();
                 console.log("Datos del formulario:", store.productForm);
-           
+
 
                 await fetch("http://localhost:5000/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {
                         "Content-Type": "application/json"
-                   }
+                    }
                 }).then((response) => response.json())
-                 .then((data) => {
-
-                    console.log("Respuesta del servidor:", data);
-                    console.log(data);
-                       })
+                    .then((data) => {
+                        console.log("Respuesta del servidor:", data);
+                        console.log(data);
+                        if(data.msg==="product uploaded"){
+                            setStore({ productSended: true, productForm: {
+                                name: "",
+                                price: 0,
+                                photo: "",
+                                product_info: "",
+                                brand: "",
+                                category_id: 0,
+                                user_id: 0,
+                            }  })
+                        }
+                        
+                    })
                     .catch((error) => console.log(error));
+
+                return store.productSended  
+
             },
 
-           
 
-      
+
+
 
         }
     }

@@ -7,7 +7,7 @@ const ProductUploadView = () => {
 
     return (
         <div>
-            <h1>Product Submit</h1>
+            <h1>Subir Producto</h1>
             <ProductUploadForm  />
         </div>
     );

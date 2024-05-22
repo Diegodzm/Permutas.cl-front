@@ -19,12 +19,13 @@ import Allproducts from './views/allproducts';
 import UserProducts from './views/userproducts';
 import { Context } from "./store/context";
 import { useContext } from "react"
+import Wishlist from './views/wishlist';
 
 
 function App() {
   
  
-  const {store,actions}= useContext(Context)
+  const {store}= useContext(Context)
    
   return (
     <BrowserRouter>
@@ -36,6 +37,7 @@ function App() {
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/wishlist' element={<Wishlist />}></Route>
         <Route path='/categorias/electro' element={<CatElectro/>}></Route>
         <Route path='/categorias/abarrotes' element={<CatAbarr/>}></Route>
         <Route path='/categorias/otros' element={<CatOtros/>}></Route>
@@ -45,7 +47,7 @@ function App() {
         <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
-        
+       
       </Routes>
     </BrowserRouter>
 

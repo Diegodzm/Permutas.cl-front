@@ -9,6 +9,7 @@ const CatOtros = () => {
 
     useEffect(() => {
         actions.getProductsbyCategory(6)
+        actions.accessTokenExpired()
         console.log(store.categoryProducts)
         
      

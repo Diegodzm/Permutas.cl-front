@@ -3,10 +3,13 @@ import { useContext, useEffect } from "react"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './allproducts.css'
+import { Link } from "react-router-dom";
+
 
 const Allproducts = () => {
     const { actions, store } = useContext(Context)
     useEffect(() => {
+        actions.accessTokenExpired()
         actions.fetchPublishedProducts()
         console.log(store.publishedProducts)
     }, []);
@@ -15,7 +18,7 @@ const Allproducts = () => {
 
         <ul>{store.publishedProducts.map((products, index) =>
             <li className='product_card col-3 border d-inline-flex ' key={index}>
-                <Button href="/productreview">
+                <Link to="/">
                     <Card style={{ width: '15 rem', }}>
                         <Card.Img className="cardimg"   variant="top" src={store.publishedProducts[index].photo} />
                         <Card.Body>
@@ -29,7 +32,7 @@ const Allproducts = () => {
                             
                         </Card.Body>
                     </Card>
-                </Button>
+                </Link>
 
 
             </li>)}

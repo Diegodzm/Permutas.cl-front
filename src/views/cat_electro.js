@@ -9,6 +9,7 @@ const CatElectro = () => {
 
     useEffect(() => {
         actions.getProductsbyCategory(1)
+        actions.accessTokenExpired()
         console.log(store.categoryProducts)
         
      

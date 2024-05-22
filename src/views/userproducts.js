@@ -7,10 +7,11 @@ const UserProducts = () => {
     const { store,actions } = useContext(Context)
     useEffect(() => {
         actions.getProductsbyUser()
- 
-     
+        actions.accessTokenExpired()
+
     }, []);
-  
+    
+
     return  <ul>{store.userProducts.map((products, index) =>
         <li className='product_card col-3 border d-inline-flex ' key={index}>
             <Button href="/productreview">
