@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Context } from "../store/context";
@@ -7,32 +7,47 @@ import { Link } from "react-router-dom";
 import UploadWidget from "./UploadWidget";
 
 const ProductUploadForm = () => {
-    const { store, actions } = useContext(Context)
+    const { actions } = useContext(Context)
     const [validated, set_Validated] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
 
         name: "",
+        photo: "",
         price: 0,
         product_info: "",
         brand: "",
-        user_id: 1
+        category_id: 0,
     });
+    const categoryOnchange = (e) => {
+        const index = e.target.selectedIndex;
+        actions.setCategory(index)
+        return index
+
+
+    }
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        set_Validated(true);
+        event.preventDefault();
 
-       /*  if (set_Validated) {
-            actions.handleProductUpload(event)  
-        } */
-    }
-    useEffect(() => {
-        console.log("Datos del formulario actualizados:", formData);
-    }, [formData]);
+        if (form.checkValidity() === false || !formData.photo) {
+            event.stopPropagation();
+            set_Validated(true);
+
+            if (!formData.photo) {
+                setErrorMessage('Por favor, sube una foto del producto.');
+            } else {
+                setErrorMessage('');
+            }
+
+            return;
+        }
+
+        set_Validated(true);
+        actions.ProductUpload(event);
+    };
+
 
     const chngProduct = (event) => {
         const { name, value } = event.target;
@@ -46,6 +61,7 @@ const ProductUploadForm = () => {
 
 
 
+
     return (
         <Container className="mt-5">
             <Row>
@@ -54,8 +70,8 @@ const ProductUploadForm = () => {
                         span: 6,
                         offset: 3,
                     }}>
-                    <Form noValidate validated={validated} onSubmit={actions.handleProductUpload}>
-                        <Form.Group className="mt-2 mb-2" controlId="name" autoComplete="off">
+                    <Form noValidate validated={validated} onSubmit={submitProduct}>
+                        <Form.Group className="mt-2 mb-2" controlId="name">
                             <Form.Label>Product name</Form.Label>
                             <Form.Control
                                 type="text"
@@ -83,25 +99,26 @@ const ProductUploadForm = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        {/*ID DE PRUEBA*/}
-
-                        <Form.Group className="mt-2 mb-2" controlId="user_id">
-                            <Form.Label>Test user id</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="user_id"
-                                value={formData.user_id}
-                                onChange={chngProduct}
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Please enter a user id.
-                            </Form.Control.Feedback>
-                        </Form.Group>
+                        <Form.Select onChange={e => categoryOnchange(e)} className="mt-4 mb-3" aria-label="Default select example">
+                            <option>Categoria del producto</option>
+                            <option value="1">Electrodomesticos</option>
+                            <option value="2">Vestimenta</option>
+                            <option value="3">Tecnologia</option>
+                            <option value="4">Deportes</option>
+                            <option value="5">Abarrotes</option>
+                            <option value="6">Otros</option>
+                        </Form.Select>
 
                         <Form.Group controlId="photo">
                             <Form.Label>Subir foto</Form.Label>
-                            <UploadWidget onUpload={(url) => actions.handleProductOnChange({ target: { name: 'photo', value: url } })} actions={actions} />
+                            <UploadWidget
+                                onUpload={(url) => {
+                                    actions.handleProductOnChange({ target: { name: 'photo', value: url } });
+                                    setErrorMessage('');
+                                }}
+                                actions={actions}
+                            />
+                            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
                             <Form.Control.Feedback type="invalid">
                                 Please upload at least one photo of your product.
                             </Form.Control.Feedback>
@@ -133,7 +150,7 @@ const ProductUploadForm = () => {
                                 Please enter the product's brand.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5' type="submit" onClick={submitProduct}>Submit Product</Button>
+                        <Button className='mt-4 mb-5' type="submit">Submit Product</Button>
                         <Link to='/'></Link>
                     </Form>
                 </Col>
