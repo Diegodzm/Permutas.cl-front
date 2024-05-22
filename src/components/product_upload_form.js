@@ -5,24 +5,25 @@ import { Context } from "../store/context";
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import UploadWidget from "./UploadWidget";
 
 const ProductUploadForm = () => {
-    const navigate = useNavigate()
-    const { store, actions } = useContext(Context)
+    const { actions } = useContext(Context);
     const [validated, set_Validated] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
-
         name: "",
-        price: 0,
         photo: "",
+        price: 0,
         product_info: "",
         brand: "",
-        category_id:0,
+        category_id: 0,
     });
     useEffect(() => {
         actions.accessTokenExpired()
 
     }, []);
+    const navigate= useNavigate()
     const categoryOnchange=(e)=>{
         const index = e.target.selectedIndex;
         actions.setCategory(index)
@@ -34,11 +35,25 @@ const ProductUploadForm = () => {
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
-        event.preventDefault()
-        if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();  
 
-            event.stopPropagation();
+        console.log("Formulario enviado");
+        console.log("Validación del formulario:", form.checkValidity());
+        console.log("Datos del formulario:", formData);
+
+        if (form.checkValidity() === false || !formData.photo) {
+            set_Validated(true);
+
+            if (!formData.photo) {
+                setErrorMessage('Por favor, sube una foto del producto.');
+            } else {
+                setErrorMessage('');
+            }
+
+            return;
         }
+
         set_Validated(true);
 
         if (set_Validated) {
@@ -46,31 +61,20 @@ const ProductUploadForm = () => {
             .then(response=>{if(response){navigate('/')}})
         }
     }
+
     const chngProduct = (event) => {
-
         const { name, value } = event.target;
-        
-        
-        setFormData({
-            ...formData,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
             [name]: value,
-        
-        });
-        actions.handleProductOnChange(event)
-      
+        }));
+        actions.handleProductOnChange(event);
     };
-   
-
-
 
     return (
         <Container className="mt-5">
             <Row>
-                <Col
-                    md={{
-                        span: 6,
-                        offset: 3,
-                    }}>
+                <Col md={{ span: 6, offset: 3 }}>
                     <Form noValidate validated={validated} onSubmit={submitProduct}>
                         <Form.Group className="mt-2 mb-2" controlId="name">
                             <Form.Label>Product name</Form.Label>
@@ -96,10 +100,16 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter a price
+                                Please enter a price.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Select onChange={e=>categoryOnchange(e)} className="mt-4 mb-3" aria-label="Default select example">
+
+                        <Form.Select
+                            onChange={categoryOnchange}
+                            className="mt-4 mb-3"
+                            aria-label="Default select example"
+                            required
+                        >
                             <option>Categoria del producto</option>
                             <option value="1">Electrodomesticos</option>
                             <option value="2">Vestimenta</option>
@@ -108,19 +118,26 @@ const ProductUploadForm = () => {
                             <option value="5">Abarrotes</option>
                             <option value="6">Otros</option>
                         </Form.Select>
-                        <Form.Group className="mt-2 mb-2" controlId="photo">
-                            <Form.Label>Photo url</Form.Label>
-                            <Form.Control
-                                type="url"
-                                name="photo"
-                                value={formData.photo}
-                                onChange={chngProduct}
-                                required
+
+                        <Form.Group controlId="photo">
+                            <Form.Label>Subir foto</Form.Label>
+                            <UploadWidget
+                                onUpload={(url) => {
+                                    actions.handleProductOnChange({ target: { name: 'photo', value: url } });
+                                    setFormData((prevFormData) => ({
+                                        ...prevFormData,
+                                        photo: url,
+                                    }));
+                                    setErrorMessage('');
+                                }}
+                                actions={actions}
                             />
+                            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
                             <Form.Control.Feedback type="invalid">
-                                Please enter a valid photo url of your product
+                                Please upload at least one photo of your product.
                             </Form.Control.Feedback>
                         </Form.Group>
+
                         <Form.Group className="mt-2 mb-2" controlId="product_info">
                             <Form.Label>Product info</Form.Label>
                             <Form.Control
@@ -131,7 +148,7 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter the info of your product
+                                Please enter the info of your product.
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mt-2 mb-2" controlId="brand">
@@ -144,17 +161,15 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter the product's brand
+                                Please enter the product's brand.
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Button className='mt-4 mb-5' type="submit">Submit Product</Button>
-                        <Link to='/'></Link>
                     </Form>
                 </Col>
             </Row>
         </Container>
     );
-
 };
 
 export default ProductUploadForm;

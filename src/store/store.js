@@ -1,5 +1,4 @@
 export const getState = ({ getActions, getStore, setStore }) => {
-
     return {
         store: {
             user: {
@@ -7,7 +6,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 firstname: "",
                 lastname: "",
                 password: "",
-                email: ""
+                email: "",
             },
             user_id: 0,
             accessToken: "",
@@ -20,19 +19,33 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 category_id: 0,
                 user_id: 0,
             },
+            selectedProduct: [],
             userProducts: [],
             publishedProducts: [],
-            validation: false,
-            productSended: false,
             categoryProducts: [],
-            wishedList: [],
-            username:""
+            loginValidation: false,
+            registerValidation: false,
+            contacto: {
+                destinatario: '',
+                mensaje: '',
+            },
+            UserProductOfferList: [],
+
+            UserProductForPermuta: [
+                
+                {}
+              
+
+            ],
+
+            validation: false,
 
         },
-        actions: {
 
+
+        actions: {
             handleOnchange: (event) => {
-                const store = getStore()
+                const store = getStore();
                 setStore({
                     user: {
                         ...store.user,
@@ -41,19 +54,31 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 });
             },
 
-            handleProductOnChange: (event) => {
-                const store = getStore();
+            handleProductOnChange: (formData) => {
+                console.log(formData)
+                const store = getStore()
+                const productForm = store.productForm
+                const {name, value} = formData.target
+                productForm[name]=value 
                 setStore({
+                    productForm: productForm
+                })
+                /* setStore((prevState) => ({
                     productForm: {
                         ...store.productForm,
                         [event.target.name]: event.target.value,
 
 
+                        ...prevState.productForm,
+                        ...formData
                     }
-                });
-                console.log(store.productForm)
+                })); */
+                console.log (getStore().productForm)
             },
+            
+            
             handleSubmitLogin: async (e) => {
+               
                 const store = getStore()
                 await fetch("http://localhost:5000/user/login", {
                     method: "POST",
@@ -63,11 +88,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => {
                     if (response.status !== 200) {
-                        throw new Error(response.json())
+                        throw new Error(response.json());
                     }
-                    return response.json()
-
-
+                    return response.json();
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
@@ -77,13 +100,13 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                     })
                     .catch((error) => console.log(error))
-                return store.validation
+                return store.validation  
             },
 
             logout: () => {
-                localStorage.removeItem("accessToken")
-                console.log("logout")
-
+                localStorage.removeItem("accessToken");
+                console.log("logout");
+                setStore({validation: false})
             },
 
             handleSubmituser: async () => {
@@ -150,10 +173,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         })
                         .catch((error) => console.log(error))
                 }
-                else {
-                    console.log("need aut token")
-                }
-
             },
 
             fetchPublishedProducts: () => {
@@ -226,6 +245,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const store = getStore();
                 console.log("Datos del formulario:", store.productForm);
 
+                if (store.productForm.photo === "") {
+                    console.log("La URL de la foto está vacía. No se puede subir el producto.");
+                    return; 
+                }
 
                 await fetch("http://localhost:5000/products/upload", {
                     method: "POST",
@@ -255,6 +278,14 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended  
 
             },
+
+            setSelectedProduct:(product) => {
+                setStore ({ selectedProduct: product });
+               const store= getStore()
+               console.log(store.selectedProduct)
+               console.log("producto seleccionado")
+               return true 
+            }, 
 
 
 

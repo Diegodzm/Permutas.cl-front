@@ -1,10 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Context } from "../store/context"
-import { useContext, } from "react"
+import { useContext } from "react"
 import { Link } from 'react-router-dom';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import "./navbar.css"
 import logo from "./logo.jpg"
 
@@ -17,7 +17,7 @@ function NavbarReact() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto ">
-          
+
             <NavDropdown  className='mx-1' title="Categorias" id="basic-nav-dropdown">
               <NavDropdown.Item  ><Link to="/categorias/electro">Electrodomesticos</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/tecnologia">Tecnologia</Link></NavDropdown.Item>
@@ -30,8 +30,8 @@ function NavbarReact() {
             <Nav.Link className= 'col-3' ><Link to="/product_upload">Subir Producto</Link></Nav.Link>
             <Nav.Link className='mx-1'><Link to="/register">Registro</Link></Nav.Link>
             <Nav.Link className='mx-1' ><Link to="/login">Ingreso</Link></Nav.Link>
-
-
+            <Nav.Link as={Link} to="/oferta_permuta" className="text-white" style={{ backgroundColor: 'rgb(66, 107, 31)', color: 'white' }}>Oferta Permuta</Nav.Link>
+    
           </Nav>
         </Navbar.Collapse>
       </Container>

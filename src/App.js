@@ -8,7 +8,7 @@ import ProductUploadView from './views/product_upload';
 import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
-import ListadeIntercambios from './views/listadeintercambios'; 
+import OfertaPermuta from './components/oferta_permuta';
 import CatAbarr from './views/cat_abarr';
 import CatDeportes from './views/cat_deportes';
 import CatElectro from './views/cat_electro';
@@ -19,38 +19,37 @@ import Allproducts from './views/allproducts';
 import UserProducts from './views/userproducts';
 import { Context } from "./store/context";
 import { useContext } from "react"
-import Wishlist from './views/wishlist';
 
 
 function App() {
   
  
-  const {store}= useContext(Context)
+  const {store,actions}= useContext(Context)
    
   return (
     <BrowserRouter>
-      {store.validation ? <NavbarLogged/>:<NavbarReact/>}
+      {store.validation ? <NavbarLogged /> : <NavbarReact />}
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
+          <Route path='/oferta_permuta' element={<OfertaPermuta />} />
+          
+          
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
-        <Route path='/wishlist' element={<Wishlist />}></Route>
         <Route path='/categorias/electro' element={<CatElectro/>}></Route>
         <Route path='/categorias/abarrotes' element={<CatAbarr/>}></Route>
         <Route path='/categorias/otros' element={<CatOtros/>}></Route>
         <Route path='/categorias/deportes' element={<CatDeportes/>}></Route>
         <Route path='/categorias/tecnologia' element={<CatTecno/>}></Route>
         <Route path='/categorias/vestimenta' element={<CatVest/>}></Route>
-        <Route path='/listadeintercambios' element={<ListadeIntercambios/>}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
-       
+        
       </Routes>
     </BrowserRouter>
-
   );
 }
 
