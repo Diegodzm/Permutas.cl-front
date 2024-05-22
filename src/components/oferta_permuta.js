@@ -10,8 +10,7 @@ function OfertaPermuta() {
 
     useEffect(() => {
         actions.getProductsbyUser();
-        console.log(store.selectedProduct)
-        console.log("producto seleccionado")
+     
     }, []);
 
     const handleOfferButtonClick = (index) => {

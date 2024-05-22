@@ -11,8 +11,8 @@ const Home = () => {
         console.log(store.user_id)
         console.log(store.validation)
 
-
     }, []);
+
     return <div className="body">
 
         <div className="container ">
@@ -21,7 +21,6 @@ const Home = () => {
             <button className="btn btn-primary" style={{ backgroundColor: '#426B1F', color: 'white', display: 'block', margin: '30px auto' }}>productos Disponibles</button>
             <div style={{ marginBottom: '50px' }}></div>
             <h2 className="text-center" style={{ color: 'black', fontSize: '32px' }}>Descubre una nueva forma de obtener lo que necesitas</h2>
-        
             <div className="container"></div>
             {store.userList && store.userList.length > 0 && store.userList.map((user) => user.email)}
         </div>

@@ -1,6 +1,6 @@
 import { Context } from "../store/context"
 import { useContext, useEffect } from "react"
-import { useNavigate, Link} from "react-router-dom";
+import { useNavigate, } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './allproducts.css'

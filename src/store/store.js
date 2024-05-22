@@ -78,7 +78,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
             
             
             handleSubmitLogin: async (e) => {
-               
                 const store = getStore()
                 await fetch("http://localhost:5000/user/login", {
                     method: "POST",
@@ -94,12 +93,12 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        localStorage.setItem("user_id",data.user_id)
                         setStore({ validation: true, user_id: data.user_id,username:data.username })
                         console.log(store.user_id)
 
                     })
                     .catch((error) => console.log(error))
+
                 return store.validation  
             },
 

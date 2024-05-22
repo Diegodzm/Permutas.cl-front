@@ -5,8 +5,6 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from "jwt-decode";
 import { Form, Button, Container,} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import logo from "./logo.jpg"
-
 
 
 
@@ -31,7 +29,6 @@ const Login = () => {
         if (set_Validated) {
             store.user = form_Data
             actions.handleSubmitLogin()
-            
             .then(response=>{if(response){navigate("/")}})
             .catch(error=>console.log(error))
       

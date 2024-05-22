@@ -27,7 +27,7 @@ function NavbarReact() {
               <NavDropdown.Item ><Link to="/categorias/otros">Otros</Link></NavDropdown.Item>
             </NavDropdown>
             <Nav.Link className='mx-1' ><Link  to='/products'>Productos</Link></Nav.Link>
-            <Nav.Link className= 'col-3' ><Link to="/product_upload">Subir Producto</Link></Nav.Link>
+            <Nav.Link className= 'mx-2' ><Link to="/product_upload">Subir Producto</Link></Nav.Link>
             <Nav.Link className='mx-1'><Link to="/register">Registro</Link></Nav.Link>
             <Nav.Link className='mx-1' ><Link to="/login">Ingreso</Link></Nav.Link>
             <Nav.Link as={Link} to="/oferta_permuta" className="text-white" style={{ backgroundColor: 'rgb(66, 107, 31)', color: 'white' }}>Oferta Permuta</Nav.Link>
