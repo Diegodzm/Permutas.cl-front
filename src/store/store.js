@@ -6,7 +6,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 firstname: "",
                 lastname: "",
                 password: "",
-                email: ""
+                email: "",
             },
             user_id: 0,
             accessToken: "",
@@ -75,6 +75,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             
             
             handleSubmitLogin: async (e) => {
+               
                 const store = getStore()
                 await fetch("http://localhost:5000/user/login", {
                     method: "POST",
@@ -95,7 +96,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                     })
                     .catch((error) => console.log(error))
-                return store.validation
+                return store.validation  
             },
 
             logout: () => {

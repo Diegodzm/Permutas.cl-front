@@ -34,6 +34,7 @@ function App() {
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
           
+          
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
