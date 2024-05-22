@@ -32,7 +32,7 @@ function NavbarLogged() {
             <Nav.Link className='mx-2' ><Link to='/product_upload'>Products Upload</Link></Nav.Link>
             <Nav.Link className='mx-1' ><Link to='/products'>Products</Link></Nav.Link>
             <Nav.Link as={Link} to="/oferta_permuta" className="text-white" style={{ backgroundColor: 'rgb(66, 107, 31)', color: 'white' }}>Oferta Permuta</Nav.Link>
-            <Nav.Link className='mx-1' href="/" onClick={actions.logout} >Logout</Nav.Link>
+            <Nav.Link className='mx-1'><Link to="/" onClick={actions.logout}> Logout</Link></Nav.Link>
 
           </Nav>
         </Navbar.Collapse>

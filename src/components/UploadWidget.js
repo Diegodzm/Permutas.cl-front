@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from 'react-bootstrap';
 
-const UploadWidget = ({ onUpload, actions }) => {
+const UploadWidget = ({ onUpload }) => {
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
-    
+
     useEffect(() => {
         cloudinaryRef.current = window.cloudinary;
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
@@ -12,14 +12,12 @@ const UploadWidget = ({ onUpload, actions }) => {
             uploadPreset: 'edxfjlkc'
         }, function (error, result){
             if (!error && result && result.event === "success") {
-                console.log(result.info);
                 const imageUrl = result.info.url;
-               // onUpload(imageUrl);
+                onUpload(imageUrl);
                 console.log('la url de la imágen es:', imageUrl);
-                actions.handleProductOnChange({ target: { name: 'photo', value: imageUrl } });
             }
         });
-    }, [onUpload, actions]);
+    }, [onUpload]);
 
     const handleButtonClick = () => {
         widgetRef.current.open();
@@ -30,6 +28,7 @@ const UploadWidget = ({ onUpload, actions }) => {
             <Button variant="info" style={{ backgroundColor: '#049a8f', borderColor: '#049a8f' }} onClick={handleButtonClick}>
                 Subir Imagen
             </Button>
+            
         </div>
     );
 }

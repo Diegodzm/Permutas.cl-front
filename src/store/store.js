@@ -20,7 +20,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 category_id: 0,
                 user_id: 0,
             },
-            selectedProduct: null,
+            selectedProduct: [],
             userProducts: [],
             publishedProducts: [],
             categoryProducts: [],
@@ -30,36 +30,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 destinatario: '',
                 mensaje: '',
             },
-            UserProductOfferList: [
-                {
-                    name: "zapatilla",
-                    photo: "https://www.realkicks.cl/cdn/shop/files/p-38583918-1_1200x.jpg?v=1688677846",
-                    price: 25000,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                },
-                {
-                    name: "zapatillaNike",
-                    photo:"https://assets.adidas.com/images/w_600,f_auto,q_auto/02cd9a97ce874d89ba17ae2b003ebe50_9366/Zapatillas_adidas_Grand_Court_Lifestyle_para_Tenis_con_Cordones_Blanco_GW6511_01_standard.jpg",
-                    price: 25,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                },
-                {
-                    name: "zapatillaJordan23",
-                    photo: "https://chalada.cl/cdn/shop/files/zapatilla-funway-mujer-biggerh-1-negro-moda-zapatillas-funway-967292_1200x.jpg?v=1707160572",
-                    price: 250002,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                },
-                {
-                    name: "zapatillaPailitaSutro",
-                    photo: "https://northstar.digitag.cl/52646-large_default/zapatillas-nina-hem.jpg", 
-                    price: 250003,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                }
-            ],
+            UserProductOfferList: [],
 
             UserProductForPermuta: [
                 
@@ -297,8 +268,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .catch((error) => console.log(error));
             },
 
-            setSelectedProduct:async (product) => {
-               await setStore({ selectedProduct: product });
+            setSelectedProduct:(product) => {
+                setStore ({ selectedProduct: product });
+               const store= getStore()
+               console.log(store.selectedProduct)
+               console.log("producto seleccionado")
                return true 
             }, 
 

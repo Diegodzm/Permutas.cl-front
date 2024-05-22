@@ -7,11 +7,10 @@ import { Link } from "react-router-dom";
 import UploadWidget from "./UploadWidget";
 
 const ProductUploadForm = () => {
-    const { actions } = useContext(Context)
+    const { actions } = useContext(Context);
     const [validated, set_Validated] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
-
         name: "",
         photo: "",
         price: 0,
@@ -19,20 +18,27 @@ const ProductUploadForm = () => {
         brand: "",
         category_id: 0,
     });
+
     const categoryOnchange = (e) => {
         const index = e.target.selectedIndex;
-        actions.setCategory(index)
-        return index
-
-
-    }
+        actions.setCategory(index);
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            category_id: index,
+        }));
+        return index;
+    };
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
+        event.stopPropagation();  
+
+        console.log("Formulario enviado");
+        console.log("Validación del formulario:", form.checkValidity());
+        console.log("Datos del formulario:", formData);
 
         if (form.checkValidity() === false || !formData.photo) {
-            event.stopPropagation();
             set_Validated(true);
 
             if (!formData.photo) {
@@ -45,9 +51,10 @@ const ProductUploadForm = () => {
         }
 
         set_Validated(true);
-        actions.ProductUpload(event);
+        actions.ProductUpload()
+            .then(() => actions.getProductsbyUser())
+            .catch((error) => console.log("Error en la carga del producto:", error));
     };
-
 
     const chngProduct = (event) => {
         const { name, value } = event.target;
@@ -55,21 +62,13 @@ const ProductUploadForm = () => {
             ...prevFormData,
             [name]: value,
         }));
-
         actions.handleProductOnChange(event);
     };
-
-
-
 
     return (
         <Container className="mt-5">
             <Row>
-                <Col
-                    md={{
-                        span: 6,
-                        offset: 3,
-                    }}>
+                <Col md={{ span: 6, offset: 3 }}>
                     <Form noValidate validated={validated} onSubmit={submitProduct}>
                         <Form.Group className="mt-2 mb-2" controlId="name">
                             <Form.Label>Product name</Form.Label>
@@ -99,7 +98,12 @@ const ProductUploadForm = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Select onChange={e => categoryOnchange(e)} className="mt-4 mb-3" aria-label="Default select example">
+                        <Form.Select
+                            onChange={categoryOnchange}
+                            className="mt-4 mb-3"
+                            aria-label="Default select example"
+                            required
+                        >
                             <option>Categoria del producto</option>
                             <option value="1">Electrodomesticos</option>
                             <option value="2">Vestimenta</option>
@@ -114,6 +118,10 @@ const ProductUploadForm = () => {
                             <UploadWidget
                                 onUpload={(url) => {
                                     actions.handleProductOnChange({ target: { name: 'photo', value: url } });
+                                    setFormData((prevFormData) => ({
+                                        ...prevFormData,
+                                        photo: url,
+                                    }));
                                     setErrorMessage('');
                                 }}
                                 actions={actions}
@@ -151,13 +159,11 @@ const ProductUploadForm = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Button className='mt-4 mb-5' type="submit">Submit Product</Button>
-                        <Link to='/'></Link>
                     </Form>
                 </Col>
             </Row>
         </Container>
     );
-
 };
 
 export default ProductUploadForm;

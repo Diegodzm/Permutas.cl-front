@@ -32,11 +32,11 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
+          <Route path='/oferta_permuta' element={<OfertaPermuta />} />
           
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
-        <Route path='/oferta_permuta' element={<OfertaPermuta />} />
         <Route path='/login' element={<Login />}></Route>
         <Route path='/categorias/electro' element={<CatElectro />}></Route>
         <Route path='/categorias/abarrotes' element={<CatAbarr />}></Route>
