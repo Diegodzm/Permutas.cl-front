@@ -20,6 +20,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 user_id: 0,
             },
             selectedProduct: [],
+            productIndex: 0,
             userProducts: [],
             publishedProducts: [],
             categoryProducts: [],
@@ -285,6 +286,45 @@ export const getState = ({ getActions, getStore, setStore }) => {
                console.log("producto seleccionado")
                return true 
             }, 
+
+            showIndex: (index) => {
+                setStore ({productIndex:index})
+
+            },
+
+            handleOfferTradeButtonClick : async () => {
+                if (!productoSeleccionado || productosOferta.length === 0) {
+                    alert("Debes seleccionar al menos un producto para ofrecer.");
+                    return;
+                }
+        
+                const offerId = productosOferta.id;
+                const selectedProductId = productoSeleccionado.id;
+                console.log(offerId)
+                console.log(selectedProductId)
+                try {
+                    const response = await fetch(`/exchange/${offerId}/${selectedProductId}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${store.accessToken}`,
+                        },
+                    });
+        
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.message);
+                    }
+        
+                    alert("La transacción se ha realizado exitosamente.");
+        
+                    setProductosOferta([]);
+                    setProductoSeleccionado(null);
+        
+                } catch (error) {
+                    alert(error.message);
+                }
+            }
 
 
 
