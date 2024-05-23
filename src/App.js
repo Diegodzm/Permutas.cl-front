@@ -24,10 +24,10 @@ import Intercambio from './views/intercambio';
 
 
 function App() {
-
-
-  const { store, actions } = useContext(Context)
-
+  
+ 
+  const {store,actions}= useContext(Context)
+   
   return (
     <BrowserRouter>
       {store.validation ? <NavbarLogged /> : <NavbarReact />}
@@ -37,21 +37,22 @@ function App() {
           <Route path='/oferta_permuta' element={<OfertaPermutaView />}></Route>
           <Route path='/intercambio' element={<Intercambio />}></Route>
 
+          <Route path='/oferta_permuta' element={<OfertaPermuta />} />
           
           
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/login' element={<Login />}></Route>
-        <Route path='/categorias/electro' element={<CatElectro />}></Route>
-        <Route path='/categorias/abarrotes' element={<CatAbarr />}></Route>
-        <Route path='/categorias/otros' element={<CatOtros />}></Route>
-        <Route path='/categorias/deportes' element={<CatDeportes />}></Route>
-        <Route path='/categorias/tecnologia' element={<CatTecno />}></Route>
-        <Route path='/categorias/vestimenta' element={<CatVest />}></Route>
+        <Route path='/categorias/electro' element={<CatElectro/>}></Route>
+        <Route path='/categorias/abarrotes' element={<CatAbarr/>}></Route>
+        <Route path='/categorias/otros' element={<CatOtros/>}></Route>
+        <Route path='/categorias/deportes' element={<CatDeportes/>}></Route>
+        <Route path='/categorias/tecnologia' element={<CatTecno/>}></Route>
+        <Route path='/categorias/vestimenta' element={<CatVest/>}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
-
+        
       </Routes>
     </BrowserRouter>
   );

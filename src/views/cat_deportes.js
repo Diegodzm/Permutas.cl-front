@@ -8,6 +8,7 @@ const CatDeportes = () => {
 
     useEffect(() => {
         actions.getProductsbyCategory(4)
+        actions.accessTokenExpired()
         console.log(store.categoryProducts)
         
      

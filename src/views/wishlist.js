@@ -3,28 +3,29 @@ import { useContext, useEffect } from "react"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-const CatTecno = () => {
+const Wishlist = () => {
     const { store,actions } = useContext(Context)
     useEffect(() => {
-        actions.getProductsbyCategory(3)
+        actions.getProductsbyUser()
         actions.accessTokenExpired()
-        console.log(store.categoryProducts)
-        
-     
+
     }, []);
-  
-    return <ul>{store.categoryProducts.map((products, index) =>
+    
+
+    return  <div>
+        asdasdasdasd
+        <ul>{store.wishedList.map((products, index) =>
         <li className='product_card col-3 border d-inline-flex ' key={index}>
             <Button href="/productreview">
                 <Card style={{ width: '15 rem', }}>
-                    <Card.Img className="cardimg"   variant="top" src={store.categoryProducts[index].photo} />
+                    <Card.Img className="cardimg"   variant="top" src={store.wishedList[index].photo} />
                     <Card.Body>
-                        <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.categoryProducts[index].name}</Card.Title>
+                        <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.wishedList[index].name}</Card.Title>
                         <Card.Text >
-                            Descripcion: {store.categoryProducts[index].product_info}
+                            Descripcion: {store.wishedList[index].product_info}
                         </Card.Text>
                         <Card.Text>
-                            Precio: {store.categoryProducts[index].price}
+                            Precio: {store.wishedList[index].price}
                         </Card.Text>
                         
                     </Card.Body>
@@ -36,5 +37,8 @@ const CatTecno = () => {
 
     </ul>
 
+
+    </div>
+
 }
-export default CatTecno
+export default Wishlist

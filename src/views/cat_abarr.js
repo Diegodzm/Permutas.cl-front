@@ -8,6 +8,7 @@ const CatAbarr = () => {
 
     useEffect(() => {
         actions.getProductsbyCategory(5)
+        actions.accessTokenExpired()
         console.log(store.categoryProducts)
         
      

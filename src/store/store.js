@@ -10,7 +10,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             user_id: 0,
             accessToken: "",
-            usersList: [],
             productForm: {
                 name: "",
                 price: 0,
@@ -20,6 +19,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 category_id: 0,
                 user_id: 0,
             },
+            selectedProduct: [],
             userProducts: [],
             publishedProducts: [],
             categoryProducts: [],
@@ -29,53 +29,16 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 destinatario: '',
                 mensaje: '',
             },
-            UserProductOfferList: [
-                {
-                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
-                    name: "zapatilla",
-                    price: 25000,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                    
-                },
-                {
-                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
-                    name: "zapatillaNike",
-                    price: 25,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                },
-                {
-                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
-                    name: "zapatillaJordan23",
-                    price: 250002,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                },
-                {
-                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
-                    name: "zapatillaPailitaSutro",
-                    price: 250003,
-                    product_info: "buenas zapatillas",
-                    brand: "nike"
-                }
-            ],
+            UserProductOfferList: [],
 
             UserProductForPermuta: [
-                {
-                    photo: "https://www.semana.com/resizer/UZ2pD8YgPJcQS2B9nGsZEH1pqeY=/fit-in/1280x0/smart/filters:format(jpg):quality(80)/cloudfront-us-east-1.images.arcpublishing.com/semana/4GDPNFO3X5HKZC6KCFPXBWKTBQ.jpg",
-                    name: "Guitarra de michel jackson",
-                    price: 25000,
-                    product_info: "buena guitarra",
-                    brand: "EEUU",
-
-                },
+                
+                {}
+              
 
             ],
 
             validation: false,
-
-            categoryProducts: [],
 
         },
 
@@ -91,22 +54,32 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 });
             },
 
-            handleProductOnChange: (event) => {
-                const store = getStore();
+            handleProductOnChange: (formData) => {
+                console.log(formData)
+                const store = getStore()
+                const productForm = store.productForm
+                const {name, value} = formData.target
+                productForm[name]=value 
                 setStore({
+                    productForm: productForm
+                })
+                /* setStore((prevState) => ({
                     productForm: {
                         ...store.productForm,
                         [event.target.name]: event.target.value,
 
 
+                        ...prevState.productForm,
+                        ...formData
                     }
-                });
+                })); */
+                console.log (getStore().productForm)
             },
-
+            
+            
             handleSubmitLogin: async (e) => {
-               
                 const store = getStore()
-                await fetch("http://localhost:3001/user/login", {
+                await fetch("http://localhost:5000/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -120,17 +93,19 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        setStore({ validation: true, user_id: data.user_id })
+                        setStore({ validation: true, user_id: data.user_id,username:data.username })
                         console.log(store.user_id)
 
                     })
                     .catch((error) => console.log(error))
+
                 return store.validation  
             },
 
             logout: () => {
                 localStorage.removeItem("accessToken");
                 console.log("logout");
+                setStore({validation: false})
             },
 
             handleSubmituser: async () => {
@@ -138,7 +113,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-                await fetch("http://localhost:3001/user/register", {
+                await fetch("http://localhost:5000/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -155,7 +130,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
 
-                await fetch("http://localhost:3001/user/logingoogle", {
+                await fetch("http://localhost:5000/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -163,9 +138,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => response.json())
                     .then((data) => {
+                        localStorage.setItem("user_id",data.user_id)
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(data)
-                        setStore({ validation: true, user_id: data.user_id })
+                        setStore({ validation: true, user_id: data.user_id,username:data.username })
                         console.log(store.user_id)
 
                     })
@@ -175,9 +151,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             accessTokenExpired: () => {
-                let accessToken = localStorage.getItem("accessToken");
+                const store = getStore()
+                let accessToken = localStorage.getItem("accessToken")
+                setStore({productSended:false})
                 if (accessToken) {
-                    fetch("http://localhost:3001/users", {
+                    fetch("http://localhost:5000/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
@@ -199,7 +177,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             fetchPublishedProducts: () => {
                 ;
                 const store = getStore()
-                fetch("http://localhost:3001/products", {
+                fetch("http://localhost:5000/products", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -226,7 +204,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getProductsbyCategory: (id) => {
                 const store = getStore()
-                fetch("http://localhost:3001/category/products/" + id, {
+                fetch("http://localhost:5000/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -244,7 +222,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getProductsbyUser: () => {
 
                 const store = getStore()
-                fetch("http://localhost:3001/products/user/" + store.user_id, {
+                fetch("http://localhost:5000/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -266,8 +244,12 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const store = getStore();
                 console.log("Datos del formulario:", store.productForm);
 
+                if (store.productForm.photo === "") {
+                    console.log("La URL de la foto está vacía. No se puede subir el producto.");
+                    return; 
+                }
 
-                await fetch("http://localhost:3001/products/upload", {
+                await fetch("http://localhost:5000/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {
@@ -275,11 +257,25 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => response.json())
                     .then((data) => {
-
                         console.log("Respuesta del servidor:", data);
                         console.log(data);
+                        if(data.msg==="product uploaded"){
+                            setStore({ productSended: true, productForm: {
+                                name: "",
+                                price: 0,
+                                photo: "",
+                                product_info: "",
+                                brand: "",
+                                category_id: 0,
+                                user_id: 0,
+                            }  })
+                        }
+                        
                     })
                     .catch((error) => console.log(error));
+
+                return store.productSended  
+
             },
             handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
                 fetch('http://localhost:3001/exchange-request', {
@@ -301,6 +297,14 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const { user_id } = store;
                 const { productId, recipientEmail, details } = exchangeDetails;
                 const actions = getActions();
+            setSelectedProduct:(product) => {
+                setStore ({ selectedProduct: product });
+               const store= getStore()
+               console.log(store.selectedProduct)
+               console.log("producto seleccionado")
+               return true 
+            }, 
+
 
                 actions.handleExchangeRequest(user_id, productId, recipientEmail, details);
             },*/

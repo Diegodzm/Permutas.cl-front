@@ -8,6 +8,7 @@ const CatVest = () => {
 
     useEffect(() => {
         actions.getProductsbyCategory(2)
+        actions.accessTokenExpired()
         console.log(store.categoryProducts)
         
      
