@@ -281,14 +281,36 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     })
                     .catch((error) => console.log(error));
             },
+            handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
+                fetch('http://localhost:3001/exchange-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "user_id": store.userId, "product_id": store.productId, recipientEmail, exchangeDetails })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => console.error(error));
+            },
 
+            /*submitExchangeRequest: (exchangeDetails) => {
+                const store = getStore();
+                const { user_id } = store;
+                const { productId, recipientEmail, details } = exchangeDetails;
+                const actions = getActions();
 
-
-
-
+                actions.handleExchangeRequest(user_id, productId, recipientEmail, details);
+            },*/
         }
     }
 };
+
+
+
+
 
 
 
