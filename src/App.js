@@ -18,7 +18,9 @@ import CatVest from './views/cat_vestimenta';
 import Allproducts from './views/allproducts';
 import UserProducts from './views/userproducts';
 import { Context } from "./store/context";
-import { useContext } from "react"
+import { useContext } from "react";
+import OfertaPermutaView from './views/oferta_permutaviews';
+import Intercambio from './views/intercambio';
 
 
 function App() {
@@ -32,6 +34,9 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
+          <Route path='/oferta_permuta' element={<OfertaPermutaView />}></Route>
+          <Route path='/intercambio' element={<Intercambio />}></Route>
+
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
           
           
