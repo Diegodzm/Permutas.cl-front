@@ -280,6 +280,20 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
+            handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
+                fetch('http://localhost:3001/exchange-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "user_id": store.userId, "product_id": store.productId, recipientEmail, exchangeDetails })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => console.error(error));
+            },
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
@@ -353,12 +367,15 @@ export const getState = ({ getActions, getStore, setStore }) => {
             
 
 
-
-
-
+               // actions.handleExchangeRequest(user_id, productId, recipientEmail, details);
+            },
         }
     }
-};
+
+
+
+
+
 
 
 
