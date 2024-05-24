@@ -189,7 +189,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             publishedProducts: data
                         })
-                        console.log(store.publishedProducts)
+                       
                     })
                     .catch((error) => console.log(error));
             },
@@ -234,7 +234,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             userProducts: data
                         })
-                        console.log(store.userProducts)
+        
                     })
                     .catch((error) => console.log(error));
             },
@@ -280,20 +280,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
-            handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
-                fetch('http://localhost:3001/exchange-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "user_id": store.userId, "product_id": store.productId, recipientEmail, exchangeDetails })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => console.error(error));
-            },
+            
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
@@ -308,66 +295,28 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             },
 
-            handleOfferTradeButtonClick: async (offeredProductIndex, amount) => {
-                try {
-                    if (offeredProductIndex === null || offeredProductIndex === -1) {
-                        throw new Error("El índice del producto ofrecido no es válido");
+            handleOfferTradeButtonClick: async(amount) => {
+                const store= getStore()
+                const offered_product= store.publishedProducts[store.productIndex]
+                offered_product.amount= amount
+                await fetch("http://localhost:5000/offerupload", {
+                    method: "POST",
+                    body: JSON.stringify(offered_product),
+                    headers: {
+                        "Content-Type": "application/json"
                     }
-                    
-                    const store = await getStore();
-                    console.log("Índice:", offeredProductIndex);
+                }).then((response) => response.json())
+                .then((data) => {
+                        console.log(data);})
+
+                .catch((error) => console.log(error));
+                return true 
             
             
-                    const producto_ofertado = store.publishedProducts[offeredProductIndex];
-                    if (!producto_ofertado) {
-                        throw new Error("El producto ofertado no está definido");
-                    }
-                    console.log("Producto ofertado en el índice", offeredProductIndex, ":", producto_ofertado);
-            
-                    if (!producto_ofertado) {
-                        throw new Error("El producto ofertado no está definido o el índice no es válido");
-                    }
-            
-                    if (amount == null) {
-                        throw new Error("El amount no está definido");
-                    }
-            
-                    producto_ofertado.amount = amount;
-            
-                    const { user_id, product_id } = producto_ofertado;
-                    if (!user_id) {
-                        throw new Error("user_id no está definido en el producto ofertado");
-                    }
-                    if (!product_id) {
-                        throw new Error("product_id no está definido en el producto ofertado");
-                    }
-                    const data = {
-                        user_id: producto_ofertado.user_id,
-                        amount: producto_ofertado.amount,
-                        product_id: producto_ofertado.id
-                    };
-            
-                    const response = await fetch('http://localhost:5000/products/oferta/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-            
-                    if (response.ok) {
-                        console.log("Oferta realizada con éxito");
-                    } else {
-                        console.error("Error al realizar la oferta");
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                }
             }
             
 
 
-               // actions.handleExchangeRequest(user_id, productId, recipientEmail, details);
             },
         }
     }
