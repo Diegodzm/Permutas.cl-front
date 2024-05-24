@@ -33,9 +33,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             UserProductOfferList: [],
 
             UserProductForPermuta: [
-                
+
                 {}
-              
+
 
             ],
 
@@ -59,8 +59,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 console.log(formData)
                 const store = getStore()
                 const productForm = store.productForm
-                const {name, value} = formData.target
-                productForm[name]=value 
+                const { name, value } = formData.target
+                productForm[name] = value
                 setStore({
                     productForm: productForm
                 })
@@ -74,10 +74,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         ...formData
                     }
                 })); */
-                console.log (getStore().productForm)
+                console.log(getStore().productForm)
             },
-            
-            
+
+
             handleSubmitLogin: async (e) => {
                 const store = getStore()
                 await fetch("http://localhost:5000/user/login", {
@@ -94,19 +94,19 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        setStore({ validation: true, user_id: data.user_id,username:data.username })
+                        setStore({ validation: true, user_id: data.user_id, username: data.username })
                         console.log(store.user_id)
 
                     })
                     .catch((error) => console.log(error))
 
-                return store.validation  
+                return store.validation
             },
 
             logout: () => {
                 localStorage.removeItem("accessToken");
                 console.log("logout");
-                setStore({validation: false})
+                setStore({ validation: false })
             },
 
             handleSubmituser: async () => {
@@ -139,10 +139,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => response.json())
                     .then((data) => {
-                        localStorage.setItem("user_id",data.user_id)
+                        localStorage.setItem("user_id", data.user_id)
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(data)
-                        setStore({ validation: true, user_id: data.user_id,username:data.username })
+                        setStore({ validation: true, user_id: data.user_id, username: data.username })
                         console.log(store.user_id)
 
                     })
@@ -154,7 +154,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             accessTokenExpired: () => {
                 const store = getStore()
                 let accessToken = localStorage.getItem("accessToken")
-                setStore({productSended:false})
+                setStore({ productSended: false })
                 if (accessToken) {
                     fetch("http://localhost:5000/users", {
                         method: "GET",
@@ -247,7 +247,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                 if (store.productForm.photo === "") {
                     console.log("La URL de la foto está vacía. No se puede subir el producto.");
-                    return; 
+                    return;
                 }
 
                 await fetch("http://localhost:5000/products/upload", {
@@ -260,71 +260,97 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .then((data) => {
                         console.log("Respuesta del servidor:", data);
                         console.log(data);
-                        if(data.msg==="product uploaded"){
-                            setStore({ productSended: true, productForm: {
-                                name: "",
-                                price: 0,
-                                photo: "",
-                                product_info: "",
-                                brand: "",
-                                category_id: 0,
-                                user_id: 0,
-                            }  })
+                        if (data.msg === "product uploaded") {
+                            setStore({
+                                productSended: true, productForm: {
+                                    name: "",
+                                    price: 0,
+                                    photo: "",
+                                    product_info: "",
+                                    brand: "",
+                                    category_id: 0,
+                                    user_id: 0,
+                                }
+                            })
                         }
-                        
+
                     })
                     .catch((error) => console.log(error));
 
-                return store.productSended  
+                return store.productSended
 
             },
 
-            setSelectedProduct:(product) => {
-                setStore ({ selectedProduct: product });
-               const store= getStore()
-               console.log(store.selectedProduct)
-               console.log("producto seleccionado")
-               return true 
-            }, 
+            setSelectedProduct: (product) => {
+                setStore({ selectedProduct: product });
+                const store = getStore()
+                console.log(store.selectedProduct)
+                console.log("producto seleccionado")
+                return true
+            },
 
             showIndex: (index) => {
-                setStore ({productIndex:index})
+                setStore({ productIndex: index })
 
             },
 
-            handleOfferTradeButtonClick : async () => {
-                if (!productoSeleccionado || productosOferta.length === 0) {
-                    alert("Debes seleccionar al menos un producto para ofrecer.");
-                    return;
-                }
-        
-                const offerId = productosOferta.id;
-                const selectedProductId = productoSeleccionado.id;
-                console.log(offerId)
-                console.log(selectedProductId)
+            handleOfferTradeButtonClick: async (offeredProductIndex, amount) => {
                 try {
-                    const response = await fetch(`/exchange/${offerId}/${selectedProductId}`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${store.accessToken}`,
-                        },
-                    });
-        
-                    if (!response.ok) {
-                        const error = await response.json();
-                        throw new Error(error.message);
+                    if (offeredProductIndex === null || offeredProductIndex === -1) {
+                        throw new Error("El índice del producto ofrecido no es válido");
                     }
-        
-                    alert("La transacción se ha realizado exitosamente.");
-        
-                    setProductosOferta([]);
-                    setProductoSeleccionado(null);
-        
+                    
+                    const store = await getStore();
+                    console.log("Índice:", offeredProductIndex);
+            
+            
+                    const producto_ofertado = store.publishedProducts[offeredProductIndex];
+                    if (!producto_ofertado) {
+                        throw new Error("El producto ofertado no está definido");
+                    }
+                    console.log("Producto ofertado en el índice", offeredProductIndex, ":", producto_ofertado);
+            
+                    if (!producto_ofertado) {
+                        throw new Error("El producto ofertado no está definido o el índice no es válido");
+                    }
+            
+                    if (amount == null) {
+                        throw new Error("El amount no está definido");
+                    }
+            
+                    producto_ofertado.amount = amount;
+            
+                    const { user_id, product_id } = producto_ofertado;
+                    if (!user_id) {
+                        throw new Error("user_id no está definido en el producto ofertado");
+                    }
+                    if (!product_id) {
+                        throw new Error("product_id no está definido en el producto ofertado");
+                    }
+                    const data = {
+                        user_id: producto_ofertado.user_id,
+                        amount: producto_ofertado.amount,
+                        product_id: producto_ofertado.id
+                    };
+            
+                    const response = await fetch('http://localhost:5000/products/oferta/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+            
+                    if (response.ok) {
+                        console.log("Oferta realizada con éxito");
+                    } else {
+                        console.error("Error al realizar la oferta");
+                    }
                 } catch (error) {
-                    alert(error.message);
+                    console.error("Error:", error);
                 }
             }
+            
 
 
 

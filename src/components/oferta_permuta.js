@@ -5,16 +5,10 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 
-
-
-
-
-
-
-
 function OfertaPermuta() {
     const [productosOferta, setProductosOferta] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
+    const [amount, setAmount] = useState('');
 
     const { actions, store } = useContext(Context);
 
@@ -23,6 +17,15 @@ function OfertaPermuta() {
         console.log(store.selectedProduct)
         console.log("producto seleccionado")
     }, []);
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value) && value <= 50000) {
+            setAmount(value);
+            console.log ("amount:", value)
+            
+        }
+    };
 
     const handleOfferButtonClick = (index) => {
         const selectedProduct = store.userProducts[index];
@@ -47,7 +50,7 @@ function OfertaPermuta() {
         setProductoSeleccionado(null);
     };
 
-    
+
 
     return (
         <Container>
@@ -77,24 +80,29 @@ function OfertaPermuta() {
                 </Row>
             </div>
 
-            {/* Sección central para los productos seleccionados */}
+            {/* Sección central para los productos ofertados y seleccionados */}
             <div className="section mt-4" style={{ backgroundColor: '#f0fcfb', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                {(productosOferta.length > 0 || productoSeleccionado) && <h2 className="text-center" style={{ color: '#006400' }}>Productos seleccionados</h2>}
+                {(productosOferta.length > 0 || productoSeleccionado) && <h2 className="text-center" style={{ color: '#006400' }}>Productos para permutar</h2>}
                 <Row className="justify-content-between align-items-center">
                     <Col xs={6} className="d-flex justify-content-end">
                         {productosOferta.map((product, index) => (
                             <Card key={index} style={{ width: '100%', backgroundColor: '#dfffd8', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px', marginRight: index === productosOferta.length - 1 ? 0 : '20px' }}>
                                 <Card.Body>
-                                    <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#006400' }}>{product.name}</Card.Title>
+                                    <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#006400' }}>Producto ofrecido: {product.name}</Card.Title>
                                     <div className="card-img-container" style={{ maxHeight: '200px', overflow: 'hidden' }}>
                                         <Card.Img className="cardimg" variant="top" src={product.photo} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                                     </div>
                                     <Card.Text style={{ color: '#4f4f4f' }}>Descripción: {product.product_info}</Card.Text>
                                     <Card.Text style={{ color: '#4f4f4f' }}>Precio: {product.price}</Card.Text>
                                     <InputGroup className="mb-3">
-                                        <InputGroup.Text>$</InputGroup.Text>
-                                        <Form.Control aria-label="Amount (to the nearest dollar)" />
-                                        <InputGroup.Text>.00</InputGroup.Text>
+                                        <InputGroup.Text>Monto extra $</InputGroup.Text>
+                                        <Form.Control
+                                            aria-label="Monto"
+                                            type="number"
+                                            value={amount}
+                                            onChange={handleChange}
+                                            placeholder="Ingresa un monto (opcional)"
+                                        />
                                     </InputGroup>
 
                                     <Button variant="danger" style={{ color: '#fff', backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={() => handleRemoveOffer(index)}>Cancelar Oferta</Button>
@@ -107,7 +115,7 @@ function OfertaPermuta() {
                             <Card style={{ width: '100%', backgroundColor: '#d1f7d1', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
                                 <Card.Img className="cardimg" variant="top" src={productoSeleccionado.photo} />
                                 <Card.Body>
-                                    <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#006400' }}>{productoSeleccionado.name}</Card.Title>
+                                    <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#006400' }}>Para permutar: {productoSeleccionado.name}</Card.Title>
                                     <Card.Text style={{ color: '#4f4f4f' }}>Descripción: {productoSeleccionado.product_info}</Card.Text>
                                     <Card.Text style={{ color: '#4f4f4f' }}>Precio: {productoSeleccionado.price}</Card.Text>
                                     <Button variant="danger" style={{ color: '#fff', backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={handleRemoveSelection}>Cancelar Selección</Button>
@@ -118,7 +126,12 @@ function OfertaPermuta() {
                 </Row>
                 {productosOferta.length > 0 && productoSeleccionado && (
                     <div className="text-center mt-4">
-                        <Button onClick={handleOfferTradeButtonClick} style={{ backgroundColor: '#20c997', borderColor: '#20c997', color: '#fff', marginRight: '10px' }}>Ofrecer Intercambio</Button>
+                        <Button onClick={(index) => {
+    console.log("Índice en onClick:", store.publishedProducts[index]);
+    console.log("Amount en onClick:", amount);
+    actions.handleOfferTradeButtonClick( store.publishedProducts[index], amount);
+}} style={{ backgroundColor: '#20c997', borderColor: '#20c997', color: '#fff', marginRight: '10px' }}>Ofrecer Intercambio</Button>
+
                         <Button variant="warning" style={{ color: '#fff', backgroundColor: '#ffc107', borderColor: '#ffc107' }} onClick={handleUndoButtonClick}>Deshacer Operación</Button>
                     </div>
                 )}
