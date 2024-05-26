@@ -20,6 +20,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 user_id: 0,
             },
             selectedProduct: [],
+            productIndex: 0,
             userProducts: [],
             publishedProducts: [],
             categoryProducts: [],
@@ -188,7 +189,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             publishedProducts: data
                         })
-                        console.log(store.publishedProducts)
+                       
                     })
                     .catch((error) => console.log(error));
             },
@@ -233,7 +234,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             userProducts: data
                         })
-                        console.log(store.userProducts)
+        
                     })
                     .catch((error) => console.log(error));
             },
@@ -279,6 +280,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
+            
+
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
                 const store = getStore()
@@ -286,9 +289,38 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 console.log("producto seleccionado")
                 return true
             },
+
+            showIndex: (index) => {
+                setStore({ productIndex: index })
+
+            },
+
+            handleOfferTradeButtonClick: async(amount) => {
+                const store= getStore()
+                const offered_product= store.publishedProducts[store.productIndex]
+                offered_product.amount= amount
+                await fetch("http://localhost:5000/offerupload", {
+                    method: "POST",
+                    body: JSON.stringify(offered_product),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then((response) => response.json())
+                .then((data) => {
+                        console.log(data);})
+
+                .catch((error) => console.log(error));
+                return true 
+            
+            
+            }
+            
+
+
+            },
         }
     }
-};
+
 
 
 

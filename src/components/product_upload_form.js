@@ -77,7 +77,7 @@ const ProductUploadForm = () => {
                 <Col md={{ span: 6, offset: 3 }}>
                     <Form noValidate validated={validated} onSubmit={submitProduct}>
                         <Form.Group className="mt-2 mb-2" controlId="name">
-                            <Form.Label>Product name</Form.Label>
+                            <Form.Label>Nombre del producto</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="name"
@@ -86,12 +86,12 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter a product name.
+                                Por favor ingresa un nombre para tu producto.
                             </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mt-2 mb-2" controlId="price">
-                            <Form.Label>Price CL$</Form.Label>
+                            <Form.Label>Avaluación CL$</Form.Label>
                             <Form.Control
                                 type="number"
                                 name="price"
@@ -100,7 +100,7 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter a price.
+                                Ingrese un avaluación de su producto. 
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -139,7 +139,7 @@ const ProductUploadForm = () => {
                         </Form.Group>
 
                         <Form.Group className="mt-2 mb-2" controlId="product_info">
-                            <Form.Label>Product info</Form.Label>
+                            <Form.Label>Información del producto</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="product_info"
@@ -148,11 +148,11 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter the info of your product.
+                                Por favor ingrese la información de su producto.
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mt-2 mb-2" controlId="brand">
-                            <Form.Label>Brand</Form.Label>
+                            <Form.Label>Marca</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="brand"
@@ -161,10 +161,10 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please enter the product's brand.
+                                Por favor ingrese la marca de su producto 
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5' type="submit">Submit Product</Button>
+                        <Button className='mt-4 mb-5' type="submit">Publicar producto</Button>
                     </Form>
                 </Col>
             </Row>

@@ -18,9 +18,10 @@ const Allproducts = () => {
 
     const handleCardClick = (product) => {
         actions.setSelectedProduct(product) 
-        console.log(product)
-       
-   
+        console.log(store.productIndex)
+        const indexProduct=store.publishedProducts.indexOf(product)
+        actions.showIndex(indexProduct)
+        
     };
 
     return (<div className="container mt-5">

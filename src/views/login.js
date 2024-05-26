@@ -84,7 +84,7 @@ const Login = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <div className="d-flex mt-5 ms-3 ">
-                <Button className='me-4 col-5 ' type="submit">Submit</Button>
+                <Button className='me-4 col-5 ' type="submit">Ingresar</Button>
                 <GoogleLogin
                         
                         onSuccess={(credentialResponse) => {
