@@ -21,6 +21,7 @@ import { Context } from "./store/context";
 import { useContext } from "react";
 import OfertaPermutaView from './views/oferta_permutaviews';
 import Intercambio from './views/intercambio';
+import EmailForm from './components/EmailForm';
 
 
 function App() {
@@ -36,7 +37,10 @@ function App() {
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
           <Route path='/oferta_permuta' element={<OfertaPermutaView />}></Route>
           <Route path='/intercambio' element={<Intercambio />}></Route>
+          <Route path='/EmailForm' element={<EmailForm />}></Route>
 
+         
+         
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
           
           

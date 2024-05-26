@@ -32,9 +32,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             UserProductOfferList: [],
 
             UserProductForPermuta: [
-                
+
                 {}
-              
+
 
             ],
 
@@ -58,8 +58,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 console.log(formData)
                 const store = getStore()
                 const productForm = store.productForm
-                const {name, value} = formData.target
-                productForm[name]=value 
+                const { name, value } = formData.target
+                productForm[name] = value
                 setStore({
                     productForm: productForm
                 })
@@ -73,13 +73,13 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         ...formData
                     }
                 })); */
-                console.log (getStore().productForm)
+                console.log(getStore().productForm)
             },
-            
-            
+
+
             handleSubmitLogin: async (e) => {
                 const store = getStore()
-                await fetch("http://localhost:5000/user/login", {
+                await fetch("http://localhost:3001/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -93,19 +93,19 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((data) => {
                         localStorage.setItem("accessToken", data.access_token);
-                        setStore({ validation: true, user_id: data.user_id,username:data.username })
+                        setStore({ validation: true, user_id: data.user_id, username: data.username })
                         console.log(store.user_id)
 
                     })
                     .catch((error) => console.log(error))
 
-                return store.validation  
+                return store.validation
             },
 
             logout: () => {
                 localStorage.removeItem("accessToken");
                 console.log("logout");
-                setStore({validation: false})
+                setStore({ validation: false })
             },
 
             handleSubmituser: async () => {
@@ -113,7 +113,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-                await fetch("http://localhost:5000/user/register", {
+                await fetch("http://localhost:3001/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -130,7 +130,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
 
-                await fetch("http://localhost:5000/user/logingoogle", {
+                await fetch("http://localhost:3001/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -138,10 +138,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 }).then((response) => response.json())
                     .then((data) => {
-                        localStorage.setItem("user_id",data.user_id)
+                        localStorage.setItem("user_id", data.user_id)
                         localStorage.setItem("accessToken", data.access_token);
                         console.log(data)
-                        setStore({ validation: true, user_id: data.user_id,username:data.username })
+                        setStore({ validation: true, user_id: data.user_id, username: data.username })
                         console.log(store.user_id)
 
                     })
@@ -153,9 +153,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
             accessTokenExpired: () => {
                 const store = getStore()
                 let accessToken = localStorage.getItem("accessToken")
-                setStore({productSended:false})
+                setStore({ productSended: false })
                 if (accessToken) {
-                    fetch("http://localhost:5000/users", {
+                    fetch("http://localhost:3001/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
@@ -177,7 +177,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             fetchPublishedProducts: () => {
                 ;
                 const store = getStore()
-                fetch("http://localhost:5000/products", {
+                fetch("http://localhost:3001/products", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -204,7 +204,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getProductsbyCategory: (id) => {
                 const store = getStore()
-                fetch("http://localhost:5000/category/products/" + id, {
+                fetch("http://localhost:3001/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -222,7 +222,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getProductsbyUser: () => {
 
                 const store = getStore()
-                fetch("http://localhost:5000/products/user/" + store.user_id, {
+                fetch("http://localhost:3001/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -246,10 +246,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                 if (store.productForm.photo === "") {
                     console.log("La URL de la foto está vacía. No se puede subir el producto.");
-                    return; 
+                    return;
                 }
 
-                await fetch("http://localhost:5000/products/upload", {
+                await fetch("http://localhost:3001/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {
@@ -259,55 +259,33 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .then((data) => {
                         console.log("Respuesta del servidor:", data);
                         console.log(data);
-                        if(data.msg==="product uploaded"){
-                            setStore({ productSended: true, productForm: {
-                                name: "",
-                                price: 0,
-                                photo: "",
-                                product_info: "",
-                                brand: "",
-                                category_id: 0,
-                                user_id: 0,
-                            }  })
+                        if (data.msg === "product uploaded") {
+                            setStore({
+                                productSended: true, productForm: {
+                                    name: "",
+                                    price: 0,
+                                    photo: "",
+                                    product_info: "",
+                                    brand: "",
+                                    category_id: 0,
+                                    user_id: 0,
+                                }
+                            })
                         }
-                        
+
                     })
                     .catch((error) => console.log(error));
 
-                return store.productSended  
+                return store.productSended
 
             },
-            handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
-                fetch('http://localhost:3001/exchange-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "user_id": store.userId, "product_id": store.productId, recipientEmail, exchangeDetails })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => console.error(error));
+            setSelectedProduct: (product) => {
+                setStore({ selectedProduct: product });
+                const store = getStore()
+                console.log(store.selectedProduct)
+                console.log("producto seleccionado")
+                return true
             },
-
-            /*submitExchangeRequest: (exchangeDetails) => {
-                const store = getStore();
-                const { user_id } = store;
-                const { productId, recipientEmail, details } = exchangeDetails;
-                const actions = getActions();
-            setSelectedProduct:(product) => {
-                setStore ({ selectedProduct: product });
-               const store= getStore()
-               console.log(store.selectedProduct)
-               console.log("producto seleccionado")
-               return true 
-            }, 
-
-
-                actions.handleExchangeRequest(user_id, productId, recipientEmail, details);
-            },*/
         }
     }
 };

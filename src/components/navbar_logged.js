@@ -15,7 +15,6 @@ function NavbarLogged() {
   return (
     <Navbar expand="lg" className=" navbar navbar-light  d-flex">
       <Container>
-        <Navbar.Brand className='col-6'>Permutas.cl</Navbar.Brand>
       <Navbar.Brand className='logo col-5'  ><Link to="/"><img  className="logo" src={logo} alt='logo'></img></Link></Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -36,6 +35,8 @@ function NavbarLogged() {
             <NavDropdown title={store.username}>
               <Nav.Link className='mx-2' ><Link to='/products/user'>Mis Productos</Link></Nav.Link>
               <Nav.Link className='mx-2' ><Link to='/wishlist'>Favoritos</Link></Nav.Link>
+              <Nav.Link className='mx-2' ><Link to='/EmailForm'>correo</Link></Nav.Link>
+
             </NavDropdown>
             <Nav.Link className='mx-1' ><Link to='/product_upload'>Subir Producto</Link></Nav.Link>
             <Nav.Link className='mx-1' ><Link to='/products'>Productos</Link></Nav.Link>
