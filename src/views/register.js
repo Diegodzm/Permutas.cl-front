@@ -167,7 +167,7 @@ const Register = () => {
                                 Please enter a valid email address.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5'type="submit">Submit</Button>
+                        <Button  className="btn btn-primary" style={{ backgroundColor: '#426B1F'}}type="submit">Registrarse</Button>
                         <Link to='/'></Link>
                     </Form>
                 </Col>

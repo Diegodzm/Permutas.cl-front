@@ -1,11 +1,9 @@
 import { Context } from "../store/context"
 import { useContext, useEffect } from "react"
 import { useNavigate, } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import './allproducts.css'
 import { Link } from "react-router-dom";
-
+import { Button, Card, Row, Col, Container } from 'react-bootstrap';
 
 const Allproducts = () => {
     const { actions, store } = useContext(Context)
@@ -24,33 +22,29 @@ const Allproducts = () => {
         
     };
 
-    return (<div className="container mt-5">
-
-        <ul>{store.publishedProducts.map((product, index) =>
-            <li className='product_card col-3 border d-inline-flex p-2 mt-4 mx-2 ' key={index}>
-                <Button onClick={() => handleCardClick(product)}>
-                    <Link to='/oferta_permuta'>
-                    <Card style={{ width: '15 rem', }}>
-                        <Card.Img className="cardimg"   variant="top" src={store.publishedProducts[index].photo} />
-                        <Card.Body>
-                            <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.publishedProducts[index].name}</Card.Title>
-                            <Card.Text >
-                                Descripcion: {store.publishedProducts[index].product_info}
-                            </Card.Text>
-                            <Card.Text>
-                                Precio: {store.publishedProducts[index].price}
-                            </Card.Text>
-                            
-                        </Card.Body>
-                    </Card>
+    return <div className="container mt-5">
+    <Row>
+        {store.publishedProducts.map((product, index) => (
+            <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                <Button onClick={() => handleCardClick(product)} className="p-0" style={{ border: 'none', width: '100%' }}>
+                    <Link to='/oferta_permuta' style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+                            <Card.Img className="cardimg" variant="top" src={product.photo} />
+                            <Card.Body>
+                                <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{product.name}</Card.Title>
+                                <Card.Text style={{ color: '#666' }}>
+                                    Descripción: {product.product_info}
+                                </Card.Text>
+                                <Card.Text style={{ color: '#666' }}>
+                                    Precio: {product.price}
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
                     </Link>
                 </Button>
+            </Col>
+        ))}
+    </Row>
+</div>}
 
-
-            </li>)}
-
-        </ul>
-
-
-    </div>)}
     export default Allproducts

@@ -30,6 +30,10 @@ function OfertaPermuta() {
     const handleOfferButtonClick = (index) => {
         const selectedProduct = store.userProducts[index];
         setProductosOferta([...productosOferta, selectedProduct]);
+        console.log(selectedProduct)
+        actions.setSelectedOfferProduct(index)
+        console.log("avanza el producto:", index)
+
     };
 
     const handleSelectButtonClick = () => {
@@ -127,9 +131,10 @@ function OfertaPermuta() {
                 {productosOferta.length > 0 && productoSeleccionado && (
                     <div className="text-center mt-4">
                         <Button onClick={(index) => {
-    console.log("Índice en onClick:", store.publishedProducts[index]);
+                            
+    console.log("Índice en onClick:", index);
     console.log("Amount en onClick:", amount);
-    actions.handleOfferTradeButtonClick( store.publishedProducts[index], amount);
+    actions.handleOfferTradeButtonClick( index, amount);
 }} style={{ backgroundColor: '#20c997', borderColor: '#20c997', color: '#fff', marginRight: '10px' }}>Ofrecer Intercambio</Button>
 
                         <Button variant="warning" style={{ color: '#fff', backgroundColor: '#ffc107', borderColor: '#ffc107' }} onClick={handleUndoButtonClick}>Deshacer Operación</Button>

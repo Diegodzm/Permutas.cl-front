@@ -20,6 +20,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 user_id: 0,
             },
             selectedProduct: [],
+            selectedOfferProduct:[],
             productIndex: 0,
             userProducts: [],
             publishedProducts: [],
@@ -280,19 +281,19 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
-            handleExchangeRequest: (userId, productId, recipientEmail, exchangeDetails) => {
-                fetch('http://localhost:3001/exchange-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "user_id": store.userId, "product_id": store.productId, recipientEmail, exchangeDetails })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => console.error(error));
+          
+
+            setSelectedOfferProduct: (product) => {
+                setStore({ selectedOfferProduct: product });
+                const store = getStore()
+                console.log(store.selectedOfferProduct)
+                console.log("producto seleccionado")
+                return true
+            },
+
+            showOfferIndex: (index) => {
+                setStore({ productIndex: index })
+
             },
 
             setSelectedProduct: (product) => {
@@ -344,7 +345,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     const data = {
                         user_id: producto_ofertado.user_id,
                         amount: producto_ofertado.amount,
-                        product_id: producto_ofertado.id
+                        product_id: producto_ofertado.user_id
                     };
             
                     const response = await fetch('http://localhost:5000/products/oferta/', {

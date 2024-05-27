@@ -15,7 +15,6 @@ function NavbarLogged() {
   return (
     <Navbar expand="lg" className=" navbar navbar-light  d-flex">
       <Container>
-        <Navbar.Brand className='col-6'>Permutas.cl</Navbar.Brand>
       <Navbar.Brand className='logo col-5'  ><Link to="/"><img  className="logo" src={logo} alt='logo'></img></Link></Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
