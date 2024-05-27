@@ -28,7 +28,7 @@ const CatElectro = () => {
                     <Card.Text style={{ color: '#666' }}>
                         Precio: {store.categoryProducts[index].price}
                     </Card.Text>
-                    <Button href="/productreview" style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff' }}>
+                    <Button className="bg-success mt-1 mb-2" href="/productreview" style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff' }}>
                         Ver producto
                     </Button>
                 </Card.Body>

@@ -29,37 +29,33 @@ const Allproducts = () => {
 
     
 
-    return (<div className="container mt-5">
-
-        <ul>{productdif.map((product, index) =>
-            <li className='product_card col-3 border d-inline-flex p-2 mt-4 mx-2 ' key={index}>
-                   
-                    <Card style={{ width: '15 rem', }}>
-                        <Card.Img className="cardimg"   variant="top" src={productdif[index].photo} />
-                        <Card.Body>
-                            <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{productdif[index].name}</Card.Title>
-                            <Card.Text >
-                                Descripcion: {productdif[index].product_info}
-                            </Card.Text>
-                            <Card.Text>
-                                Precio: {productdif[index].price}
-                            </Card.Text>
-                            
-                        </Card.Body>
-                        <Link  to='/oferta_permuta'><Button className="bg-success mt-1 mb-2 " onClick={() => handleCardClick(product)}>Ofertar</Button></Link>
-                        <Button className="bg-primary" onClick={()=>actions.addWishedproduct(product)}>Agregar a favoritos</Button>
-                    </Card>
-                    
-                
-               
-
-
-            </li>)}
-
-
-        </ul>
-        
-
-
-    </div>)}
+    return <div className="container mt-5">
+    <Row>
+        {productdif.map((product, index) => (
+            <Col className='product_card mb-4' xs={12} sm={6} md={4} lg={3} key={index}>
+                <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+                    <Card.Img className="cardimg" variant="top" src={productdif[index].photo} />
+                    <Card.Body>
+                        <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{productdif[index].name}</Card.Title>
+                        <Card.Text style={{ color: '#666' }}>
+                            Descripción: {productdif[index].product_info}
+                        </Card.Text>
+                        <Card.Text style={{ color: '#666' }}>
+                            Precio: {productdif[index].price}
+                        </Card.Text>
+                        <Link to='/oferta_permuta'>
+                            <Button className="bg-success mt-1 mb-2" onClick={() => handleCardClick(product)} style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff', width: '100%' }}>
+                                Ofertar
+                            </Button>
+                        </Link>
+                        <Button className="bg-success mt-1 mb-2" onClick={() => actions.addWishedproduct(product)} style={{ backgroundColor: '#006400', borderColor: '#2e8b57', color: '#fff', width: '100%' }}>
+                            Agregar a favoritos
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        ))}
+    </Row>
+</div>
+}
     export default Allproducts
