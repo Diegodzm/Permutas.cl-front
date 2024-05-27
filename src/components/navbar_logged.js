@@ -16,12 +16,9 @@ function NavbarLogged() {
     <Navbar expand="lg" className=" navbar navbar-light  d-flex">
       <Container>
       <Navbar.Brand className='logo col-5'  ><Link to="/"><img  className="logo" src={logo} alt='logo'></img></Link></Navbar.Brand>
-        
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-
           <Nav >
-          
             <NavDropdown className='mx-1' title="Categories" id="basic-nav-dropdown">
               <NavDropdown.Item  ><Link to="/categorias/electro">Electrodomesticos</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/tecnologia">Tecnologia</Link></NavDropdown.Item>
@@ -29,8 +26,6 @@ function NavbarLogged() {
               <NavDropdown.Item ><Link to="/categorias/abarrotes">Abarrotes</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/deportes">Deportes</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/otros">Otros</Link></NavDropdown.Item>
-
-
             </NavDropdown>
             <NavDropdown title={store.username}>
               <Nav.Link className='mx-2' ><Link to='/products/user'>Mis Productos</Link></Nav.Link>
