@@ -9,12 +9,17 @@ import { Link } from "react-router-dom";
 
 const Allproducts = () => {
     const { actions, store } = useContext(Context)
-
     useEffect(() => {
         actions.accessTokenExpired()
         actions.fetchPublishedProducts()
-        console.log(store.publishedProducts)
+        actions.getProductsbyUser()
     }, []);
+
+    const allproducts= store.publishedProducts
+    const userproducts= store.userProducts
+  
+    let productdif = allproducts.filter(a => !userproducts.map(b=>b.user_id).includes(a.user_id))
+
 
     const handleCardClick = (product) => {
         actions.setSelectedProduct(product) 
@@ -24,32 +29,38 @@ const Allproducts = () => {
         
     };
 
+    
+
     return (<div className="container mt-5">
 
-        <ul>{store.publishedProducts.map((product, index) =>
+        <ul>{productdif.map((product, index) =>
             <li className='product_card col-3 border d-inline-flex p-2 mt-4 mx-2 ' key={index}>
-                <Button onClick={() => handleCardClick(product)}>
-                    <Link to='/oferta_permuta'>
+                   
                     <Card style={{ width: '15 rem', }}>
-                        <Card.Img className="cardimg"   variant="top" src={store.publishedProducts[index].photo} />
+                        <Card.Img className="cardimg"   variant="top" src={productdif[index].photo} />
                         <Card.Body>
-                            <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.publishedProducts[index].name}</Card.Title>
+                            <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{productdif[index].name}</Card.Title>
                             <Card.Text >
-                                Descripcion: {store.publishedProducts[index].product_info}
+                                Descripcion: {productdif[index].product_info}
                             </Card.Text>
                             <Card.Text>
-                                Precio: {store.publishedProducts[index].price}
+                                Precio: {productdif[index].price}
                             </Card.Text>
                             
                         </Card.Body>
+                        <Link  to='/oferta_permuta'><Button className="bg-success mt-1 mb-2 " onClick={() => handleCardClick(product)}>Ofertar</Button></Link>
+                        <Button className="bg-primary" onClick={()=>actions.addWishedproduct(product)}>Agregar a favoritos</Button>
                     </Card>
-                    </Link>
-                </Button>
+                    
+                
+               
 
 
             </li>)}
 
+
         </ul>
+        
 
 
     </div>)}

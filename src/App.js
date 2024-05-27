@@ -21,7 +21,7 @@ import { Context } from "./store/context";
 import { useContext } from "react";
 import OfertaPermutaView from './views/oferta_permutaviews';
 import Intercambio from './views/intercambio';
-
+import Wishlist from './views/wishlist';
 
 function App() {
   
@@ -52,6 +52,7 @@ function App() {
         <Route path='/categorias/vestimenta' element={<CatVest/>}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
+        <Route path='/wishlist' element={<Wishlist />}></Route>
         
       </Routes>
     </BrowserRouter>

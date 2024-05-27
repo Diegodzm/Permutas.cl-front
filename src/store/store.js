@@ -30,14 +30,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 destinatario: '',
                 mensaje: '',
             },
-            UserProductOfferList: [],
 
-            UserProductForPermuta: [
-
-                {}
-
-
-            ],
+            userwishlist:[],
 
             validation: false,
 
@@ -64,17 +58,55 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 setStore({
                     productForm: productForm
                 })
-                /* setStore((prevState) => ({
-                    productForm: {
-                        ...store.productForm,
-                        [event.target.name]: event.target.value,
-
-
-                        ...prevState.productForm,
-                        ...formData
-                    }
-                })); */
                 console.log(getStore().productForm)
+            },
+            getWishlist:()=>{
+                const store= getStore()
+                fetch("http://localhost:5000/wishlist/"+store.user_id, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        setStore({
+                            userwishlist:data
+                        })
+                        console.log(store.userwishlist)
+                       
+                    })
+                    .catch((error) => console.log(error));
+
+
+
+            },
+
+            addWishedproduct:(product)=>{
+                const store= getStore()
+                console.log(product)
+                fetch("http://localhost:5000/products/wishlist/"+store.user_id, {
+                    method: "POST",
+                    body: JSON.stringify(product),
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error(response.json());
+                    }
+                    return response.json();
+                })
+                    .then((data) => {
+                        console.log(data)
+                        console.log("producto agregado")
+                    
+
+                    })
+                    .catch((error) => console.log(error))
+
+                
+
             },
 
 
@@ -176,7 +208,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             fetchPublishedProducts: () => {
-                ;
                 const store = getStore()
                 fetch("http://localhost:5000/products", {
                     method: "GET",
@@ -189,6 +220,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             publishedProducts: data
                         })
+                        console.log(store.publishedProducts)
                        
                     })
                     .catch((error) => console.log(error));
