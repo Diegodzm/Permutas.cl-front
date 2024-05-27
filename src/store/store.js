@@ -61,7 +61,18 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 });
             },
+            setSelectedOfferProduct: (product) => {
+                setStore({ selectedOfferProduct: product });
+                const store = getStore()
+                console.log(store.selectedOfferProduct)
+                console.log("producto seleccionado")
+                return true
+            },
 
+            showOfferIndex: (index) => {
+                setStore({ productIndex: index })
+
+            },
             handleProductOnChange: (formData) => {
                 console.log(formData)
                 const store = getStore()
@@ -75,7 +86,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getWishlist:()=>{
                 const store= getStore()
-                fetch("http://localhost:5000/wishlist/"+store.user_id, {
+                fetch("http://localhost:3001/wishlist/"+store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -98,7 +109,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             addWishedproduct:(product)=>{
                 const store= getStore()
                 console.log(product)
-                fetch("http://localhost:5000/products/wishlist/"+store.user_id, {
+                fetch("http://localhost:3001/products/wishlist/"+store.user_id, {
                     method: "POST",
                     body: JSON.stringify(product),
                     headers: {

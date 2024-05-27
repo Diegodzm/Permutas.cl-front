@@ -14,28 +14,11 @@ const Notifications = () => {
     }, []);
 
     return (
-        <div className="container mt-5">
 
-            <ul>{store.useroffer.map((product, index) =>
-                <li className='product_card col-3 border d-inline-flex p-2 mt-4 mx-2 ' key={index}>
+            <h1>en construccion...
+            </h1>
 
-                    <Card style={{ width: '15 rem', }}>
-                        <Card.Img className="cardimg" variant="top" src={store.interestedproduct[index].photo} />
-                        <Card.Body>
-                            <Card.Title style={{ fontWeight: "bold", fontSize: "25px" }}>{store.interestedproduct[index].product_info}</Card.Title>
-
-
-                        </Card.Body>
-                    </Card>
-
-
-
-                </li>)}
-
-
-            </ul>
-
-        </div>
+        
     );
 };
 

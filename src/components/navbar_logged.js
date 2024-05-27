@@ -21,7 +21,7 @@ function NavbarLogged() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav >
-            <NavDropdown className='mx-1' title="Categories" id="basic-nav-dropdown">
+            <NavDropdown className='mx-1' title="Categorias" id="basic-nav-dropdown">
               <NavDropdown.Item  ><Link to="/categorias/electro">Electrodomesticos</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/tecnologia">Tecnologia</Link></NavDropdown.Item>
               <NavDropdown.Item ><Link to="/categorias/vestimenta">Vestimenta</Link></NavDropdown.Item>
