@@ -30,7 +30,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 destinatario: '',
                 mensaje: '',
             },
-            UserProductOfferList: [],
+            usernotifications: [],
 
             UserProductForPermuta: [
 
@@ -38,6 +38,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
             ],
+            useroffer: [],
+            interestedproduct: [],
+
+
 
             validation: false,
 
@@ -189,7 +193,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             publishedProducts: data
                         })
-                       
+
                     })
                     .catch((error) => console.log(error));
             },
@@ -234,7 +238,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         setStore({
                             userProducts: data
                         })
-        
+
                     })
                     .catch((error) => console.log(error));
             },
@@ -280,7 +284,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
-            
+
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
@@ -295,31 +299,115 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             },
 
-            handleOfferTradeButtonClick: async(amount) => {
-                const store= getStore()
-                const offered_product= store.publishedProducts[store.productIndex]
-                offered_product.amount= amount
-                await fetch("http://localhost:5000/offerupload", {
+            handleOfferTradeButtonClick: async (amount) => {
+                const store = getStore()
+                const offered_product = store.publishedProducts[store.productIndex]
+                offered_product.user_interested = store.user_id
+                console.log(offered_product)
+                console.log(store.publishedProducts[store.productIndex].user_id)
+                offered_product.amount = amount
+                await fetch("http://localhost:3001/offerupload", {
                     method: "POST",
                     body: JSON.stringify(offered_product),
                     headers: {
                         "Content-Type": "application/json"
                     }
                 }).then((response) => response.json())
-                .then((data) => {
-                        console.log(data);})
+                    .then((data) => {
+                        console.log(data);
+                    })
 
-                .catch((error) => console.log(error));
-                return true 
-            
-            
-            }
-            
+                    .catch((error) => console.log(error));
+                return true
 
 
             },
-        }
+
+            getOfferedUser: () => {
+
+                const store = getStore()
+                const usercatch = store.publishedProducts[store.productIndex].user_id
+                fetch("http://localhost:3001/Email/" + usercatch, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data)
+
+                    })
+                    .catch((error) => console.log(error));
+            },
+
+            getNotifications: () => {
+
+                const store = getStore()
+                fetch("http://localhost:3001/notifications/" + store.user_id, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data)
+                        setStore({ usernotifications: data })
+
+                    })
+                    .catch((error) => console.log(error));
+            },
+            getUserInterested: () => {
+
+                const store = getStore()
+                for (let i = 0; i < store.usernotifications.length; i++) {
+                    const user_interested = store.usernotifications[i].user_interested
+                    fetch("http://localhost:3001/usernotifications/" + user_interested, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data)
+                            setStore({useroffer:data})
+
+                        })
+                        .catch((error) => console.log(error));
+                }
+                
+
+            },
+            getUserInterestedProduct: () => {
+
+                const store = getStore()
+                for (let i = 0; i < store.usernotifications.length; i++) {
+                    const user_interestedproduct = store.usernotifications[i].product_id
+                    fetch("http://localhost:3001/userinterestedproduct/" + user_interestedproduct, {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data) 
+                            setStore({interestedproduct:data})
+
+                        })
+                        .catch((error) => console.log(error));
+                }
+                
+
+            },
+
+
+
+        },
     }
+}
 
 
 

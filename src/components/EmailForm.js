@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import emailjs from "@emailjs/browser";
+import { Context } from "../store/context"
+
 
 const EmailForm = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-
+    const {actions, store} = useContext (Context)
+    useEffect(() => {
+        actions.getOfferedUser()
+        
+     
+    }, []);
+   
     const handlesubmit = (e) => {
       e.preventDefault();
+      setMessage ('hola')
 
       const serviceId = 'service_l8rq83q';
       const templateId = 'template_g3hfj69';
@@ -34,11 +43,7 @@ const EmailForm = () => {
 
     }
 
-    setMessage ('Estiamdo' + name + ', le ha llegado una oferta desde permutas.cl')
-
     return (
-
-
         <form onSubmit={handlesubmit} className="emailform">
             <input
                 type="text"
@@ -52,11 +57,10 @@ const EmailForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 />
+              
                 <button type="submit">Enviar Mensaje</button>
-        
+
         </form>
-
-
     )
 }
 
