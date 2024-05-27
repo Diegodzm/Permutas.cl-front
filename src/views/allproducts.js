@@ -1,20 +1,23 @@
 import { Context } from "../store/context"
 import { useContext, useEffect } from "react"
 import { useNavigate, } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import './allproducts.css'
 import { Link } from "react-router-dom";
-
+import { Button, Card, Row, Col, Container } from 'react-bootstrap';
 
 const Allproducts = () => {
     const { actions, store } = useContext(Context)
-
     useEffect(() => {
         actions.accessTokenExpired()
         actions.fetchPublishedProducts()
-        console.log(store.publishedProducts)
+        actions.getProductsbyUser()
     }, []);
+
+    const allproducts= store.publishedProducts
+    const userproducts= store.userProducts
+  
+    let productdif = allproducts.filter(a => !userproducts.map(b=>b.user_id).includes(a.user_id))
+
 
     const handleCardClick = (product) => {
         actions.setSelectedProduct(product) 
@@ -24,33 +27,35 @@ const Allproducts = () => {
         
     };
 
-    return (<div className="container mt-5">
+    
 
-        <ul>{store.publishedProducts.map((product, index) =>
-            <li className='product_card col-3 border d-inline-flex p-2 mt-4 mx-2 ' key={index}>
-                <Button onClick={() => handleCardClick(product)}>
-                    <Link to='/oferta_permuta'>
-                    <Card style={{ width: '15 rem', }}>
-                        <Card.Img className="cardimg"   variant="top" src={store.publishedProducts[index].photo} />
-                        <Card.Body>
-                            <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.publishedProducts[index].name}</Card.Title>
-                            <Card.Text >
-                                Descripcion: {store.publishedProducts[index].product_info}
-                            </Card.Text>
-                            <Card.Text>
-                                Precio: {store.publishedProducts[index].price}
-                            </Card.Text>
-                            
-                        </Card.Body>
-                    </Card>
-                    </Link>
-                </Button>
-
-
-            </li>)}
-
-        </ul>
-
-
-    </div>)}
+    return <div className="container mt-5">
+    <Row>
+        {productdif.map((product, index) => (
+            <Col className='product_card mb-4' xs={12} sm={6} md={4} lg={3} key={index}>
+                <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+                    <Card.Img className="cardimg" variant="top" src={productdif[index].photo} />
+                    <Card.Body>
+                        <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{productdif[index].name}</Card.Title>
+                        <Card.Text style={{ color: '#666' }}>
+                            Descripción: {productdif[index].product_info}
+                        </Card.Text>
+                        <Card.Text style={{ color: '#666' }}>
+                            Precio: {productdif[index].price}
+                        </Card.Text>
+                        <Link to='/oferta_permuta'>
+                            <Button className="bg-success mt-1 mb-2" onClick={() => handleCardClick(product)} style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff', width: '100%' }}>
+                                Ofertar
+                            </Button>
+                        </Link>
+                        <Button className="bg-success mt-1 mb-2" onClick={() => actions.addWishedproduct(product)} style={{ backgroundColor: '#006400', borderColor: '#2e8b57', color: '#fff', width: '100%' }}>
+                            Agregar a favoritos
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        ))}
+    </Row>
+</div>
+}
     export default Allproducts

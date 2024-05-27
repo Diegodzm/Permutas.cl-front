@@ -164,7 +164,7 @@ const ProductUploadForm = () => {
                                 Por favor ingrese la marca de su producto 
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5' type="submit">Publicar producto</Button>
+                        <Button className='mt-4 mb-5 btn btn-primary' style={{ backgroundColor: '#426B1F'}} type="submit">Publicar producto</Button>
                     </Form>
                 </Col>
             </Row>

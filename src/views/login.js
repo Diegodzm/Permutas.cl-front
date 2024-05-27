@@ -84,7 +84,7 @@ const Login = () => {
                     </Form.Control.Feedback>
                 </Form.Group>
                 <div className="d-flex mt-5 ms-3 ">
-                <Button className='me-4 col-5 ' type="submit">Ingresar</Button>
+                <Button className='me-4 col-5 btn btn-primary' style={{ backgroundColor: '#426B1F'}} type="submit">Ingresar</Button>
                 <GoogleLogin
                         
                         onSuccess={(credentialResponse) => {

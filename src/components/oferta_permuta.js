@@ -32,6 +32,10 @@ function OfertaPermuta() {
     const handleOfferButtonClick = (index) => {
         const selectedProduct = store.userProducts[index];
         setProductosOferta([...productosOferta, selectedProduct]);
+        console.log(selectedProduct)
+        actions.setSelectedOfferProduct(index)
+        console.log("avanza el producto:", index)
+
     };
 
     const handleSelectButtonClick = () => {
