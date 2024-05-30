@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Context } from "../store/context"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Link } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import "./navbar.css"
@@ -10,6 +10,11 @@ import logo from "./logo.jpg"
 
 function NavbarReact() {
   const { actions,store } = useContext(Context)
+
+  useEffect(() => {
+    actions.accessTokenExpired()
+   
+}, []);
   return (
     <Navbar expand="lg" className="navbar navbar-light d-flex" >
       <Container>
