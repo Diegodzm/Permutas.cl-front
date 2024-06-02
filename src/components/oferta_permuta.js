@@ -33,7 +33,7 @@ function OfertaPermuta() {
         const selectedProduct = store.userProducts[index];
         setProductosOferta([...productosOferta, selectedProduct]);
         console.log(selectedProduct)
-        actions.setSelectedOfferProduct(index)
+        actions.setSelectedOfferProduct(selectedProduct)
         console.log("avanza el producto:", index)
 
     };

@@ -20,7 +20,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 user_id: 0,
             },
             selectedProduct: [],
-            selectedOfferProduct:[],
+            selectedOfferProduct: [],
             productIndex: 0,
             userProducts: [],
             publishedProducts: [],
@@ -40,13 +40,12 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             ],
             useroffer: [],
-            interestedproduct: [],
-
-
-
-            userwishlist:[],
-
+            notificationdisplay: [],
+            offeredproduct: [],
+            userwishlist: [],
             validation: false,
+            objetoOferta: [],
+            tradeinfo:[]
 
         },
 
@@ -64,8 +63,17 @@ export const getState = ({ getActions, getStore, setStore }) => {
             setSelectedOfferProduct: (product) => {
                 setStore({ selectedOfferProduct: product });
                 const store = getStore()
-                console.log(store.selectedOfferProduct)
+                console.log(store.selectedOfferProduct.user_id)
+                console.log(store.selectedProduct.user_id)
                 console.log("producto seleccionado")
+                const objetoOferta = store.selectedProduct
+                objetoOferta.user_interested = store.selectedOfferProduct.user_id
+                objetoOferta.brand_interested = store.selectedOfferProduct.brand
+                objetoOferta.photo_interested = store.selectedOfferProduct.photo
+                objetoOferta.info_interested = store.selectedOfferProduct.product_info
+                setStore({ objetoOferta: objetoOferta })
+                console.log(store.objetoOferta)
+
                 return true
             },
 
@@ -84,9 +92,9 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                 console.log(getStore().productForm)
             },
-            getWishlist:()=>{
-                const store= getStore()
-                fetch("http://localhost:3001/wishlist/"+store.user_id, {
+            getWishlist: () => {
+                const store = getStore()
+                fetch("http://localhost:5000/wishlist/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -95,10 +103,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .then((response) => response.json())
                     .then((data) => {
                         setStore({
-                            userwishlist:data
+                            userwishlist: data
                         })
                         console.log(store.userwishlist)
-                       
+
                     })
                     .catch((error) => console.log(error));
 
@@ -106,10 +114,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             },
 
-            addWishedproduct:(product)=>{
-                const store= getStore()
+            addWishedproduct: (product) => {
+                const store = getStore()
                 console.log(product)
-                fetch("http://localhost:3001/products/wishlist/"+store.user_id, {
+                fetch("http://localhost:5000/products/wishlist/" + store.user_id, {
                     method: "POST",
                     body: JSON.stringify(product),
                     headers: {
@@ -124,19 +132,19 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     .then((data) => {
                         console.log(data)
                         console.log("producto agregado")
-                    
+
 
                     })
                     .catch((error) => console.log(error))
 
-                
+
 
             },
 
 
             handleSubmitLogin: async (e) => {
                 const store = getStore()
-                await fetch("http://localhost:3001/user/login", {
+                await fetch("http://localhost:5000/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -170,7 +178,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-                await fetch("http://localhost:3001/user/register", {
+                await fetch("http://localhost:5000/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -187,7 +195,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
 
-                await fetch("http://localhost:3001/user/logingoogle", {
+                await fetch("http://localhost:5000/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -212,7 +220,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 let accessToken = localStorage.getItem("accessToken")
                 setStore({ productSended: false })
                 if (accessToken) {
-                    fetch("http://localhost:3001/users", {
+                    fetch("http://localhost:5000/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
@@ -223,9 +231,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
                             if (data.msg === "Token has expired") {
                                 localStorage.removeItem("accessToken")
                                 setStore({ validation: false })
+                                
                             }
                             else { console.log("accessTokenValid") }
-                            setStore({ validation: true })
+                            
                         })
                         .catch((error) => console.log(error))
                 }
@@ -233,7 +242,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             fetchPublishedProducts: () => {
                 const store = getStore()
-                fetch("http://localhost:3001/products", {
+                fetch("http://localhost:5000/products", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -246,7 +255,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                         })
 
                         console.log(store.publishedProducts)
-                       
+
                     })
                     .catch((error) => console.log(error));
             },
@@ -262,7 +271,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getProductsbyCategory: (id) => {
                 const store = getStore()
-                fetch("http://localhost:3001/category/products/" + id, {
+                fetch("http://localhost:5000/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -280,7 +289,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getProductsbyUser: () => {
 
                 const store = getStore()
-                fetch("http://localhost:3001/products/user/" + store.user_id, {
+                fetch("http://localhost:5000/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -307,7 +316,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     return;
                 }
 
-                await fetch("http://localhost:3001/products/upload", {
+                await fetch("http://localhost:5000/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {
@@ -341,8 +350,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
-                const store = getStore()
-                console.log(store.selectedProduct[0].user_id)
                 console.log("producto seleccionado")
                 return true
             },
@@ -354,13 +361,10 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             handleOfferTradeButtonClick: async (amount) => {
                 const store = getStore()
-                const offered_product = store.publishedProducts[store.productIndex]
-                offered_product.user_interested = store.user_id
-                offered_product.productinterested_id = store.selectedProduct[0].user_id
-                console.log(offered_product)
-                console.log(store.publishedProducts[store.productIndex].user_id)
+                const offered_product = store.objetoOferta
                 offered_product.amount = amount
-                await fetch("http://localhost:3001/offerupload", {
+
+                await fetch("http://localhost:5000/offerupload", {
                     method: "POST",
                     body: JSON.stringify(offered_product),
                     headers: {
@@ -381,7 +385,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                 const store = getStore()
                 const usercatch = store.publishedProducts[store.productIndex].user_id
-                fetch("http://localhost:3001/Email/" + usercatch, {
+                fetch("http://localhost:5000/Email/" + usercatch, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -398,7 +402,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getNotifications: () => {
 
                 const store = getStore()
-                fetch("http://localhost:3001/notifications/" + store.user_id, {
+                fetch("http://localhost:5000/notifications/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -412,50 +416,28 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     })
                     .catch((error) => console.log(error));
             },
-            getUserInterested: () => {
-
+            getoffertrade: () => {
                 const store = getStore()
-                for (let i = 0; i < store.usernotifications.length; i++) {
-                    const user_interested = store.usernotifications[i].user_interested
-                    fetch("http://localhost:3001/usernotifications/" + user_interested, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            console.log(data)
-                            setStore({useroffer:data})
 
-                        })
-                        .catch((error) => console.log(error));
-                }
-                
+
+                fetch("http://localhost:5000/offertrade", {
+                    method: "POST",
+                    body: JSON.stringify(store.usernotifications),
+                    headers: {  
+                        "content-type": "application/json"
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => setStore({tradeinfo:data}))
+                    .catch((error) => console.log(error))
+
+
+
+
 
             },
-            getUserInterestedProduct: () => {
 
-                const store = getStore()
-                for (let i = 0; i < store.usernotifications.length; i++) {
-                    const user_interestedproduct = store.usernotifications[i].product_id
-                    fetch("http://localhost:3001/userinterestedproduct/" + user_interestedproduct, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            console.log(data) 
-                            setStore({interestedproduct:data})
 
-                        })
-                        .catch((error) => console.log(error));
-                }
-                
-
-            },
 
 
 

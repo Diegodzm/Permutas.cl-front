@@ -32,7 +32,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {store.validation ? <NavbarLogged /> : <NavbarReact />}
+      <NavbarLogged />
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path='/product_upload' element={<ProductUploadView />}></Route>
@@ -40,7 +40,6 @@ function App() {
           <Route path='/intercambio' element={<Intercambio />}></Route>
           <Route path='/EmailForm' element={<EmailForm />}></Route>
           <Route path="/notifications" element={<Notifications />}></Route>
-
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
 
 
