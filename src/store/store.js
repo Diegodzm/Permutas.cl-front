@@ -342,7 +342,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
                 const store = getStore()
-                console.log(store.selectedProduct)
+                console.log(store.selectedProduct[0].user_id)
                 console.log("producto seleccionado")
                 return true
             },
@@ -356,6 +356,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const store = getStore()
                 const offered_product = store.publishedProducts[store.productIndex]
                 offered_product.user_interested = store.user_id
+                offered_product.productinterested_id = store.selectedProduct[0].user_id
                 console.log(offered_product)
                 console.log(store.publishedProducts[store.productIndex].user_id)
                 offered_product.amount = amount
