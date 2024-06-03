@@ -1,10 +1,97 @@
-a{
+@import '~animate.css/animate.min.css';
+
+a {
     text-decoration: none !important;
-    color: black!important;
-    
+    color: black !important;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
-a:hover{
+
+a:hover {
     text-decoration: none !important;
-    color: blue!important;
-    
+    color: #049a8f !important; 
+}
+
+
+.notification-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.numeronotificacion {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #049a8f;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.fa-envelope {
+    font-size: 30px;
+}
+
+.navbar {
+    background-color: #fff;
+    border-bottom: 2px solid black; 
+    padding: 10px 0; 
+}
+
+.navbar-brand img {
+    width: 150px; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.nav-link, .dropdown-item {
+    color: black !important;
+    font-size: 16px;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+    color: #049a8f !important;
+    transform: translateY(-3px);
+}
+
+.dropdown-menu {
+    background-color: transparent !important; 
+    border: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    color: white !important; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(53, 82, 20, 0.9) !important; 
+    color: white !important; 
+}
+
+.offer-link {
+    background-color: #426B1F;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.offer-link:hover {
+    background-color: #2a511e;
+    transform: scale(1.05);
 }
