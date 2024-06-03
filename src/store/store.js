@@ -313,7 +313,20 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return store.productSended
 
             },
-            
+          
+
+            setSelectedOfferProduct: (product) => {
+                setStore({ selectedOfferProduct: product });
+                const store = getStore()
+                console.log(store.selectedOfferProduct)
+                console.log("producto seleccionado")
+                return true
+            },
+
+            showOfferIndex: (index) => {
+                setStore({ productIndex: index })
+
+            },
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
