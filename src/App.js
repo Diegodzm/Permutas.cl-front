@@ -24,6 +24,7 @@ import Intercambio from './views/intercambio';
 import EmailForm from './components/EmailForm';
 import Notifications from './components/notifications';
 import Wishlist from './views/wishlist';
+import PermutaCompleta from './views/permutacompleta';
 
 function App() {
 
@@ -55,7 +56,7 @@ function App() {
         <Route path='/categorias/vestimenta' element={<CatVest />}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
-
+        <Route path='/permutacompletada' element={<PermutaCompleta />}></Route>
         <Route path='/wishlist' element={<Wishlist />}></Route>
 
       </Routes>

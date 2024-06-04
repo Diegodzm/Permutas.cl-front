@@ -12,7 +12,7 @@ const Wishlist = () => {
 
     }, []);
     
-    return  <ul>{store.userwishlist.map(( product,index) =>
+    return  <ul>{store.userwishlist.map(( product,index) =>{
         <li className='product_card col-3 border d-inline-flex ' key={index}>
             <Button href="/productreview">
                 <Card style={{ width: '15 rem', }}>
@@ -31,7 +31,7 @@ const Wishlist = () => {
             </Button>
 
 
-        </li>)}
+        </li>})}
 
     </ul>
 

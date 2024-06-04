@@ -34,7 +34,7 @@ const Allproducts = () => {
         {productdif.map((product, index) => (
             <Col className='product_card mb-4' xs={12} sm={6} md={4} lg={3} key={index}>
                 <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-                    <Card.Img className="cardimg" variant="top" src={productdif[index].photo} />
+                    <Card.Img className="cardimg mx-auto" variant="top" src={productdif[index].photo} />
                     <Card.Body>
                         <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{productdif[index].name}</Card.Title>
                         <Card.Text style={{ color: '#666' }}>

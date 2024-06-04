@@ -37,7 +37,7 @@ function NavbarLogged() {
             <Nav.Link className='mx-1' ><Link to='/products'>Productos</Link></Nav.Link>
 
             <Nav.Link as={Link} to="/oferta_permuta" className="text-white" style={{ backgroundColor: 'rgb(66, 107, 31)', color: 'white' }}>Oferta Permuta</Nav.Link>
-            <Link to="/notifications" className="notification-icon btn" ><div className="numeronotificacion">{store.usernotifications.length}</div><i className="fas fa-envelope notificaciones"></i></Link>
+            <Link to="/notifications" className="notification-icon btn"><div className="numeronotificacion">{store.usernotifications.length}</div><i className="fas fa-envelope notificaciones"></i></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

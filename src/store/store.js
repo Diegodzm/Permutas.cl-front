@@ -32,20 +32,15 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 mensaje: '',
             },
             usernotifications: [],
-
-            UserProductForPermuta: [
-
-                {}
-
-
-            ],
             useroffer: [],
             notificationdisplay: [],
             offeredproduct: [],
             userwishlist: [],
             validation: false,
             objetoOferta: [],
-            tradeinfo:[]
+            tradeinfo:[],
+            userindexpermutacompleta:0
+
 
         },
 
@@ -76,6 +71,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                 return true
             },
+      
 
             showOfferIndex: (index) => {
                 setStore({ productIndex: index })
@@ -411,7 +407,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log(data)
                         setStore({ usernotifications: data })
 
                     })
@@ -419,6 +414,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getoffertrade: () => {
                 const store = getStore()
+
 
 
                 fetch("http://localhost:5000/offertrade", {
@@ -429,7 +425,11 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                 })
                     .then((response) => response.json())
-                    .then((data) => setStore({tradeinfo:data}))
+                    .then((data) => {setStore({tradeinfo:data})
+                
+                }
+
+                )
                     .catch((error) => console.log(error))
 
 
@@ -438,6 +438,40 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             },
 
+            delOffer:(index)=>{
+                const store= getStore()
+                const delofferobject= store.usernotifications[index]
+                console.log(store.usernotifications[index])
+                
+
+                fetch("http://localhost:5000/deloffer", {
+                    method: "PUT",
+                    body: JSON.stringify(delofferobject),
+                    headers: {  
+                        "content-type": "application/json"
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => {setStore({usernotifications:data})})
+                
+                   
+                    
+                
+                .catch((error) => console.log(error))
+
+
+            },
+            permutacompletaindex:(index)=>{
+                const store= getStore()
+
+                setStore({userindexpermutacompleta:index})
+                console.log(store.userindexpermutacompleta)
+                console.log(store.tradeinfo)
+
+
+
+            },
+      
 
 
 
