@@ -94,7 +94,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getWishlist: () => {
                 const store = getStore()
-                fetch("http://localhost:5000/wishlist/" + store.user_id, {
+                fetch("http://localhost:3001/wishlist/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             addWishedproduct: (product) => {
                 const store = getStore()
                 console.log(product)
-                fetch("http://localhost:5000/products/wishlist/" + store.user_id, {
+                fetch("http://localhost:3001/products/wishlist/" + store.user_id, {
                     method: "POST",
                     body: JSON.stringify(product),
                     headers: {
@@ -144,7 +144,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             handleSubmitLogin: async (e) => {
                 const store = getStore()
-                await fetch("http://localhost:5000/user/login", {
+                await fetch("http://localhost:3001/user/login", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -178,7 +178,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
 
-                await fetch("http://localhost:5000/user/register", {
+                await fetch("http://localhost:3001/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
                     headers: {
@@ -195,7 +195,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             handleSubmitGoogleuser: async (user) => {
                 const store = getStore()
 
-                await fetch("http://localhost:5000/user/logingoogle", {
+                await fetch("http://localhost:3001/user/logingoogle", {
                     method: "POST",
                     body: JSON.stringify(user),
                     headers: {
@@ -220,7 +220,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 let accessToken = localStorage.getItem("accessToken")
                 setStore({ productSended: false })
                 if (accessToken) {
-                    fetch("http://localhost:5000/users", {
+                    fetch("http://localhost:3001/users", {
                         method: "GET",
                         headers: {
                             "content-type": "application/json",
@@ -242,7 +242,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             fetchPublishedProducts: () => {
                 const store = getStore()
-                fetch("http://localhost:5000/products", {
+                fetch("http://localhost:3001/products", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -271,7 +271,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
             getProductsbyCategory: (id) => {
                 const store = getStore()
-                fetch("http://localhost:5000/category/products/" + id, {
+                fetch("http://localhost:3001/category/products/" + id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -289,7 +289,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getProductsbyUser: () => {
 
                 const store = getStore()
-                fetch("http://localhost:5000/products/user/" + store.user_id, {
+                fetch("http://localhost:3001/products/user/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -316,7 +316,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     return;
                 }
 
-                await fetch("http://localhost:5000/products/upload", {
+                await fetch("http://localhost:3001/products/upload", {
                     method: "POST",
                     body: JSON.stringify(store.productForm),
                     headers: {
@@ -364,7 +364,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const offered_product = store.objetoOferta
                 offered_product.amount = amount
 
-                await fetch("http://localhost:5000/offerupload", {
+                await fetch("http://localhost:3001/offerupload", {
                     method: "POST",
                     body: JSON.stringify(offered_product),
                     headers: {
@@ -385,7 +385,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
                 const store = getStore()
                 const usercatch = store.publishedProducts[store.productIndex].user_id
-                fetch("http://localhost:5000/Email/" + usercatch, {
+                fetch("http://localhost:3001/Email/" + usercatch, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -402,7 +402,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             getNotifications: () => {
 
                 const store = getStore()
-                fetch("http://localhost:5000/notifications/" + store.user_id, {
+                fetch("http://localhost:3001/notifications/" + store.user_id, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -420,7 +420,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 const store = getStore()
 
 
-                fetch("http://localhost:5000/offertrade", {
+                fetch("http://localhost:3001/offertrade", {
                     method: "POST",
                     body: JSON.stringify(store.usernotifications),
                     headers: {  
