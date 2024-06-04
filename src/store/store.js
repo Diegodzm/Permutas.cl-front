@@ -346,7 +346,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             setSelectedProduct: (product) => {
                 setStore({ selectedProduct: product });
-
                 console.log("producto seleccionado")
                 return true
             },

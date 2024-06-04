@@ -1,5 +1,47 @@
-.body{
+@import '~animate.css/animate.min.css';
 
+.body {
     background-color: #049a8f;
-    height: 500px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: black;
+    margin: 20px 0;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: lighter;
+}
+
+.user-list p {
+    color: white;
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+.btn-primary {
+    background-color: #426B1F;
+    border-color: #426B1F;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #355214;
 }
