@@ -18,7 +18,9 @@
     height: 150px;
     width: 100px !important;
 }
-
+.eliminar{
+    margin-top:0;
+}
 .info{
     display: inline-flex;
     font-weight: bold;

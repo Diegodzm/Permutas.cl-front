@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/context';
-import { Container, Row, Col, CardTitle, CardText, CardImg, Card } from 'react-bootstrap';
+import { Container, Col, CardTitle, CardText, Card } from 'react-bootstrap';
 
 
 const PermutaCompleta = () => {

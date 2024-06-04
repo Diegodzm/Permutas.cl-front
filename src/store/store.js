@@ -212,7 +212,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
 
             accessTokenExpired: () => {
-                const store = getStore()
+                
                 let accessToken = localStorage.getItem("accessToken")
                 setStore({ productSended: false })
                 if (accessToken) {

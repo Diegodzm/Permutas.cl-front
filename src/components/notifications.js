@@ -64,10 +64,10 @@ const Notifications = () => {
                     </Col>
                     <div className='align-content-center ms-3 mt-4 p-1'>
                         <div className='d-flex'>
-                            <Link to='/permutacompletada'className='pt-1 aceptar mx-2 bg-success rounded' onClick={() => actions.permutacompletaindex(index)}>
+                            <Link to='/permutacompletada'className='pt-1 aceptar mx-1 bg-success rounded' onClick={() => actions.permutacompletaindex(index)}>
                                 <i className="fa fa-check accept text-white"></i>
                             </Link>
-                            <Button className='btn-danger p-0 pt-1'><DeleteModal index={index}></DeleteModal></Button>
+                            <Button className='btn-danger eliminar p-0 pt-1'><DeleteModal index={index}></DeleteModal></Button>
 
                         </div>
 

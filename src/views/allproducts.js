@@ -1,6 +1,5 @@
 import { Context } from "../store/context"
 import { useContext, useEffect } from "react"
-import { useNavigate, } from "react-router-dom";
 import './allproducts.css'
 import { Link } from "react-router-dom";
 import { Button, Card, Row, Col, Container } from 'react-bootstrap';

@@ -5,7 +5,6 @@ import injectContext from './store/context';
 import Register from './views/register';
 import Login from './views/login';
 import ProductUploadView from './views/product_upload';
-import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import OfertaPermuta from './components/oferta_permuta';
@@ -17,8 +16,6 @@ import CatTecno from './views/cat_tecno';
 import CatVest from './views/cat_vestimenta';
 import Allproducts from './views/allproducts';
 import UserProducts from './views/userproducts';
-import { Context } from "./store/context";
-import { useContext } from "react";
 import OfertaPermutaView from './views/oferta_permutaviews';
 import Intercambio from './views/intercambio';
 import EmailForm from './components/EmailForm';
@@ -29,7 +26,7 @@ import PermutaCompleta from './views/permutacompleta';
 function App() {
 
 
-  const { store, actions } = useContext(Context)
+
 
   return (
     <BrowserRouter>
