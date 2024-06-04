@@ -3,76 +3,95 @@ import { Context } from '../store/context';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, CardTitle, CardText, CardImg } from 'react-bootstrap';
+import './notifications.css';
+import DeleteModal from './modal';
 
 const Notifications = () => {
     const { store, actions } = useContext(Context);
 
+
     useEffect(() => {
-        actions.getoffertrade();
-        console.log(store.tradeinfo);
-    }, []);
+        actions.getoffertrade()
+  
+        console.log(store.tradeinfo)
+    }, [])
 
     const handleAccept = (tradeId) => {
         console.log(`Se ha aceptado el intercambio con ID: ${tradeId}`);
     };
 
-    const handleReject = (tradeId) => {
-        console.log(`Se ha rechazado el intercambio con ID: ${tradeId}`);
-    };
+    function numberWithDots(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return parts.join(",");
+    }
 
-    const renderNotifications = () => {
-        return store.tradeinfo.map((trade, index) => (
-            <Card key={index} style={{ margin: '10px 0' }}>
-                <Card.Body>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <h5>Producto Ofrecido</h5>
-                                <Link to={`/product/${trade.product_offered.id}`}>{trade.product_offered.name}</Link>
-                                <p>Marca: {trade.product_offered.brand}</p>
-                                <p>Descripción: {trade.product_offered.product_info}</p>
-                                <img src={trade.product_offered.photo} alt={trade.product_offered.name} style={{ maxWidth: '100%' }} />
-                                <p>Precio: {trade.product_offered.price}</p>
-                            </Col>
-                            <Col>
-                                <h5>Producto Ofertado</h5>
-                                <Link to={`/product/${trade.product.id}`}>{trade.product.name}</Link>
-                                <p>Marca: {trade.product.brand}</p>
-                                <p>Descripción: {trade.product.product_info}</p>
-                                <img src={trade.product.photo} alt={trade.product.name} style={{ maxWidth: '100%' }} />
-                                <p>Precio: {trade.product.price}</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <h5>Info del usuario que recibió la oferta</h5>
-                                <p>Email: {trade.user.email}</p>
-                                <p>Nombre: {trade.user.firstname}</p>
-                                <p>Usuario: {trade.user.username}</p>
-                            </Col>
-                            <Col>
-                                <h5>Info del usuario interesado</h5>
-                                <p>Email: {trade.user_interested.email}</p>
-                                <p>Nombre: {trade.user_interested.firstname}</p>
-                                <p>Usuario: {trade.user_interested.username}</p>
-                            </Col>
-                        </Row>
-                    </Container>
-
-                
-                </Card.Body>
-            </Card>
-        ));
-    };
 
     return (
-        <div>
-            {store.tradeinfo.length > 0 ? renderNotifications() : <div>No hay notificaciones disponibles.</div>}
-        </div>
+        <Container className='mt-4 d-block'>
+            <h4 className='d-flex justify-content-center me-5'>Ofertas Permuta</h4>
+            {store.tradeinfo.map((product, index) => (
+                <ul className='oferta d-flex col-12 mt-5' key={index}>
+                    <Col sm="5" >
+                        <Card style={{ backgroundColor: '#dfffd8', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }} body >
+                            <CardText className='mt-2 ' tag="h5">
+                                <p className='info'>Producto:</p>   {store.tradeinfo[index].product_offered.name}
+                            </CardText>
+                            <CardText>
+                                <p className='info'> Informacion Producto: </p>   {store.tradeinfo[index].product_offered.product_info}
+                            </CardText>
+                            <CardText>
+                                <p className='info'>Monto Ofrecido: </p>  ${numberWithDots(store.tradeinfo[index].product_offered.amount)}
+                            </CardText>
+
+                            <Card.Img className="cardimg" variant="top" src={store.tradeinfo[index].product_offered.photo} />
+
+                        </Card>
+                    </Col>
+                    <i className="flecha fa fa-arrow-right align-content-center mx-4"></i>
+                    <Col sm="5" >
+                        <Card body style={{ backgroundColor: '#3cb371', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            <CardText className='mt-2' tag="h5" >
+                                <p className='info'>Producto:</p> {store.tradeinfo[index].product.name}
+                            </CardText>
+                            <CardText>
+                                <p className='info'> Informacion Producto:</p> {store.tradeinfo[index].product.product_info}
+                            </CardText>
+                            <CardText>
+                                <p className='info'>Precio:</p> ${numberWithDots(store.tradeinfo[index].product.price)}
+                            </CardText>
+
+                            <Card.Img className="cardimg" variant="top" src={store.tradeinfo[index].product.photo} />
+                        </Card>
+                    </Col>
+                    <div className='align-content-center ms-3 mt-4 p-1'>
+                        <div className='d-flex'>
+                            <Link to='/permutacompletada'className='pt-1 aceptar mx-1 bg-success rounded' onClick={() => actions.permutacompletaindex(index)}>
+                                <i className="fa fa-check accept text-white"></i>
+                            </Link>
+                            <Button className='btn-danger eliminar p-0 pt-1'><DeleteModal index={index}></DeleteModal></Button>
+
+                        </div>
+
+                    </div>
+
+
+                </ul>
+
+
+
+
+
+            ))}  </Container>
+
+
     );
+
+
+
+
+
 };
 
 export default Notifications;

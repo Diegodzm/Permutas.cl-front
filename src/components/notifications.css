@@ -1,0 +1,32 @@
+.flecha{
+    font-size: 50px;
+    color: #049a8f;
+}
+.aceptar{
+    font-size: 20px;
+    width: 49px;
+    height: 45px;
+    
+ 
+}
+.accept{
+    margin-top: 10px;
+    margin-left: 13px;   
+}
+.cardimg{
+
+    height: 150px;
+    width: 100px !important;
+}
+.eliminar{
+    margin-top:0;
+}
+.info{
+    display: inline-flex;
+    font-weight: bold;
+    text-decoration: underline  ;
+}
+.oferta{
+    border-radius: 20px;
+    color: #049a8f;
+}

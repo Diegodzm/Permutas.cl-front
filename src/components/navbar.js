@@ -9,7 +9,7 @@ import "./navbar.css";
 import logo from "./logo.jpg";
 
 function NavbarReact() {
-  const { actions,store } = useContext(Context)
+  const { actions } = useContext(Context)
 
   useEffect(() => {
     actions.accessTokenExpired()

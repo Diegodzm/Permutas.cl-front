@@ -18,9 +18,13 @@ const Home = () => {
     useEffect(() => {
         actions.accessTokenExpired();
         actions.getNotifications();
-        console.log(store.user_id);
-        console.log(store.validation);
-        console.log(store.usernotifications.length);
+        
+        console.log(store.user_id)
+        console.log(store.validation)
+        console.log(store.usernotifications )
+
+
+
     }, []);
 
     const handleButtonClick = () => {
