@@ -5,7 +5,6 @@ import injectContext from './store/context';
 import Register from './views/register';
 import Login from './views/login';
 import ProductUploadView from './views/product_upload';
-import NavbarReact from './components/navbar';
 import PrivateRoutes from './components/privateroutes';
 import NavbarLogged from './components/navbar_logged';
 import OfertaPermuta from './components/oferta_permuta';
@@ -17,19 +16,18 @@ import CatTecno from './views/cat_tecno';
 import CatVest from './views/cat_vestimenta';
 import Allproducts from './views/allproducts';
 import UserProducts from './views/userproducts';
-import { Context } from "./store/context";
-import { useContext } from "react";
 import OfertaPermutaView from './views/oferta_permutaviews';
 import Intercambio from './views/intercambio';
 import EmailForm from './components/EmailForm';
 import Notifications from './components/notifications';
 import Wishlist from './views/wishlist';
 import OfertaPermutaWish from './components/oferta_permuta_wish';
+import PermutaCompleta from './views/permutacompleta';
 
 function App() {
 
 
-  const { store, actions } = useContext(Context)
+
 
   return (
     <BrowserRouter>
@@ -57,7 +55,7 @@ function App() {
         <Route path='/categorias/vestimenta' element={<CatVest />}></Route>
         <Route path='/products' element={<Allproducts />}></Route>
         <Route path='/products/user' element={<UserProducts />}></Route>
-
+        <Route path='/permutacompletada' element={<PermutaCompleta />}></Route>
         <Route path='/wishlist' element={<Wishlist />}></Route>
 
       </Routes>

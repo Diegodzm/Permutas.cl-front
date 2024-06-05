@@ -8,19 +8,16 @@ a {
 
 a:hover {
     text-decoration: none !important;
-    color: #049a8f !important; 
+    color: #049a8f !important;
 }
 
-
 .notification-icon {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 10px;
+    width: fit-content;
+    height: fit-content;
 }
 
 .numeronotificacion {
-    position: absolute;
+  
     top: -8px;
     right: -8px;
     background-color: #049a8f;
@@ -41,12 +38,12 @@ a:hover {
 
 .navbar {
     background-color: #fff;
-    border-bottom: 2px solid black; 
-    padding: 10px 0; 
+    border-bottom: 2px solid black;
+    padding: 10px 0;
 }
 
 .navbar-brand img {
-    width: 150px; 
+    width: 150px;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
@@ -55,36 +52,9 @@ a:hover {
     opacity: 0.8;
 }
 
-.nav-link, .dropdown-item {
-    color: black !important;
-    font-size: 16px;
-    margin: 0 10px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.nav-link:hover, .dropdown-item:hover {
-    color: #049a8f !important;
-    transform: translateY(-3px);
-}
-
-.dropdown-menu {
-    background-color: transparent !important; 
-    border: none;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-item {
-    color: white !important; 
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.dropdown-item:hover {
-    background-color: rgba(53, 82, 20, 0.9) !important; 
-    color: white !important; 
-}
 
 .offer-link {
-    background-color: #426B1F;
+    background-color: rgb(66, 107, 31);
     color: white !important;
     padding: 10px 20px;
     border-radius: 5px;
@@ -92,6 +62,18 @@ a:hover {
 }
 
 .offer-link:hover {
-    background-color: #2a511e;
-    transform: scale(1.05);
+    background-color: transparent; 
+    color: #049a8f !important; 
+}
+
+.offer-link:active {
+    background-color: #2a511e; 
+    transform: scale(0.95);
+}
+
+.offer-link, .nav-link, .dropdown-item {
+    color: black !important;
+    font-size: 16px;
+    
+    
 }
