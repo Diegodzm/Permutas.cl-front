@@ -3,11 +3,10 @@ import { Button, Card, Row, Col, Container } from 'react-bootstrap';
 import { Context } from "../store/context";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-
-function OfertaPermuta() {
-    const navigate = useNavigate()
+function OfertaPermutaWish() {
+    const navigate = useNavigate();
     const [productosOferta, setProductosOferta] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [amount, setAmount] = useState('');
@@ -16,31 +15,30 @@ function OfertaPermuta() {
 
     useEffect(() => {
         actions.getProductsbyUser();
-        console.log(store.selectedProduct)
-        console.log("producto seleccionado")
+        console.log(store.selectedProduct);
+        console.log("producto seleccionado");
+        setProductoSeleccionado(store.selectedProduct);  // Añadido para manejar selección desde wishlist
     }, []);
 
     const handleChange = (e) => {
         const value = e.target.value;
-        if (/^\d*$/.test(value) && value <= store.publishedProducts[store.productIndex].price) {
+        if (/^\d*$/.test(value) && value <= store.userwishlist[store.productIndex].price) {
             setAmount(value);
-            console.log("amount:", value)
-
+            console.log("amount:", value);
         }
     };
 
     const handleOfferButtonClick = (index) => {
         const selectedProduct = store.userProducts[index];
         setProductosOferta([...productosOferta, selectedProduct]);
-        console.log(selectedProduct)
-        actions.setSelectedOfferProduct(selectedProduct)
-        console.log("avanza el producto:", index)
-
+        console.log(selectedProduct);
+        actions.setSelectedOfferProduct(selectedProduct);
+        console.log("avanza el producto:", index);
     };
 
     const handleSelectButtonClick = () => {
         console.log("boton select apretado");
-        setProductoSeleccionado(store.publishedProducts[store.productIndex]);
+        setProductoSeleccionado(store.userwishlist[store.productIndex]);
     };
 
     const handleRemoveOffer = (index) => {
@@ -55,8 +53,6 @@ function OfertaPermuta() {
         setProductosOferta([]);
         setProductoSeleccionado(null);
     };
-
-
 
     return (
         <Container>
@@ -132,11 +128,11 @@ function OfertaPermuta() {
                 </Row>
                 {productosOferta.length > 0 && productoSeleccionado && (
                     <div className="text-center mt-4">
-                        <Button onClick={(index) => {
+                        <Button onClick={() => {
                             console.log("Índice en onClick:", store.productIndex);
                             console.log("Amount en onClick:", amount);
                             actions.handleOfferTradeButtonClick(amount)
-                                .then(response => { if (response) { navigate('/') } })
+                                .then(response => { if (response) { navigate('/') } });
                         }} style={{ backgroundColor: '#20c997', borderColor: '#20c997', color: '#fff', marginRight: '10px' }}>Ofrecer Intercambio</Button>
 
                         <Button variant="warning" style={{ color: '#fff', backgroundColor: '#ffc107', borderColor: '#ffc107' }} onClick={handleUndoButtonClick}>Deshacer Operación</Button>
@@ -144,34 +140,33 @@ function OfertaPermuta() {
                 )}
             </div>
 
-
             {/* Sección de producto seleccionado */}
             <div className="section mt-4" style={{ backgroundColor: '#65a165', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                 <h2 className="text-center" style={{ color: '#f0fcfb' }}>Producto seleccionado</h2>
                 <Row className="justify-content-center align-items-center">
                     {productoSeleccionado ? null : (
-                        store.publishedProducts && store.publishedProducts[store.productIndex] && (
+                        store.userwishlist && store.userwishlist[store.productIndex] && (
                             <Col xs={12} className='mb-4'>
                                 <Card style={{ width: '80%', maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-                                    <Card.Img className="cardimg" variant="top" src={store.publishedProducts[store.productIndex].photo} />
+                                    <Card.Img className="cardimg" variant="top" src={store.userwishlist[store.productIndex].photo} />
                                     <Card.Body>
-                                        <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{store.publishedProducts[store.productIndex].name}</Card.Title>
+                                        <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{store.userwishlist[store.productIndex].name}</Card.Title>
                                         <Card.Text style={{ color: '#666' }}>
-                                            Descripción: {store.publishedProducts[store.productIndex].product_info}
+                                            Descripción: {store.userwishlist[store.productIndex].product_info}
                                         </Card.Text>
                                         <Card.Text style={{ color: '#666' }}>
-                                            Precio: {store.publishedProducts[store.productIndex].price}
+                                            Precio: {store.userwishlist[store.productIndex].price}
                                         </Card.Text>
                                         <Button style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff' }} onClick={handleSelectButtonClick}>Confirmar selección</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
-                        ))}
+                        )
+                    )}
                 </Row>
             </div>
-
         </Container>
     );
 }
 
-export default OfertaPermuta;
+export default OfertaPermutaWish;

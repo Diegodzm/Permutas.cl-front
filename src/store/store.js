@@ -129,18 +129,43 @@ export const getState = ({ getActions, getStore, setStore }) => {
                     }
                     return response.json();
                 })
-                    .then((data) => {
-                        console.log(data)
-                        console.log("producto agregado")
-
-
-                    })
+                .then((data) => {
+                    console.log(data);
+                    console.log("producto agregado");
+                    
+                    setStore({ userwishlist: [...store.userwishlist, product] });
+                })
                     .catch((error) => console.log(error))
 
 
 
             },
 
+            removeWishedProduct : (product_i_d) => {
+                const store = getStore()
+                const userId = store.user_id
+                
+                if (!product_i_d) {
+                    console.error("product_i_d is not defined");
+                    return;
+                }
+
+                fetch(`http://localhost:5000/products/wishlist/` + product_i_d + "/" + userId , {
+                    method: "DELETE"
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Error al eliminar el producto de la lista de deseos');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setStore({ userwishlist: data });
+                    console.log("Estado actualizado después de eliminar:", getStore());
+                })
+                .catch((error) => console.error(error));
+            },
+            
 
             handleSubmitLogin: async (e) => {
                 const store = getStore()
@@ -297,6 +322,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 })
                     .then((response) => response.json())
                     .then((data) => {
+                        console.log("Data received from backend:", data);
                         setStore({
                             userProducts: data
                         })
@@ -450,6 +476,44 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
 
             },
+
+            deleteProduct: async (productId) => {
+                const store = getStore();
+            
+                await fetch(`http://localhost:5000/products/delete/${productId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then((response) => {
+                    if (response.status === 200) {
+                      
+                        console.log("Producto eliminado correctamente");
+                    } else if (response.status === 404) {
+                       
+                        console.log("Producto no encontrado");
+                    } else {
+                      
+                        console.log("Error al eliminar el producto");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+
+            currencyFormatter(value) {
+                const formatter = new Intl.NumberFormat('es-CL', {
+                  style: 'currency',
+                  currency: 'CLP'
+                });
+                return formatter.format(value);
+              },
+              
+
+            
+            
 
 
 
