@@ -1,39 +1,39 @@
-import { Context } from "../store/context"
-import { useContext, useEffect } from "react"
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React, { useContext, useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Context } from '../store/context';
+import ProductCardWithDelete from '../components/product_card_delete';
 
 const UserProducts = () => {
-    const { store,actions } = useContext(Context)
-    useEffect(() => {
-        actions.getProductsbyUser()
-        actions.accessTokenExpired()
+  const { store, actions } = useContext(Context);
 
-    }, []);
-    
+  useEffect(() => {
+    actions.getProductsbyUser();
+    actions.accessTokenExpired();
+  }, []);
 
-    return  <ul>{store.userProducts.map((products, index) =>
-        <li className='product_card col-3 border d-inline-flex ' key={index}>
-            <Button href="/productreview">
-                <Card style={{ width: '15 rem', }}>
-                    <Card.Img className="cardimg"   variant="top" src={store.userProducts[index].photo} />
-                    <Card.Body>
-                        <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.userProducts[index].name}</Card.Title>
-                        <Card.Text >
-                            Descripcion: {store.userProducts[index].product_info}
-                        </Card.Text>
-                        <Card.Text>
-                            Precio: {store.userProducts[index].price}
-                        </Card.Text>
-                        
-                    </Card.Body>
-                </Card>
-            </Button>
+  const handleDelete = async (productId) => {
+    await actions.deleteProduct(productId);
+    actions.getProductsbyUser(); 
+  };
 
+  return (
+    <Container>
+      <h1 className="my-4">Mis Productos</h1>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {store.userProducts.map((product, index) => {
+        
+          console.log("User Products:", store.userProducts); 
+          return (
+            <Col key={index}>
+             
+              <ProductCardWithDelete product={product} onDelete={() => handleDelete(product.id)} />
+            </Col>
+          );
+        })}
+      </Row>
+    </Container>
+  );
+};
 
-        </li>)}
+export default UserProducts;
 
-    </ul>
-
-}
-export default UserProducts

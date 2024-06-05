@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../store/context';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 import { Container, Row, Col, CardTitle, CardText, CardImg } from 'react-bootstrap';
 import './notifications.css';
@@ -17,6 +17,9 @@ const Notifications = () => {
         console.log(store.tradeinfo)
     }, [])
 
+    const handleAccept = (tradeId) => {
+        console.log(`Se ha aceptado el intercambio con ID: ${tradeId}`);
+    };
 
     function numberWithDots(x) {
         var parts = x.toString().split(".");

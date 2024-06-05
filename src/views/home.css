@@ -45,3 +45,27 @@ h2 {
 .btn-primary:hover {
     background-color: #355214;
 }
+
+.carousel-item img {
+    max-height: 400px;
+    object-fit: cover;
+}
+.btn-primary {
+    background-color: #426B1F;
+    border-color: #426B1F; 
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #355214; 
+}
+
+
+.btn-primary.home-btn {
+    background-color: #1E5749; 
+    border-color: #1E5749;
+}

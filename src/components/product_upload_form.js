@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Context } from "../store/context";
@@ -23,20 +23,20 @@ const ProductUploadForm = () => {
         actions.accessTokenExpired()
 
     }, []);
-    const navigate= useNavigate()
-    const categoryOnchange=(e)=>{
+    const navigate = useNavigate()
+    const categoryOnchange = (e) => {
         const index = e.target.selectedIndex;
         actions.setCategory(index)
         return index
 
 
     }
-    
+
 
     const submitProduct = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        event.stopPropagation();  
+        event.stopPropagation();
 
         console.log("Formulario enviado");
         console.log("Validación del formulario:", form.checkValidity());
@@ -58,7 +58,7 @@ const ProductUploadForm = () => {
 
         if (set_Validated) {
             actions.ProductUpload()
-            .then(response=>{if(response){navigate('/')}})
+                .then(response => { if (response) { navigate('/') } })
         }
     }
 
@@ -70,6 +70,15 @@ const ProductUploadForm = () => {
         }));
         actions.handleProductOnChange(event);
     };
+
+    function currencyFormatter(value) {
+        const formatter = new Intl.NumberFormat('es-CL', {
+          style: 'currency',
+          currency: 'CLP'
+        });
+        return formatter.format(value);
+      }
+      
 
     return (
         <Container className="mt-5">
@@ -99,8 +108,9 @@ const ProductUploadForm = () => {
                                 onChange={chngProduct}
                                 required
                             />
+                         
                             <Form.Control.Feedback type="invalid">
-                                Ingrese un avaluación de su producto. 
+                                Ingrese una avaluación de su producto.
                             </Form.Control.Feedback>
                         </Form.Group>
 
@@ -161,10 +171,10 @@ const ProductUploadForm = () => {
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Por favor ingrese la marca de su producto 
+                                Por favor ingrese la marca de su producto
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button className='mt-4 mb-5 btn btn-primary' style={{ backgroundColor: '#426B1F'}} type="submit">Publicar producto</Button>
+                        <Button className='mt-4 mb-5 btn btn-primary' style={{ backgroundColor: '#426B1F' }} type="submit">Publicar producto</Button>
                     </Form>
                 </Col>
             </Row>

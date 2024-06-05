@@ -21,6 +21,7 @@ import Intercambio from './views/intercambio';
 import EmailForm from './components/EmailForm';
 import Notifications from './components/notifications';
 import Wishlist from './views/wishlist';
+import OfertaPermutaWish from './components/oferta_permuta_wish';
 import PermutaCompleta from './views/permutacompleta';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path='/EmailForm' element={<EmailForm />}></Route>
           <Route path="/notifications" element={<Notifications />}></Route>
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
+          <Route path='/oferta_permuta_wish' element={<OfertaPermutaWish />} />
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
@@ -53,7 +55,6 @@ function App() {
         <Route path='/products/user' element={<UserProducts />}></Route>
         <Route path='/permutacompletada' element={<PermutaCompleta />}></Route>
         <Route path='/wishlist' element={<Wishlist />}></Route>
-
       </Routes>
     </BrowserRouter>
   );
