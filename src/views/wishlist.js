@@ -13,17 +13,18 @@ const Wishlist = () => {
     }, []);
     
     return  <ul>{store.userwishlist.map(( product,index) =>{
-        <li className='product_card col-3 border d-inline-flex ' key={index}>
-            <Button href="/productreview">
-                <Card style={{ width: '15 rem', }}>
-                    <Card.Img className="cardimg"   variant="top" src={store.userwishlist[index].photo} />
+        return( 
+        <li  key={index}>
+            <Button>
+                <Card >
+                    <Card.Img  src={product.photo} />
                     <Card.Body>
-                        <Card.Title style={{ fontWeight:"bold", fontSize:"25px" }}>{store.userwishlist[index].name}</Card.Title>
+                        <Card.Title>{product.name}</Card.Title>
                         <Card.Text >
-                            Descripcion: {store.userwishlist[index].product_info}
+                            Descripcion: {product.product_info}
                         </Card.Text>
                         <Card.Text>
-                            Precio: {store.userwishlist[index].price}
+                            Precio: {product.brand}
                         </Card.Text>
                         
                     </Card.Body>
@@ -31,7 +32,7 @@ const Wishlist = () => {
             </Button>
 
 
-        </li>})}
+        </li>)})}
 
     </ul>
 

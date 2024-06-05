@@ -39,8 +39,6 @@ function App() {
           <Route path='/EmailForm' element={<EmailForm />}></Route>
           <Route path="/notifications" element={<Notifications />}></Route>
           <Route path='/oferta_permuta' element={<OfertaPermuta />} />
-
-
         </Route>
         <Route path='/' element={<Home />}></Route>
         <Route path='/register' element={<Register />}></Route>
