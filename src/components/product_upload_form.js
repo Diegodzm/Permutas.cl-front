@@ -14,7 +14,7 @@ const ProductUploadForm = () => {
     const [formData, setFormData] = useState({
         name: "",
         photo: "",
-        price: 25000,
+        price: 0,
         product_info: "",
         brand: "",
         category_id: 0,

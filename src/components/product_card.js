@@ -33,3 +33,5 @@ const ProductCard = ({ product, onClick }) => {
 };
 
 export default ProductCard;
+
+
