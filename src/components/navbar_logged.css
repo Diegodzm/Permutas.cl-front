@@ -4,6 +4,7 @@ a {
     text-decoration: none !important;
     color: black !important;
     transition: color 0.3s ease, transform 0.3s ease;
+  
 }
 
 a:hover {
@@ -12,14 +13,12 @@ a:hover {
 }
 
 .notification-icon {
-    width: fit-content;
-    height: fit-content;
+    margin-left: 5px;
 }
 
 .numeronotificacion {
   
-    top: -8px;
-    right: -8px;
+  
     background-color: #049a8f;
     color: white;
     width: 20px;
@@ -28,14 +27,20 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 10px;
     font-size: 12px;
     font-weight: bold;
+    margin-left: -6px;
+    margin-bottom: 10px;
+    
 }
 
 .fa-envelope {
     font-size: 30px;
 }
-
+.notificacion{
+ margin-top: 8px;
+}
 .navbar {
     background-color: #fff;
     border-bottom: 2px solid black;

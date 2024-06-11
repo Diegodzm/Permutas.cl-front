@@ -18,7 +18,7 @@ const UserProducts = () => {
 
   return (
     <Container>
-      <h1 className="my-4">Mis Productos</h1>
+      <h1 className='d-flex justify-content-center mt-4 mb-5'>Mis Productos</h1>
       <Row xs={1} md={2} lg={3} className="g-4">
         {store.userProducts.map((product, index) => {
         

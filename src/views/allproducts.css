@@ -23,7 +23,7 @@ html, body {
 }
 
 .cardimg {
-    width: 100%;
+    width:200px;
     height: 200px; 
     object-fit: cover; 
 }
@@ -56,6 +56,6 @@ html, body {
     width: 100%;
 }
 
-.button:hover {
-    background-color: #03877e;
-}
+    .button:hover {
+        background-color: #03877e;
+    }

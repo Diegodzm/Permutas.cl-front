@@ -18,10 +18,10 @@ const Home = () => {
     useEffect(() => {
         actions.accessTokenExpired();
         actions.getNotifications();
-        
+
         console.log(store.user_id)
         console.log(store.validation)
-        console.log(store.usernotifications )
+        console.log(store.usernotifications)
 
 
 
@@ -34,37 +34,40 @@ const Home = () => {
     return (
         <div className="body">
             <Container>
-            
+
                 <h1 className="animate__animated animate__fadeInDown mt-3">
                     Permuta tus productos y únete a la comunidad de Permutadores de Chile
                 </h1>
-                <Carousel className="mb-4 mt-5">
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image1} alt="First slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image2} alt="Second slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image3} alt="Third slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image4} alt="Fourth slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image5} alt="Fifth slide" />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <img className="d-block w-100" src={image6} alt="Sixth slide" />
-                    </Carousel.Item>
-                </Carousel>
+                <div >
+                    <Carousel className="mb-4 mt-5">
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image1} alt="First slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image2} alt="Second slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image3} alt="Third slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image4} alt="Fourth slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image5} alt="Fifth slide" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img className="d-block w-100 rounded" src={image6} alt="Sixth slide" />
+                        </Carousel.Item>
+                    </Carousel>
+                </div>
+
 
                 <h2 className="animate__animated animate__fadeInUp mt-5">
                     Descubre una nueva forma de obtener lo que necesitas
                 </h2>
                 <Button
                     variant="primary"
-                    className="animate__animated animate__pulse animate__infinite home-btn"  
+                    className="animate__animated animate__pulse animate__infinite home-btn"
                     onClick={handleButtonClick}
                 >
                     Productos Disponibles

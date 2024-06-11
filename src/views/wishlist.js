@@ -35,14 +35,16 @@ const Wishlist = () => {
 
     const handleCardClick = (product) => {
         actions.setSelectedProduct(product);
+        console.log(product)
+        console.log(store.setSelectedProduct)
 
         const indexProduct = store.userwishlist.findIndex(item => item.id === product.id);
         console.log("Índice del producto en la lista de deseos:", indexProduct);
 
         if (indexProduct !== -1) {
-            actions.showIndex(indexProduct);
+            actions.offerIndex(indexProduct);
         
-        }
+        }   
     };
     
     const handleConfirmDelete = () => {
@@ -59,8 +61,8 @@ const Wishlist = () => {
     };
 
     return (
-        <Container>
-            <h1 className="my-4">Mis Favoritos</h1>
+        <Container >
+            <h1 className='d-flex justify-content-center mt-4 mb-4'>Mis Favoritos</h1>
             <Row xs={1} md={2} lg={3} className="g-4">
                 {store.userwishlist.map((product, index) => (
                     <Col key={index}>
@@ -75,11 +77,7 @@ const Wishlist = () => {
                                         <Button variant="secondary" onClick={() => toggleExpand(index)}>
                                             Ver menos
                                         </Button>
-                                        <Link to='/oferta_permuta_wish'>
-                                            <Button className="bg-success mt-1 mb-2" onClick={() => handleCardClick(product)} style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff', width: '100%' }}>
-                                                Ofertar
-                                            </Button>
-                                        </Link>
+                q
                                         <Button variant="danger" onClick={() => handleDeleteButtonClick(product.id)}>
                                             Eliminar de Favoritos
                                         </Button>

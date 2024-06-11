@@ -5,11 +5,6 @@ body,
     height: 100%;
 }
 
-.email-container {
-    position: relative;
-    min-height: 100vh;
-}
-
 .background {
     position: absolute;
     top: 0;

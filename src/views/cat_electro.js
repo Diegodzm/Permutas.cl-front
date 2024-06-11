@@ -13,7 +13,7 @@ const CatElectro = () => {
 
   return (
     <Container>
-      <h1 className="my-4">Electrodomésticos</h1>
+      <h1 className='d-flex justify-content-center mt-4 mb-3'>Electrodomésticos</h1>
       <Row xs={1} md={2} lg={3} className="g-4">
         {store.categoryProducts.map((product, index) => (
           <Col key={index}>

@@ -3,8 +3,7 @@ import OfertaPermuta from '../components/oferta_permuta';
 
 const OfertaPermutaView = () => {
     return (
-        <div>
-            <h1>Oferta Permuta</h1>
+        <div className='mt-5'>
             <OfertaPermuta />
         </div>
     );

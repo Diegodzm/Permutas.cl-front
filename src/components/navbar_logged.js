@@ -14,7 +14,7 @@ function NavbarLogged() {
     return (
         <Navbar expand="lg" className="navbar navbar-light">
             <Container>
-                <Navbar.Brand className='logo col-5' ><Link to="/"><img className="logo" src={logo} alt='logo'></img></Link></Navbar.Brand>
+                <Navbar.Brand className='logo col-6' ><Link to="/"><img className="logo" src={logo} alt='logo'></img></Link></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -26,24 +26,24 @@ function NavbarLogged() {
                             <NavDropdown.Item><Link to="/categorias/deportes">Deportes</Link></NavDropdown.Item>
                             <NavDropdown.Item><Link to="/categorias/otros">Otros</Link></NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link className='mx-1'><Link to='/products'>Productos</Link></Nav.Link>
-                        <Nav.Link className='mx-2'><Link to="/product_upload">Subir.Producto</Link></Nav.Link>
+                        <Nav.Link className='mx-1 '><Link to='/products'>Productos</Link></Nav.Link>
+                       
                         {store.validation ? (
                             <>
+                                 <Nav.Link className='mx-2 col-3'><Link to="/product_upload">Subir Producto</Link></Nav.Link>
                                 <NavDropdown title={store.username}>
                                     <Nav.Link className='mx-2'><Link to='/products/user'>Mis Productos</Link></Nav.Link>
                                     <Nav.Link className='mx-2'><Link to='/wishlist'>Favoritos</Link></Nav.Link>
                                     <Nav.Link className='mx-2' href="/" onClick={actions.logout}>Salir</Nav.Link>
                                 </NavDropdown>
-                                <Nav.Link as={Link} to="/oferta_permuta" className="offer-link">Oferta.Permuta</Nav.Link>
                                 <Nav.Link className='mx-2'><Link to='/EmailForm'>Contacto</Link></Nav.Link>
-                                <Link to="/notifications" className="notification-icon btn"><div className="numeronotificacion">{store.usernotifications.length}</div><i className="fas fa-envelope notificaciones"></i></Link>
+                                <Link to="/notifications" className="notification-icon"><div className='notificacion d-flex'><i className="fas fa-envelope notificaciones mb-1"></i><div className="numeronotificacion ">{store.usernotifications.length}</div></div></Link>
                             </>
                         ) : (
                             <>
                                 <Nav.Link className='mx-1'><Link to="/register">Registro</Link></Nav.Link>
                                 <Nav.Link className='mx-1'><Link to="/login">Ingreso</Link></Nav.Link>
-                                <Nav.Link as={Link} to="/oferta_permuta" className="offer-link">Oferta Permuta</Nav.Link>
+                                
                             </>
                         )}
                     </Nav>

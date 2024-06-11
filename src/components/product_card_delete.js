@@ -15,7 +15,7 @@ const ProductCardWithDelete = ({ product, onDelete }) => {
   
     return (
       <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-        <Card.Img className="cardimg" variant="top" src={product.photo} />
+        <Card.Img className="cardimg mx-auto" variant="top" src={product.photo} />
         <Card.Body>
           <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{product.name}</Card.Title>
           {!expanded && (

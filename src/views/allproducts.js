@@ -12,7 +12,12 @@ const Allproducts = () => {
         actions.fetchPublishedProducts();
         actions.getProductsbyUser();
     }, []);
-
+    
+    function numberWithDots(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return parts.join(",");
+    }
     const allproducts = store.publishedProducts;
     const userproducts = store.userProducts;
     let productdif = allproducts.filter(a => !userproducts.map(b => b.user_id).includes(a.user_id));
@@ -36,14 +41,14 @@ const Allproducts = () => {
                 {productdif.map((product, index) => (
                     <Col className='product_card mb-4' xs={12} sm={6} md={4} lg={3} key={index}>
                         <Card style={{ width: '100%', backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
-                            <Card.Img className="cardimg" variant="top" src={product.photo} />
+                            <Card.Img className="cardimg d-flex mx-auto" variant="top" src={product.photo} />
                             <Card.Body>
                                 <Card.Title style={{ fontWeight: "bold", fontSize: "18px", color: '#333' }}>{product.name}</Card.Title>
                                 <Card.Text style={{ color: '#666' }}>
                                     Descripción: {product.product_info}
                                 </Card.Text>
                                 <Card.Text style={{ color: '#666' }}>
-                                    Precio: {product.price}
+                                    Precio: $    {numberWithDots(product.price)}
                                 </Card.Text>
                                 <Link to='/oferta_permuta'>
                                     <Button className="bg-success mt-1 mb-2" onClick={() => handleCardClick(product)} style={{ backgroundColor: '#006400', borderColor: '#006400', color: '#fff', width: '100%' }}>

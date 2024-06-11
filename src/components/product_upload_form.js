@@ -56,7 +56,7 @@ const ProductUploadForm = () => {
 
         set_Validated(true);
 
-        if (set_Validated) {
+        if (form.checkValidity()) {
             actions.ProductUpload()
                 .then(response => { if (response) { navigate('/') } })
         }

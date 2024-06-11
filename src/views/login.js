@@ -46,7 +46,7 @@ const Login = () => {
 
 
     return  <Container className="mt-5 col-4">
-            <h1 className="h3 mb-3 ">Ingreso</h1>
+            <h4 className='d-flex justify-content-center mt-4'>Ingreso</h4>
             <Form noValidate validated={validated} onSubmit={submitFn}>
                 <Form.Group className="mt-5 mb-2" controlId="email">
 
@@ -83,8 +83,8 @@ const Login = () => {
                         Contraseña debe contener al menos 6 characteres
                     </Form.Control.Feedback>
                 </Form.Group>
-                <div className="d-flex mt-5 ms-3 ">
-                <Button className='me-4 col-5 btn btn-primary' style={{ backgroundColor: '#426B1F'}} type="submit">Ingresar</Button>
+                <div className="d-flex mt-5 me-2 ">
+                <Button className='me-4 col-5 btn btn-primary mt-0' style={{ backgroundColor: '#426B1F'}} type="submit">Ingresar</Button>
                 <GoogleLogin
                         
                         onSuccess={(credentialResponse) => {

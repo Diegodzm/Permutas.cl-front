@@ -51,7 +51,7 @@ const Notifications = () => {
                     </Col>
                     <i className="flecha fa fa-arrow-right align-content-center mx-4"></i>
                     <Col sm="5" >
-                        <Card body style={{ backgroundColor: '#3cb371', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                        <Card body style={{ backgroundColor: '#b2dcdc       ', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                             <CardText className='mt-2' tag="h5" >
                                 <p className='info'>Producto:</p> {store.tradeinfo[index].product.name}
                             </CardText>

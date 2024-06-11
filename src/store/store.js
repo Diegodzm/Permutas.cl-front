@@ -58,8 +58,8 @@ export const getState = ({ getActions, getStore, setStore }) => {
             setSelectedOfferProduct: (product) => {
                 setStore({ selectedOfferProduct: product });
                 const store = getStore()
-                console.log(store.selectedOfferProduct.user_id)
-                console.log(store.selectedProduct.user_id)
+                console.log(store.selectedOfferProduct)
+                console.log(store.selectedProduct)
                 console.log("producto seleccionado")
                 const objetoOferta = store.selectedProduct
                 objetoOferta.user_interested = store.selectedOfferProduct.user_id
@@ -196,9 +196,6 @@ export const getState = ({ getActions, getStore, setStore }) => {
 
             handleSubmituser: async () => {
                 const store = getStore()
-
-
-
                 await fetch("http://localhost:5000/user/register", {
                     method: "POST",
                     body: JSON.stringify(store.user),
@@ -370,7 +367,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
             },
           
 
-            setSelectedOfferProduct: (product) => {
+            selectedOfferProduct: (product) => {
                 setStore({ selectedOfferProduct: product });
                 const store = getStore()
                 console.log(store.selectedOfferProduct)
@@ -378,7 +375,7 @@ export const getState = ({ getActions, getStore, setStore }) => {
                 return true
             },
 
-            showOfferIndex: (index) => {
+            offerIndex: (index) => {
                 setStore({ productIndex: index })
 
             },

@@ -25,12 +25,13 @@ const Register = () => {
             event.stopPropagation();
         }
         set_Validated(true);
+        
 
-        if (set_Validated) {
+        if (form.checkValidity()) {
             store.user = form_Data;
             actions.handleSubmituser()
-                .then(response => { if (response) { navigate("/login") } })
-                .catch(error => console.log(error));
+            .then(response => { if (response) { navigate('/') } })
+            .catch(error => console.log(error));
         }
     };
 
@@ -46,7 +47,7 @@ const Register = () => {
 
     return (
         <div className="register-container">
-            <div className="background" />
+            <div />
             <Container className="mt-5">
                 <Row>
                     <Col

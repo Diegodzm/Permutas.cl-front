@@ -11,10 +11,10 @@ const CatDeportes = () => {
     actions.getProductsbyCategory(4); 
     actions.accessTokenExpired();
   }, []);
-
+  
   return (
-    <Container className="mt-5">
-      <h1 className="mb-4">Deportes</h1> 
+    <Container className="mt-4">
+      <h1 className='d-flex justify-content-center mt-4 mb-3'>Deportes</h1> 
       <Row xs={1} md={2} lg={3} className="g-4">
         {store.categoryProducts.map((product, index) => (
           <Col key={index}>

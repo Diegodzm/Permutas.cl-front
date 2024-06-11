@@ -39,7 +39,7 @@ const EmailForm = () => {
     return (
         <div className="email-container">
             <div className="background" />
-            <Form onSubmit={handleSubmit} className="email-form">
+            <Form onSubmit={handleSubmit} className="email-form mt-4">
                 <h2>Contacto</h2>
                 <Form.Group controlId="formNombre">
                     <Form.Control
